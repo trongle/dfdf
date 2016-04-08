@@ -205,23 +205,18 @@
 						})
 
 						$("#accept").on('click',function(){
-							// console.log($("input[name='city[validate][between][min]']").val());
-							// $("#myForm :input").each(function(){
-								
-							// 	if($(this).is(":checkbox")){
-							// 		if($(this).is(":checked")){
-							// 			// console.log($(this).val())
-							// 			console.log($(this).attr('name'))
-							// 		}
-							// 	}else{
-							// 		// console.log($(this).val());
-							// 		console.log($(this).attr('name'))
-							// 	}
-								
-							// })
+			
 							var str = ($("#myForm").serialize());
-							$(self).next('i').html(str);
+							str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
+								if(match === '&') {
+									return '<span class="blue">' + match + '</span>';
+								}else{
+									return '<span class="red">' + match + '</span>';
+								}
+							})
+							$(self).next().next().removeClass('hide').html(str);		
 							hideValidateTemplate();
+							self = null;
 							return false;
 						})
 					}
@@ -238,7 +233,7 @@
 	})
 
 	function addOptionValidate(validateValue,validateName){
-		return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i>Lorem ipsum dolor sit amet.</i></li>';
+		return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i></i></li>';
 	}
 	
 	function changeIdInput(nameElement){

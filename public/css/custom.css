@@ -26,3 +26,18 @@
 hr{
 	border-top : #ddd 2px solid !important;
 }
+
+i{
+	display: inline-block;
+    width: 400px;
+    overflow: scroll;
+}
+
+.red{
+	color:red;
+}
+
+.blue{
+	color:blue;
+	font-weight: bold;
+}
