@@ -116,17 +116,10 @@
 				    <ul id="validateList">
 				    	
 				    </ul>
-				    
+				    <span class="hide" id="haveTemplate">no</span>
 				    <!-- template validate option -->
-				    <div class="col-md-12 validate-template hide">
-				    	<form id="myForm">
-	    					<div id="showtemplate"></div>              
-						                                                 
-	                        <div class="form-group col-md-12">	   
-		                    	<button class="btn btn-primary" id="accept">Accept</button>
-		                    	<button class="btn btn-info" id="cancel">Cancel</button>		        			    
-	                        </div>
-                        </form>
+				    <div id="showtemplate" class="col-md-12 validate-template">
+				    	
 					    
 				    </div>  
 				    <!-- END template validate option -->  
@@ -172,68 +165,123 @@
 		$("#setValidate").on("click",function(){
 		    var validateValue = $("#validateElement :selected").val();
 		    var validateName  = $("#validateElement :selected").text();
-		   
-		    
-		    $("#validateList").append(addOptionValidate(validateValue,validateName) );
-
-		    $(".show-option-validate").on('click',function(){
-			    var self = this;
-		    	var fileName = $(this).attr("href");
-				fileName = fileName.replace('#','') + '.php';	
+		   	var fileName      = validateValue.replace('#','') + '.php';
 			
-				$.ajax({
-					url  	 : "<?php echo BASE_URL .  $url ?>",
-					data 	 : { fileName : fileName },
-					type 	 : 'GET',
-					dataType : 'json',
-					success : function(data){
-						$("#showtemplate").empty();
-
+		   	$.ajax({
+				url  	 : "<?php echo BASE_URL .  $url ?>",
+				data 	 : { fileName : fileName },
+				type 	 : 'GET',
+				dataType : 'json',
+				success  : function(data){
+					if(data.template === 'no'){
+						$("#haveTemplate").text('no');
+					}else{
+						
+						$("#haveTemplate").text('yes');	
 						var templateFormated = data.template.replace(/my_element/g,nameElement);
-						$("#showtemplate").html(templateFormated);
-						showValidateTemplate('.show-option-validate');
+						$("#showtemplate").append(templateFormated);
+					}
 
+					var haveTemplate = $("#haveTemplate").text();
 
-						$(".removeVal").on('click',function(){
-							$(this).parents('li').remove();
-						})
+		    		addValidateRow("#validateList",validateValue,validateName,nameElement,haveTemplate);
 
-						$("#cancel").on('click',function(){
-							hideValidateTemplate();
+		    		$(".removeVal").on('click',function(){
+					    removeOption(this);
+					})
+
+				    $(".show-option-validate").on('click',function(){
+					    var self = this;
+					   	var idTemplate = $(self).attr('href');
+					   
+					    showValidateTemplate('.show-option-validate',idTemplate);
+						
+						$(".cancel").on('click',function(){
+							hideValidateTemplate('.show-option-validate',idTemplate);
 
 							return false;
 						})
 
-						$("#accept").on('click',function(){
+						$(".accept").on('click',function(){
 			
-							var str = ($("#myForm").serialize());
-							str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
-								if(match === '&') {
-									return '<span class="blue">' + match + '</span>';
-								}else{
-									return '<span class="red">' + match + '</span>';
-								}
-							})
-							$(self).next().next().removeClass('hide').html(str);		
-							hideValidateTemplate();
+							var str = $(idTemplate).serialize();	
+						// 	bindingFormValidateOption(str);
+
+							createSerializeString(self,str)		
+							hideValidateTemplate('.show-option-validate',idTemplate);
 							self = null;
 							return false;
 						})
-					}
-				})
-			})
-
-			
+							
+					})
+							
+				},
+			})		
+		 	
 		})
-		
-		
-		
-		
-	
+
 	})
 
-	function addOptionValidate(validateValue,validateName){
-		return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i></i></li>';
+	function createSerializeString(selector,str){
+		str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
+			if(match === '&') {
+				return '<span class="blue">' + match + '</span>';
+			}else{
+				return '<span class="red">' + match + '</span>';
+			}
+		})
+
+		$(selector).next().next().removeClass('hide').html(str);
+	}
+
+	function addValidateRow(selector,validateValue,validateName,nameElement,haveTemplate){
+		$(selector).append(addOptionValidate(validateValue,validateName,nameElement,haveTemplate) );
+	}
+
+	function removeOption(selector){	
+		$(selector).parents('li').remove();
+		var idTemplate = $(selector).prev('a').attr('href');
+		$(idTemplate).remove();
+	}
+
+	function loadTemplateValidate(fileName,nameElement){
+		$.ajax({
+			url  	 : "<?php echo BASE_URL .  $url ?>",
+			data 	 : { fileName : fileName },
+			type 	 : 'GET',
+			dataType : 'json',
+			success  : function(data){
+				console.log(data);
+				if(data.template === 'no'){
+					$("#haveTemplate").text('no');
+				}else{
+					$("#haveTemplate").text('yes');	
+					var templateFormated = data.template.replace(/my_element/g,nameElement);
+					$("#showtemplate").append(templateFormated);
+				}
+			},
+		})
+
+
+	}
+
+	function bindingFormValidateOption(str){
+		var newArr = str.split('&');
+		$.each(newArr,function(index,val){
+			val = val.replace(/%5B/g,'[');
+			val = val.replace(/%5D/g,']');
+			var option = val.split('=');
+			$("[name='"+ option[0] +"']").val(option[1]);
+			console.log($("[name='"+ option[0] +"']").val());
+		})
+	}
+
+	function addOptionValidate(validateValue,validateName,nameElement,haveTemplate){
+		if(haveTemplate === 'yes'){
+			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i class="hide"></i></li>';
+		}else{
+			return '<li>' + validateName + '<span class="removeVal glyphicon glyphicon-remove"></span><input type="hidden" value="' + validateValue + '" name="' + nameElement +'[validate]['+ validateValue +']"></li>';
+		}
 	}
 	
 	function changeIdInput(nameElement){
@@ -245,14 +293,14 @@
 		$("#attrElement").attr('name',nameElement  + "[attr]");
 	}
 	
-	function showValidateTemplate(selector , template){
+	function showValidateTemplate(selector,idTemplate){
 		$(selector).parents("ul#validateList").hide();
-		$(".validate-template").addClass("animated fadeIn").removeClass('hide')
+		$(idTemplate).addClass("animated fadeIn").removeClass('hide')
 	}
 	
-	function hideValidateTemplate(selector , template){
-		$("#validateList").show();
-		$(".validate-template").removeClass("animated fadeIn").addClass('hide')
+	function hideValidateTemplate(selector ,idTemplate){
+		$(selector).parents("ul#validateList").show();
+		$(idTemplate).removeClass("animated fadeIn").addClass('hide')
 	}
 	
 </script>

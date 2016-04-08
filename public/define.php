@@ -1,6 +1,7 @@
 <?php 
 
 	define("BASE_URL","http://localhost");
+	// define("BASE_URL","");
 	define("PATH_APPLICATION",realpath(dirname(__DIR__)));
 	define("PATH_LIBRARY",PATH_APPLICATION."/library/");
 	define("PATH_PUBLIC",PATH_APPLICATION."/public/");

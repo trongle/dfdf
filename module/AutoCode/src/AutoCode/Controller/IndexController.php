@@ -29,17 +29,18 @@ class IndexController extends AbstractActionController
     public function loadTemplateAction(){   
         if($this->request->isXmlHttpRequest()){
             $fileName = $this->params()->fromQuery('fileName');
-            $templateValidate = file_get_contents(PATH_PUBLIC . 'html/' . $fileName);
-                     
+            if(file_exists(PATH_PUBLIC . 'html/' . $fileName)){
+                $templateValidate = file_get_contents(PATH_PUBLIC . 'html/' . $fileName);
+            }else{
+                $templateValidate = 'no';
+            }
+            
             return new JsonModel(array(
                 'template' => $templateValidate
             ));
         }else{
             echo "not permission";
-        }
-
-
-        
+        }   
     }
 
    
