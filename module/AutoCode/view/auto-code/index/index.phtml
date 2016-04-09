@@ -52,100 +52,104 @@
 			
 		</div>
 	</div>
-	
+	<?php $urlActionValidateForm = BASE_URL. $this->url('code/default',['action' => 'validate']) ?>
 	<div class="row box hide" id="elementAttrs">
-		
-		<div class="col-md-6">
-			<h3> [...] Element</h3>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">					
-					    <label for="id">ID</label>
-					    <input type="text" id="idElement" name="idElement" class="form-control"/>
-				    </div>
-				 </div>
-				 
-				 <div class="col-md-4">
-				 	<div class="form-group">
-				    	<label for="class">Class</label>
-				    	<input type="text" id="classElement" name="classElement" class="form-control"/>
-				    </div>
-				 </div>
-				 
-				 <div class="col-md-4">
-				 	<div class="form-group">
-				 		<label for="placeElement">Placeholder</label><br/>
-				    	<input type="text" name="placeElement" id="placeElement" class="form-control"/>
-				    </div>
-				 </div>
-				 
-				 <div class="col-md-4">
-				 	<div class="form-group">
-				 		<label for="valueElement">Value</label><br/>
-				    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
-				    </div>
-				 </div>
-				 
-				 <div class="col-md-4">
-				 	<div class="form-group">
-				 		<label for="attrElement">Attributes</label><br/>
-				    	<textarea class="form-control" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
-				    </div>
-				 </div>
-				 
-			</div>
-			<hr />
-			<div class="row">	
-				 <div class="col-md-8">
-				 	<div class="form-group">
-				 		<label for="validateElement">Validate</label><br/>
-				    	<select name="validateElement" id="validateElement" class="form-control">
-				    		<?php
-				    		
-				    		 	$list = "";
-				    		 	foreach($this->validateElement as $vali){
-				    		 		$list .= '<option value="'. strtolower($vali['name']) .'">'. $vali['name'] .'</option>';
-				    		 	}
-				    		 	echo $list;
-				    		 ?>
-				    	
-				    	</select>
-				    </div>
-				    
+		<form id="validateForm" method="post" action ="<?php echo $urlActionValidateForm ?>">
+				<div class="col-md-6">
+					<h3> [...] Element</h3>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">					
+							    <label for="id">ID</label>
+							    <input type="text" id="idElement" name="idElement" class="form-control"/>
+						    </div>
+						 </div>
+						 
+						 <div class="col-md-4">
+						 	<div class="form-group">
+						    	<label for="class">Class</label>
+						    	<input type="text" id="classElement" name="classElement" class="form-control"/>
+						    </div>
+						 </div>
+						 
+						 <div class="col-md-4">
+						 	<div class="form-group">
+						 		<label for="placeElement">Placeholder</label><br/>
+						    	<input type="text" name="placeElement" id="placeElement" class="form-control"/>
+						    </div>
+						 </div>
+						 
+						 <div class="col-md-4">
+						 	<div class="form-group">
+						 		<label for="valueElement">Value</label><br/>
+						    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
+						    </div>
+						 </div>
+						 
+						 <div class="col-md-4">
+						 	<div class="form-group">
+						 		<label for="attrElement">Attributes</label><br/>
+						    	<textarea class="form-control" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
+						    </div>
+						 </div>
+						 
+					</div>
+					<hr />
+					<div class="row">
+					<!-- List Validate Hidden For Submit -->
+					<div id="listValidateHidden"></div>
+					<!-- End Validate Hidden -->
 
-				    <ul id="validateList">
-				    	
-				    </ul>
-				    <span class="hide" id="haveTemplate">no</span>
-				    <!-- template validate option -->
-				    <div id="showtemplate" class="col-md-12 validate-template">
-				    	
-					    
-				    </div>  
-				    <!-- END template validate option -->  
-				    
-				 </div>
-				 
-				 <div class="col-md-4">
-				 	<div class="form-group ">
-				 		<label>&nbsp;</label><br/>
-				    	<button class="btn btn-primary" id="setValidate">Set validate</button>
-				    </div>
-				 </div> 
-				 
-			</div>
-			
-		</div>
+						 <div class="col-md-8">
+						 	<div class="form-group">
+						 		<label for="validateElement">Validate</label><br/>
+						    	<select name="validateElement" id="validateElement" class="form-control">
+						    		<?php
+						    			
+						    		 	$list = "<option value='not-validate'>Choose Validate Type</option>";
+						    		 	foreach($this->validateElement as $vali){
+						    		 		$list .= '<option value="'. strtolower($vali['name']) .'">'. $vali['name'] .'</option>';
+						    		 	}
+						    		 	echo $list;
+						    		 ?>
+						    	
+						    	</select>
+						    </div>
+						    
+
+						    <ul id="validateList">
+						    	
+						    </ul>
+						    <span class="hide" id="haveTemplate">no</span>
+						    <!-- template validate option -->
+						    <div id="showtemplate" class="col-md-12 validate-template">
+						    	
+							    
+						    </div>  
+						    <!-- END template validate option -->  
+						    
+						 </div>
+						 
+						 <div class="col-md-4">
+						 	<div class="form-group ">
+						 		<label>&nbsp;</label><br/>
+						    	<button class="btn btn-primary" type="button" id="setValidate">Set validate</button>
+						    </div>
+						 </div> 
+						 
+					</div>
+					
+				</div>
 		
-		<div class="pull-right col-md-6 display-code">
-			<h3>Code</h3>
-			<textarea  name="code" id="code" cols="65" rows="20" class="form-control"></textarea>
-		</div>
-		
-		<div class="col-md-6 col-md-offset-3 text-center">
-			<button class="btn btn-primary" id="create">Create</button>
-		</div>
-		
+				<div class="pull-right col-md-6 display-code">
+					<h3>Code</h3>
+					<textarea  name="code" id="code" cols="65" rows="20" class="form-control"></textarea>
+				</div>
+				 <!-- onclick="submitValidateForm()" -->
+				<div class="col-md-6 col-md-offset-3 text-center">
+					<button class="btn btn-primary" onclick="submitValidateForm()" id="create">Create</button>
+				</div>
+		</form>
 	</div>
 	
 </div>
@@ -176,7 +180,6 @@
 					if(data.template === 'no'){
 						$("#haveTemplate").text('no');
 					}else{
-						
 						$("#haveTemplate").text('yes');	
 						var templateFormated = data.template.replace(/my_element/g,nameElement);
 						$("#showtemplate").append(templateFormated);
@@ -205,33 +208,47 @@
 						$(".accept").on('click',function(){
 			
 							var str = $(idTemplate).serialize();	
-						// 	bindingFormValidateOption(str);
 
 							createSerializeString(self,str)		
 							hideValidateTemplate('.show-option-validate',idTemplate);
+
 							self = null;
+
 							return false;
 						})
 							
 					})
 							
 				},
-			})		
-		 	
+			})		 	
 		})
 
 	})
 
-	function createSerializeString(selector,str){
-		str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
-			if(match === '&') {
-				return '<span class="blue">' + match + '</span>';
-			}else{
-				return '<span class="red">' + match + '</span>';
-			}
-		})
+	function submitValidateForm(){
+		$("#validateForm").submit();
 
-		$(selector).next().next().removeClass('hide').html(str);
+	}
+
+	function createSerializeString(selector,str){
+		createRowValidateHidden(str);
+		
+		serializeString = createPrettySerializeString(str);
+
+		$(selector).next().next().removeClass('hide').html(serializeString);
+	}
+
+	function createPrettySerializeString(str){
+		
+		str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
+				if(match === '&') {
+					return '<span class="blue">' + match + '</span>';
+				}else{
+					return '<span class="red">' + match + '</span>';
+				}
+			});
+
+		return str;
 	}
 
 	function addValidateRow(selector,validateValue,validateName,nameElement,haveTemplate){
@@ -244,43 +261,30 @@
 		$(idTemplate).remove();
 	}
 
-	function loadTemplateValidate(fileName,nameElement){
-		$.ajax({
-			url  	 : "<?php echo BASE_URL .  $url ?>",
-			data 	 : { fileName : fileName },
-			type 	 : 'GET',
-			dataType : 'json',
-			success  : function(data){
-				console.log(data);
-				if(data.template === 'no'){
-					$("#haveTemplate").text('no');
-				}else{
-					$("#haveTemplate").text('yes');	
-					var templateFormated = data.template.replace(/my_element/g,nameElement);
-					$("#showtemplate").append(templateFormated);
-				}
-			},
-		})
 
-
-	}
-
-	function bindingFormValidateOption(str){
-		var newArr = str.split('&');
-		$.each(newArr,function(index,val){
-			val = val.replace(/%5B/g,'[');
-			val = val.replace(/%5D/g,']');
-			var option = val.split('=');
-			$("[name='"+ option[0] +"']").val(option[1]);
-			console.log($("[name='"+ option[0] +"']").val());
-		})
+	function createRowValidateHidden(str,haveTemplate = 'yes'){
+		if(haveTemplate === 'yes'){
+			var newArr = str.split('&');
+			$.each(newArr,function(index,val){
+				val = val.replace(/%5B/g,'[');
+				val = val.replace(/%5D/g,']');
+				var option = val.split('=');
+				$("#listValidateHidden").append('<input type="hidden" name="' + option[0] + '" value="' + option[1] + '" />')
+			})
+		}else if(haveTemplate === 'no'){
+			$("#listValidateHidden").append('<input type="hidden" value="' + str[1] + '" name="' + str[0] +'[validateName][]">');
+		}
+		
 	}
 
 	function addOptionValidate(validateValue,validateName,nameElement,haveTemplate){
+		var str = [nameElement,validateValue];
+		createRowValidateHidden(str,'no');
+
 		if(haveTemplate === 'yes'){
 			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i class="hide"></i></li>';
 		}else{
-			return '<li>' + validateName + '<span class="removeVal glyphicon glyphicon-remove"></span><input type="hidden" value="' + validateValue + '" name="' + nameElement +'[validate]['+ validateValue +']"></li>';
+			return '<li>' + validateName + '<span class="removeVal glyphicon glyphicon-remove"></span></li>';
 		}
 	}
 	

@@ -43,5 +43,14 @@ class IndexController extends AbstractActionController
         }   
     }
 
+    public function validateAction(){
+        
+        echo "<pre>";
+        print_r($this->request->getPost());
+        echo "</pre>";exit();
+
+        return false;
+    }
+
    
 }
