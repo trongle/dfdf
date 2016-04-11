@@ -19,10 +19,6 @@
 	margin-right:5px;
 }
 
-.display-code #code{
-	font-size : 11px;
-}
-
 hr{
 	border-top : #ddd 2px solid !important;
 }
@@ -40,4 +36,33 @@ i{
 .blue{
 	color:blue;
 	font-weight: bold;
+}
+
+.a-normal{
+	color : black;
+}
+
+.a-normal:hover{
+	text-decoration: none;
+	color : black;
+	cursor: default;
+}
+
+#code{
+	height: 400px;
+    font-size: 15px;
+    line-height: 22px;
+    color: purple;
+    overflow: scroll;
+}
+
+.tab{
+	background-color:#7BB0A6;
+	text-align: center;
+	transition:background-color 0.5s;
+}
+
+.tab:hover{
+	cursor: pointer;
+	background-color:#64DDBB; 
 }

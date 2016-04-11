@@ -59,7 +59,16 @@
 		
 			<div class="col-md-6">
 				<h3> [...] Element</h3>
-				<div class="row">
+				<div class="row" style="margin-bottom: 30px;">
+					<div class="col-md-6 tab" id="tabAttribute">
+						<h4>Attributes</h4>
+					</div>
+					<div class="col-md-6 tab" id="tabOption">
+						<h4>Options</h4>
+					</div>
+				</div>
+				<!-- ATTRIBUTES -->
+				<div class="row" id="attribute">
 					<div class="col-md-4">
 						<div class="form-group">					
 						    <label for="id">ID</label>
@@ -87,6 +96,13 @@
 					    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
 					    </div>
 					 </div>
+
+					 <div class="col-md-4">
+					 	<div class="form-group">
+					 		<label for="requiredElement">Required</label><br/>
+					    	<input type="checkbox" name="requiredElement" id="requiredElement"/>
+					    </div>
+					 </div>
 					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
@@ -96,13 +112,49 @@
 					 </div>
 					 
 				</div>
+				<!-- END ATTRIBUTES -->
+
+				<!-- OPTIONS -->
+				<div class="row hide" id="option">
+					<div class="col-md-4">
+						<div class="form-group">					
+						    <label for="id">Label name</label>
+						    <input type="text" id="nameLabel" name="nameLabel" class="form-control"/>
+					    </div>
+					</div>
+					 
+					<div class="col-md-4">
+					 	<div class="form-group">
+					    	<label for="class">Label class</label>
+					    	<input type="text" id="classLabel" name="classLabel" class="form-control"/>
+					    </div>
+					</div>
+					 
+					<div class="col-md-4">
+					 	<div class="form-group">
+					 		<label for="placeElement">For</label><br/>
+					    	<input type="text" name="forLabel" id="forLabel" class="form-control"/>
+					    </div>
+					</div>
+					 
+					<!-- <div class="col-md-4">
+					 	<div class="form-group">
+					 		<label for="valueElement">Value</label><br/>
+					    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
+					    </div>
+					</div>
+					 
+					<div class="col-md-4">
+					 	<div class="form-group">
+					 		<label for="attrElement">Attributes</label><br/>
+					    	<textarea class="form-control" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
+					    </div>
+					</div> -->
+				</div>
+				<!-- END OPTIONS -->
 				<hr />
 				<div class="row">
-				<!-- List Validate Hidden For Submit -->
-				<div id="listValidateHidden"></div>
-				<!-- End Validate Hidden -->
-
-					 <div class="col-md-8">
+					<div class="col-md-8">
 					 	<div class="form-group">
 					 		<label for="validateElement">Validate</label><br/>
 					    	<select name="validateElement" id="validateElement" class="form-control">
@@ -145,11 +197,13 @@
 
 			<div class="pull-right col-md-6 display-code">
 				<h3>Code</h3>
-				<textarea  name="code" id="code" cols="65" rows="20" class="form-control"></textarea>
+				<div  name="code" id="code" class="form-control">
+				
+				</div>
 			</div>
 			 <!-- onclick="submitValidateForm()" -->
 			<div class="col-md-6 col-md-offset-3 text-center">
-				<button class="btn btn-primary" onclick="submitValidateForm()" id="create">Create</button>
+				<button type="button" class="btn btn-primary" onclick="submitValidateForm()" id="create">Create</button>
 			</div>
 		
 		</div>
@@ -159,6 +213,7 @@
 <?php $url = $this->url('code/default',array('action' => 'loadTemplate')) ?>
 <script type="text/javascript">
 	$(document).ready(function(){
+		openTab();
 		var nameElement,typeElement;
 		$("#addNewElement").on("click",function(){
 			nameElement = $("#nameElement").val();
@@ -172,7 +227,7 @@
 		$("#setValidate").on("click",function(){
 		    var validateValue = $("#validateElement :selected").val();
 		    var validateName  = $("#validateElement :selected").text();
-		   	var fileName      = validateValue.replace('#','') + '.php';
+		   	var fileName      = validateValue + '.php';
 			
 		   	$.ajax({
 				url  	 : "<?php echo BASE_URL .  $url ?>",
@@ -194,6 +249,7 @@
 
 		    		$(".removeVal").on('click',function(){
 					    removeOption(this);
+
 					})
 
 				    $(".show-option-validate").on('click',function(){
@@ -212,7 +268,7 @@
 			
 							var str = $(idTemplate).serialize();	
 
-							createSerializeString(self,str)		
+							createSerializeString(self,str,idTemplate)		
 							hideValidateTemplate('.show-option-validate',idTemplate);
 
 							self = null;
@@ -228,13 +284,32 @@
 
 	})
 
+	function openTab(){
+		$("#tabAttribute").click(function(){
+			$("#attribute").removeClass('hide');
+			$("#option").addClass('hide');
+		})
+		$("#tabOption").click(function(){
+			$("#option").removeClass('hide');
+			$("#attribute").addClass('hide');
+		})
+	}
+
 	function submitValidateForm(){
-		$("#validateForm").submit();
+		var action = $("#validateForm").attr('action');
+		$.ajax({
+			url  : action,
+			type : 'POST',
+			data : $("#validateForm").serialize(),
+			success : function(data){
+				$("#code").html(data);
+			}
+		})
 
 	}
 
-	function createSerializeString(selector,str){
-		createRowValidateHidden(str);
+	function createSerializeString(selector,str,idTemplate = null){
+		createRowValidateHidden(str,'yes',idTemplate,selector);
 		
 		serializeString = createPrettySerializeString(str);
 
@@ -242,7 +317,6 @@
 	}
 
 	function createPrettySerializeString(str){
-		
 		str = str.replace(/([^(%5BD\s)])/g,function(match,p1,p2,p3){
 				if(match === '&') {
 					return '<span class="blue">' + match + '</span>';
@@ -262,42 +336,55 @@
 		$(selector).parents('li').remove();
 		var idTemplate = $(selector).prev('a').attr('href');
 		$(idTemplate).remove();
+
+		var nameRemove = idTemplate.replace('#','');
+	    $('#listValidateHidden > *').each(function(index,selec){
+
+	       	if($(selec).val() === nameRemove){
+	       		$(selec).remove();
+	    		return false;
+	    	}
+
+	    })
 	}
 
 
-	function createRowValidateHidden(str,haveTemplate = 'yes'){
+	function createRowValidateHidden(str,haveTemplate = 'yes',idTemplate = null,selector = null){
 		if(haveTemplate === 'yes'){
 			var newArr = str.split('&');
+			var html = '<div class="' + idTemplate + '">'
 			$.each(newArr,function(index,val){
 				val = val.replace(/%5B/g,'[');
 				val = val.replace(/%5D/g,']');
 				var option = val.split('=');
-				$("#listValidateHidden").append('<input type="hidden" name="' + option[0] + '" value="' + option[1] + '" />')
+				html += '<input class="" type="hidden" name="' + option[0] + '" value="' + option[1] + '" />';
 			})
-		}else if(haveTemplate === 'no'){
-			$("#listValidateHidden").append('<input type="hidden" value="' + str[1] + '" name="' + str[0] +'[validateName][]">');
-		}
-		
+			html += '</div>';
+
+			$(selector).parent('li').append(html);
+		}	
 	}
 
 	function addOptionValidate(validateValue,validateName,nameElement,haveTemplate){
 		var str = [nameElement,validateValue];
-		createRowValidateHidden(str,'no');
-
+	
 		if(haveTemplate === 'yes'){
-			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i class="hide"></i></li>';
+			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i class="hide"></i><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
 		}else{
-			return '<li>' + validateName + '<span class="removeVal glyphicon glyphicon-remove"></span></li>';
+			return '<li><a class="a-normal" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
 		}
 	}
 	
 	function changeIdInput(nameElement){
 		$("#elementAttrs h3:first").text("[" + nameElement + "] Element")
-		$("#idElement").attr('name',nameElement + "[id]");
-		$("#classElement").attr('name',nameElement + "[class]");
-		$("#placeElement").attr('name',nameElement + "[placeholder]");
-		$("#valueElement").attr('name',nameElement + "[value]");
-		$("#attrElement").attr('name',nameElement  + "[attr]");
+		$("#idElement").attr('name',nameElement + "[attribute][id]");
+		$("#classElement").attr('name',nameElement + "[attribute][class]");
+		$("#placeElement").attr('name',nameElement + "[attribute][placeholder]");
+		$("#valueElement").attr('name',nameElement + "[attribute][value]");
+		$("#attrElement").attr('name',nameElement  + "[attribute][attr]");
+		$("#nameLabel").attr('name',nameElement  + "[option][nameLabel]");
+		$("#classLabel").attr('name',nameElement  + "[option][classLabel]");
+		$("#forLabel").attr('name',nameElement  + "[option][forLabel]");
 	}
 	
 	function showValidateTemplate(selector,idTemplate){
