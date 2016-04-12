@@ -26,6 +26,7 @@
 						    	<option value="range">Range</option>
 						    	<option value="reset">Reset</option>
 						    	<option value="search">Search</option>
+						    	<option value="select">Select</option>
 						    	<option value="Submit">Submit</option>
 						    	<option value="Tel">Tel</option>
 						    	<option value="text">Text</option>
@@ -137,19 +138,30 @@
 					    </div>
 					</div>
 					 
-					<!-- <div class="col-md-4">
-					 	<div class="form-group">
-					 		<label for="valueElement">Value</label><br/>
-					    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
-					    </div>
+					
+					
+					<div id="selectbox" class="hide">
+						<div class="col-md-4">
+						 	<div class="form-group">
+						 		<label for="emptyOption">Empty option</label><br/>
+						    	<input type="text" name="emptyOption" id="emptyOption" class="form-control"/>
+						    </div>
+						</div>
+
+						<div class="col-md-4">
+						 	<div class="form-group">
+						 		<label for="valueOption">Value option</label><br/>
+						    	<input type="text" name="valueOption" id="valueOption" placeholder="1,2,3,4" class="form-control"/>
+						    </div>
+						</div>
+
+						<div class="col-md-4">
+						    <div class="form-group">
+						 		<label for="nameOption">Name option</label><br/>
+						    	<input type="text" name="nameOption" placeholder="name1,name2,name3,name4" id="nameOption" class="form-control"/>
+						    </div>
+						</div>
 					</div>
-					 
-					<div class="col-md-4">
-					 	<div class="form-group">
-					 		<label for="attrElement">Attributes</label><br/>
-					    	<textarea class="form-control" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
-					    </div>
-					</div> -->
 				</div>
 				<!-- END OPTIONS -->
 				<hr />
@@ -214,6 +226,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		openTab();
+		showOptionSelectBox();
+
 		var nameElement,typeElement;
 		$("#addNewElement").on("click",function(){
 			nameElement = $("#nameElement").val();
@@ -283,6 +297,16 @@
 		})
 
 	})
+
+	function showOptionSelectBox(){
+		$("#typeElement").change(function(){
+			if($(this).val() === 'select'){
+				$("#selectbox").removeClass('hide').addClass('animated bounce');
+			}else{
+				$("#selectbox").addClass('hide').removeClass('animated bounce');
+			}
+		})
+	}
 
 	function openTab(){
 		$("#tabAttribute").click(function(){
@@ -385,6 +409,9 @@
 		$("#nameLabel").attr('name',nameElement  + "[option][nameLabel]");
 		$("#classLabel").attr('name',nameElement  + "[option][classLabel]");
 		$("#forLabel").attr('name',nameElement  + "[option][forLabel]");
+		$("#emptyOption").attr('name',nameElement  + "[option][emptyOption]");
+		$("#valueOption").attr('name',nameElement  + "[option][valueOption]");
+		$("#nameOption").attr('name',nameElement  + "[option][nameOption]");
 	}
 	
 	function showValidateTemplate(selector,idTemplate){

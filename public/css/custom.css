@@ -49,11 +49,12 @@ i{
 }
 
 #code{
-	height: 400px;
+	height: 500px;
     font-size: 15px;
     line-height: 22px;
     color: purple;
     overflow: scroll;
+    background: black;
 }
 
 .tab{
@@ -65,4 +66,9 @@ i{
 .tab:hover{
 	cursor: pointer;
 	background-color:#64DDBB; 
+}
+
+code{
+	color:#5ce638 !important;
+	background: black !important;
 }
