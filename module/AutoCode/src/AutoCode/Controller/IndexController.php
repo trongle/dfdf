@@ -26,15 +26,20 @@ class IndexController extends AbstractActionController
     private $value;
     private $otherAttributes;
 
-//label
+//option
+    private $option;
+    //label
     private $nameLabel;
     private $classLabel;
     private $forLabel;
-    private $option;
-//select box
+    //select box
     private $emptyOption;
     private $valueOption;
     private $nameOption;
+//validator
+    private $validateName;
+    private $validateOption;
+    private $validateBreakChain;
 
     public function indexAction()
     {
@@ -77,16 +82,16 @@ class IndexController extends AbstractActionController
         //                 )
         //         )
         //     ),
-        //     "validators" => array(
-        //         array(
-        //             "name" => "NotEmpty",
-        //             "options" => array(
-        //                 "messages" => array(
-        //                     \Zend\Validator\NotEmpty::IS_EMPTY => "Dữ liệu không được rỗng"
-        //                 )
-        //             ),
-        //             "break_chain_on_failure" => "true"
-        //         ),
+            // "validators" => array(
+            //     array(
+            //         "name" => "NotEmpty",
+            //         "options" => array(
+            //             "messages" => array(
+            //                 \Zend\Validator\NotEmpty::IS_EMPTY => "Dữ liệu không được rỗng"
+            //             )
+            //         ),
+            //         "break_chain_on_failure" => "true"
+            //     ),
         //         array(
         //             "name" => "StringLength",
         //             "options" => array(
@@ -106,21 +111,25 @@ class IndexController extends AbstractActionController
             
         // ));
         
-        // echo "<pre>";
-        // print_r($this->request->getPost());
-        // echo "</pre>";
+        echo "<pre>";
+        print_r($this->request->getPost());
+        echo "</pre>";
 
         if($this->request->isXmlHttpRequest()){
             
             $post        = $this->request->getPost();
             $nameElement = $post['nameElement']; 
 
-            $this->attribute   = $post[$nameElement]['attribute'];
-            $this->option      = $post[$nameElement]['option'];
+            $this->attribute          = $post[$nameElement]['attribute'];
+            $this->option             = $post[$nameElement]['option'];
+            $this->validateName       = isset($post[$nameElement]['validateName'])? $post[$nameElement]['validateName'] : '';
+            $this->validateOption     = isset($post[$nameElement]['validateOption'])? $post[$nameElement]['validateOption'] : '';
+            $this->validateBreakChain = isset($post[$nameElement]['validateBreakChain'])? $post[$nameElement]['validateBreakChain'] : '';
             
             $this->setValue($post);          
             
-            $code = $this->openCode();
+            // Create input code 
+            $code = $this->openCode() . $this->name . $this->type . $this->required ;
 
                 if($this->checkAttribute() == true){
                     $code .=    $this->openAttribute()
@@ -138,9 +147,64 @@ class IndexController extends AbstractActionController
 
             echo $code;
 
+            // Create validate code 
+            $codeValidate = '';
+            if(count($this->validateName) > 0 && !empty($this->validateName)){
+                $codeValidate = $this->openCode() . $this->name
+                                    . $this->openValidate()
+                                        . $this->createStringValidate()
+                                    . $this->close()
+                                . $this->closeCode();
+            }
+            echo '<hr/>';
+            echo $codeValidate;
+
             return $this->response;
         }
                        
+    }
+
+    private function openValidate(){
+        return $this->setSpace() . '"validators" => array(<br/>';
+    }
+
+    private function createStringValidate(){
+        $codeValidate = '';
+        foreach($this->validateName as $validate){
+            $codeValidate   .= $this->setSpace(2) . 'array(<br/>'
+                . $this->setSpace(3) . '"name" => "' . $this->validateName[$validate] . '",<br/>'
+                . $this->validateOptionString(strtolower($validate))
+                . $this->createBreakChainString($validate)
+            . $this->close(2);
+        }
+
+        return $codeValidate;
+    }
+
+    private function validateOptionString($validateName){
+        $codeValidate = '';
+        if(isset($this->validateOption[$validateName]) && count($this->validateOption[$validateName]) > 0){
+            $codeValidate   .= $this->setSpace(3) . '"options" => array(<br/>';
+                $codeValidateOption = '';
+                foreach($this->validateOption[$validateName] as $name => $value){
+                    if($value == 'on') $value = "true";
+                    $codeValidateOption   .= $this->setSpace(4) . '"' . $name . '" => "' . $value . '",<br/>';
+                    
+                }
+                $codeValidate .= $codeValidateOption;
+            $codeValidate   .= $this->close(3);       
+        }
+
+        return $codeValidate;
+    }
+
+    private function createBreakChainString($validateName){
+        $breakChain = 'false';
+        if(!empty($this->validateBreakChain) && isset($this->validateBreakChain[$validateName])){
+            $breakChain = 'true';
+        }
+
+        return $this->setSpace(3) . '"break_chain_on_failure" => "' . $breakChain . '"<br/>';
     }
 
     private function openAttribute(){
@@ -151,8 +215,8 @@ class IndexController extends AbstractActionController
         return self::setSpace().'"options" => array(<br/>' ;
     }
 
-    private function close(){
-        return self::setSpace().'),<br/>';
+    private function close($level = 1){
+        return self::setSpace($level).'),<br/>';
     }
     
     private function labelAttribute(){
@@ -226,12 +290,12 @@ class IndexController extends AbstractActionController
         return $selectOption;
     }
 
-    private  function openCode(){
-        return '<code>$this->add(array(<br/>' . $this->name . $this->type . $this->required;
+    private  function openCode($tag = '<code>'){
+        return $tag . '$this->add(array(<br/>' ;
     }
 
-    private  function closeCode(){
-        return '));</code><br/>';
+    private  function closeCode($closeTag = '</code>'){
+        return '));' . $closeTag . '<br/>';
     }
 
     private function setOtherAttributes(){

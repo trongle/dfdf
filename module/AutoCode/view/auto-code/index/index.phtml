@@ -174,7 +174,7 @@
 					    			
 					    		 	$list = "<option value='not-validate'>Choose Validate Type</option>";
 					    		 	foreach($this->validateElement as $vali){
-					    		 		$list .= '<option value="'. strtolower($vali['name']) .'">'. $vali['name'] .'</option>';
+					    		 		$list .= '<option value="'. ($vali['name']) .'">'. $vali['name'] .'</option>';
 					    		 	}
 					    		 	echo $list;
 					    		 ?>
@@ -241,7 +241,7 @@
 		$("#setValidate").on("click",function(){
 		    var validateValue = $("#validateElement :selected").val();
 		    var validateName  = $("#validateElement :selected").text();
-		   	var fileName      = validateValue + '.php';
+		   	var fileName      = validateValue.toLowerCase() + '.php';
 			
 		   	$.ajax({
 				url  	 : "<?php echo BASE_URL .  $url ?>",
@@ -269,6 +269,7 @@
 				    $(".show-option-validate").on('click',function(){
 					    var self = this;
 					   	var idTemplate = $(self).attr('href');
+					   	idTemplate = idTemplate.toLowerCase();
 					   
 					    showValidateTemplate('.show-option-validate',idTemplate);
 						
@@ -337,7 +338,7 @@
 		
 		serializeString = createPrettySerializeString(str);
 
-		$(selector).next().next().removeClass('hide').html(serializeString);
+		$(selector).next().next().next().removeClass('hide').html(serializeString);
 	}
 
 	function createPrettySerializeString(str){
@@ -374,9 +375,11 @@
 
 
 	function createRowValidateHidden(str,haveTemplate = 'yes',idTemplate = null,selector = null){
+		$('[name=' + idTemplate + ']').remove();
+	
 		if(haveTemplate === 'yes'){
 			var newArr = str.split('&');
-			var html = '<div class="' + idTemplate + '">'
+			var html = '<div name="' + idTemplate + '">'
 			$.each(newArr,function(index,val){
 				val = val.replace(/%5B/g,'[');
 				val = val.replace(/%5D/g,']');
@@ -393,9 +396,9 @@
 		var str = [nameElement,validateValue];
 	
 		if(haveTemplate === 'yes'){
-			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span> <i class="hide"></i><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
+			return '<li><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span><label class="checkbox-inline">Break chain on failure<input type="checkbox" checked name="' + nameElement + '[validateBreakChain][' + validateValue + ']"></label><i class="hide"></i><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
 		}else{
-			return '<li><a class="a-normal" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
+			return '<li><a class="a-normal" href="#' + validateValue + '">' + validateName + '</a> <span class="removeVal glyphicon glyphicon-remove"></span><label class="checkbox-inline">Break chain on failure<input type="checkbox" checked name="' + nameElement + '[validateBreakChain][' + validateValue + ']"></label><input type="hidden" value="' + validateValue + '" name="' + nameElement + '[validateName][' + validateValue + ']"/></li>';
 		}
 	}
 	

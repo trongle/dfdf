@@ -16,7 +16,7 @@
 
 	<div class="form-group col-md-6">
 		<label for="min">exclude:</label>
-		<textarea name="my_element[validateOption][dbnorecordexists][exclude]" class="form-control" placeholder="field:name,value:name"></textarea>
+		<input name="my_element[validateOption][dbnorecordexists][exclude]" class="form-control" placeholder="field:name,value:name"/>
 	</div>
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>
