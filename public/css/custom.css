@@ -13,6 +13,10 @@
 	cursor : pointer
 }
 
+/*#elementAttrs{
+	height : 700px;
+}*/
+
 .row .display-code{
 	height : 500px;
 	width : 500px;
@@ -66,6 +70,18 @@ i{
 .tab:hover{
 	cursor: pointer;
 	background-color:#64DDBB; 
+}
+
+.php-keyword{
+	color : #5ba1cf !important;
+}
+
+.php-variable{
+	color : #ffaa3e !important;
+}
+
+.php-plain{
+	color: #b9bdb6 !important;
 }
 
 code{

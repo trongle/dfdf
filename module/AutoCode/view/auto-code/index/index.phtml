@@ -166,9 +166,18 @@
 				<!-- END OPTIONS -->
 				<hr />
 				<div class="row">
+					<div style="margin-bottom: 30px;">
+						<div class="col-md-6 tab" id="tabValidate">
+							<h4>Validate</h4>
+						</div>
+						<div class="col-md-6 tab" id="tabFilter">
+							<h4>Filter</h4>
+						</div>
+					</div>
+
 					<div class="col-md-8">
 					 	<div class="form-group">
-					 		<label for="validateElement">Validate</label><br/>
+					 		<label>&nbsp;</label><br/>
 					    	<select name="validateElement" id="validateElement" class="form-control">
 					    		<?php
 					    			
@@ -180,18 +189,13 @@
 					    		 ?>
 					    	
 					    	</select>
-					    </div>
-					    
+					    </div>				    
 
-					    <ul id="validateList">
-					    	
-					    </ul>
+					    <ul id="validateList"> </ul>
+
 					    <span class="hide" id="haveTemplate">no</span>
 					    <!-- template validate option -->
-					    <div id="showtemplate" class="col-md-12 validate-template">
-					    	
-						    
-					    </div>  
+					    <div id="showtemplate" class="col-md-12 validate-template"> </div>  
 					    <!-- END template validate option -->  
 					    
 					 </div>
@@ -209,15 +213,23 @@
 
 			<div class="pull-right col-md-6 display-code">
 				<h3>Code</h3>
+				<div class="row-show-code hide" style="margin-bottom: 70px;">
+					<div class="col-md-6 tab" id="elementForm">
+						<h4>Element Form</h4>
+					</div>
+					<div class="col-md-6 tab" id="filterValidate">
+						<h4>Filter &amp; Validate</h4>
+					</div>
+				</div>
+
 				<div  name="code" id="code" class="form-control">
 				
 				</div>
 			</div>
 			 <!-- onclick="submitValidateForm()" -->
-			<div class="col-md-6 col-md-offset-3 text-center">
+			<div class="col-md-6 col-md-offset-3 text-center" style="margin-top:80px;margin-bottom:20px">
 				<button type="button" class="btn btn-primary" onclick="submitValidateForm()" id="create">Create</button>
 			</div>
-		
 		</div>
 	</form>
 	
@@ -327,7 +339,19 @@
 			type : 'POST',
 			data : $("#validateForm").serialize(),
 			success : function(data){
-				$("#code").html(data);
+				var source = data.split('<div class="hide">superman</div>');
+				// console.log(source);
+				$('.row-show-code').removeClass('hide').addClass('animated flipInX');
+				
+				$("#code").html(source[0]);
+				
+				$('#filterValidate').click(function(){
+					$("#code").html(source[1]);
+				});
+
+				$('#elementForm').click(function(){
+					$("#code").html(source[0]);
+				});
 			}
 		})
 
