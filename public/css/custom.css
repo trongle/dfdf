@@ -88,3 +88,20 @@ code{
 	color:#5ce638 !important;
 	background: black !important;
 }
+
+.showTemplateValidate,.showTemplateFilter{
+	margin: 15px 0;
+    background: #D3EBB2;
+    padding: 10px;
+}
+
+.glyphicon{
+	font-size: 9px;
+    margin-right: 5px;
+}
+
+ul{
+	list-style-type: none;
+}
+
+

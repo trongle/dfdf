@@ -40,29 +40,43 @@ class IndexController extends AbstractActionController
     private $validateName;
     private $validateOption;
     private $validateBreakChain;
+//filter
+    private $filterName;
+    private $filterOption;
 
     public function indexAction()
     {
-        $validateTable   = $this->getServiceLocator()->get('ValidateTable');
-        
-        $validateElement = $validateTable->listItem();
+        $validateTable = $this->getServiceLocator()->get('ValidateTable');
+        $filterTable   = $this->getServiceLocator()->get('FilterTable');
 
         return new ViewModel([
-            'validateElement' => $validateElement
+            'validateElement' => $validateTable->listItem(),
+            'filterElement'   => $filterTable->listItem()
         ]);
     }
     
     public function loadTemplateAction(){   
         if($this->request->isXmlHttpRequest()){
-            $fileName = $this->params()->fromQuery('fileName');
-            if(file_exists(PATH_PUBLIC . 'html/validate/' . $fileName)){
-                $templateValidate = file_get_contents(PATH_PUBLIC . 'html/validate/' . $fileName);
-            }else{
-                $templateValidate = 'no';
+            $type = $this->params()->fromQuery('type');
+
+            if($type == 'validate'){
+                $fileName = $this->params()->fromQuery('fileName');
+                if(file_exists(PATH_PUBLIC . 'html/validate/' . $fileName)){
+                    $template = file_get_contents(PATH_PUBLIC . 'html/validate/' . $fileName);
+                }else{
+                    $template = 'no';
+                }
+            }else if($type == 'filter'){
+                $fileName = $this->params()->fromQuery('fileName');
+                if(file_exists(PATH_PUBLIC . 'html/filter/' . $fileName)){
+                    $template = file_get_contents(PATH_PUBLIC . 'html/filter/' . $fileName);
+                }else{
+                    $template = 'no';
+                }
             }
             
             return new JsonModel(array(
-                'template' => $templateValidate
+                'template' => $template
             ));
         }else{
             echo "not permission";
@@ -71,16 +85,25 @@ class IndexController extends AbstractActionController
 
     public function validateAction(){
         if($this->request->isXmlHttpRequest()){
-            
+            echo "<pre>";
+            print_r($this->request->getPost());
+            echo "</pre>";
             $post        = $this->request->getPost();
             $nameElement = $post['nameElement']; 
 
+            //inputName
             $this->attribute          = $post[$nameElement]['attribute'];
             $this->option             = $post[$nameElement]['option'];
+
+            //validate
             $this->validateName       = isset($post[$nameElement]['validateName'])? $post[$nameElement]['validateName'] : '';
             $this->validateOption     = isset($post[$nameElement]['validateOption'])? $post[$nameElement]['validateOption'] : '';
             $this->validateBreakChain = isset($post[$nameElement]['validateBreakChain'])? $post[$nameElement]['validateBreakChain'] : '';
             
+            //filter
+            $this->filterName       = isset($post[$nameElement]['filterName'])? $post[$nameElement]['filterName'] : '';
+            $this->filterOption     = isset($post[$nameElement]['filterOption'])? $post[$nameElement]['filterOption'] : '';
+
             $this->setValue($post);          
             
             // Create input code 
@@ -103,16 +126,22 @@ class IndexController extends AbstractActionController
             echo $code;
 
             // Create validate code 
-            $codeValidate = '';
-            if(count($this->validateName) > 0 && !empty($this->validateName)){
-                $codeValidate = $this->openCode() . $this->name
-                                    . $this->openValidate()
-                                        . $this->createStringValidate()
-                                    . $this->close()
-                                . $this->closeCode();
+            $codeFilterAndValidate = '';
+            if(count($this->filterName) > 0 && !empty($this->filterName)){
+                $codeFilterAndValidate = $this->openCode() . $this->name
+                                                . $this->openFilter()
+                                                        . $this->createStringFilter();
+                                if(count($this->validateName) > 0 && !empty($this->validateName)){
+                                    $codeFilterAndValidate .=    $this->openValidate()
+                                                        . $this->createStringValidate()
+                                                    . $this->close() ;
+                                }
+                $codeFilterAndValidate         .= $this->close()
+                                        . $this->closeCode();
             }
+                        
             echo '<div class="hide">superman</div>';
-            echo $codeValidate;
+            echo $codeFilterAndValidate;
 
             return $this->response;
         }
@@ -121,6 +150,10 @@ class IndexController extends AbstractActionController
 
     private function openValidate(){
         return $this->setSpace() . '"validators" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
+    }
+
+    private function openFilter(){
+        return $this->setSpace() . '"filters" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
     }
 
     private function createStringValidate(){
@@ -134,6 +167,18 @@ class IndexController extends AbstractActionController
         }
 
         return $codeValidate;
+    }
+
+    private function createStringfilter(){
+        $codeFilter = '';
+        foreach($this->filterName as $filter){
+            $codeFilter   .= $this->setSpace(2) . '<span class="php-keyword">array</span><span class="php-plain">(</span><br/>'
+                . $this->setSpace(3) . '"name" <span class="php-plain">=></span> "' . $this->filterName[$filter] . '"<span class="php-plain">,</span><br/>'
+                . $this->filterOptionString(strtolower($filter))
+            . $this->close(2);
+        }
+
+        return $codeFilter;
     }
 
     private function validateOptionString($validateName){
@@ -154,6 +199,26 @@ class IndexController extends AbstractActionController
         }
 
         return $codeValidate;
+    }
+
+    private function filterOptionString($filterName){
+        $codeFilter = '';
+        if(isset($this->filterOption[$filterName]) && count($this->filterOption[$filterName]) > 0){
+                $codeFilterOption = '';
+                foreach($this->filterOption[$filterName] as $name => $value){
+                    if($value == 'on') $value = "true";
+                    if(empty($value)) continue;
+                    $codeFilterOption   .= $this->setSpace(4) . '"' . $name . '" <span class="php-plain">=></span> "' . $value . '"<span class="php-plain">,</span><br/>';
+                    
+                }
+                if(!empty(trim($codeFilterOption))){
+                    $codeFilter   .= $this->setSpace(3) . '"options" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
+                        $codeFilter .= $codeFilterOption;
+                    $codeFilter   .= $this->close(3);       
+                }
+        }
+
+        return $codeFilter;
     }
 
     private function createBreakChainString($validateName){
@@ -240,9 +305,6 @@ class IndexController extends AbstractActionController
 
                 $selectOption .= self::setSpace(2).'<span class="php-plain">),</span><br/>' ;
             }
-
-
-
         }
 
         return $selectOption;

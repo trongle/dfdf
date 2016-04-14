@@ -62,9 +62,23 @@ class Module implements AutoloaderProviderInterface
                     $tableGateway = $sm->get("ValidateTableGateway");
                     return  new \AutoCode\Model\ValidateTable($tableGateway);
                 },
+                "FilterTableGateway" => function($sm){
+                    $adapter = $sm->get("Zend\Db\Adapter\Adapter");
+
+                    $resultSetPrototype = new HydratingResultSet();
+                    $resultSetPrototype->setHydrator(new ObjectProperty());
+                    $resultSetPrototype->setObjectPrototype(new \AutoCode\Model\Entity\Filter());
+                    
+                    return $tableGateway = new TableGateway("filters",$adapter,null,$resultSetPrototype);
+                },
+                "Database\Model\Filter" => function($sm){
+                    $tableGateway = $sm->get("FilterTableGateway");
+                    return  new \AutoCode\Model\FilterTable($tableGateway);
+                },
             ),
             "aliases" => array(
                 "ValidateTable"     => "Database\Model\Validate",
+                "FilterTable"     => "Database\Model\Filter",
             )
         );
     }
