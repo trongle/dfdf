@@ -1,4 +1,4 @@
-<form id="stringtolwer">	
+<form id="stringtolower">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Encoding:</label>

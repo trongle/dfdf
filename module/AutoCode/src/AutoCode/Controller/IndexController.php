@@ -85,9 +85,9 @@ class IndexController extends AbstractActionController
 
     public function validateAction(){
         if($this->request->isXmlHttpRequest()){
-            echo "<pre>";
-            print_r($this->request->getPost());
-            echo "</pre>";
+            // echo "<pre>";
+            // print_r($this->request->getPost());
+            // echo "</pre>";
             $post        = $this->request->getPost();
             $nameElement = $post['nameElement']; 
 
@@ -110,37 +110,43 @@ class IndexController extends AbstractActionController
             $code = $this->openCode() . $this->name . $this->type . $this->required ;
 
                 if($this->checkAttribute() == true){
-                    $code .=    $this->openAttribute()
-                                    . $this->class . $this->id . $this->placeholder . $this->value . $this->otherAttributes
-                                . $this->close();
+                    $code   .= $this->openAttribute()
+                                . $this->class . $this->id . $this->placeholder . $this->value . $this->otherAttributes
+                            . $this->close();
                 }
 
                 if($this->checkOption() == true){
-                    $code .=    $this->openOption() 
-                                    . $this->nameLabel . $this->labelAttribute() . $this->createStringSelectBox($post)
-                                .$this->close();
+                    $code   .= $this->openOption() 
+                                . $this->nameLabel . $this->labelAttribute() . $this->createStringSelectBox($post)
+                            .$this->close();
                 }
 
             $code .= $this->closeCode();
 
             echo $code;
+            
+            echo '<div class="hide">superman</div>';
+
+            // Create filter code 
+            $codeFilter = '';
+            if(count($this->filterName) > 0 && !empty($this->filterName)){
+                $codeFilter = $this->openFilter()
+                                . $this->createStringFilter()
+                            . $this->close();
+            }
 
             // Create validate code 
-            $codeFilterAndValidate = '';
-            if(count($this->filterName) > 0 && !empty($this->filterName)){
-                $codeFilterAndValidate = $this->openCode() . $this->name
-                                                . $this->openFilter()
-                                                        . $this->createStringFilter();
-                                if(count($this->validateName) > 0 && !empty($this->validateName)){
-                                    $codeFilterAndValidate .=    $this->openValidate()
-                                                        . $this->createStringValidate()
-                                                    . $this->close() ;
-                                }
-                $codeFilterAndValidate         .= $this->close()
-                                        . $this->closeCode();
+            $codeValidate = '';
+            if(count($this->validateName) > 0 && !empty($this->validateName)){
+                $codeValidate   .= $this->openValidate()
+                                    . $this->createStringValidate()
+                                . $this->close() ;
             }
-                        
-            echo '<div class="hide">superman</div>';
+            
+            $codeFilterAndValidate  = $this->openCode() . $this->name
+                                        .$codeFilter . $codeValidate
+                                    . $this->closeCode() ;  
+
             echo $codeFilterAndValidate;
 
             return $this->response;
