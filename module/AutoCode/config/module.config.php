@@ -2,7 +2,8 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'AutoCode\Controller\Index' => 'AutoCode\Controller\IndexController',
+			'AutoCode\Controller\Index' => 'AutoCode\Controller\IndexController',
+			'AutoCode\Controller\User'  => 'AutoCode\Controller\UserController',
         ),
     ),
     
@@ -24,6 +25,13 @@ return array(
             'ViewJsonStrategy' 
         ),
 		"default_template_suffix" => "phtml",
-		
+    ),
+    'view_helper_config' => array(
+        "flashmessenger" => array(
+            "message_open_format" => '<div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>',
+            "message_separator_string" => "",
+            "message_close_string" => "</div>"
+        ),
     ),
 );

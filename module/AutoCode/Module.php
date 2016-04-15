@@ -1,20 +1,20 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/AutoCode for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace AutoCode;
 
-use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use AutoCode\Form\FormUser;
+use AutoCode\Model\UserTable;
+use AutoCode\Model\Entity\User;
+use AutoCode\Form\FormUserFilter;
+use AutoCode\Model\Entity\Filter;
+use Zend\Mvc\ModuleRouteListener;
+use AutoCode\Model\Entity\Validate;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Stdlib\Hydrator\ObjectProperty;
+use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -44,41 +44,44 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $adapter = $e->getApplication()->getServiceManager()->get("Zend\Db\Adapter\Adapter");
+        GlobalAdapterFeature::setStaticAdapter($adapter);
     }
 
     public function getServiceConfig(){
         return array(
             "factories" => array(
-                "ValidateTableGateway" => function($sm){
-                    $adapter = $sm->get("Zend\Db\Adapter\Adapter");
-
-                    $resultSetPrototype = new HydratingResultSet();
-                    $resultSetPrototype->setHydrator(new ObjectProperty());
-                    $resultSetPrototype->setObjectPrototype(new \AutoCode\Model\Entity\Validate());
-                    
-                    return $tableGateway = new TableGateway("validates",$adapter,null,$resultSetPrototype);
-                },
                 "Database\Model\Validate" => function($sm){
-                    $tableGateway = $sm->get("ValidateTableGateway");
-                    return  new \AutoCode\Model\ValidateTable($tableGateway);
-                },
-                "FilterTableGateway" => function($sm){
-                    $adapter = $sm->get("Zend\Db\Adapter\Adapter");
-
-                    $resultSetPrototype = new HydratingResultSet();
-                    $resultSetPrototype->setHydrator(new ObjectProperty());
-                    $resultSetPrototype->setObjectPrototype(new \AutoCode\Model\Entity\Filter());
-                    
-                    return $tableGateway = new TableGateway("filters",$adapter,null,$resultSetPrototype);
+                    $tableGateway = $this->getTableGateway($sm, 'validates',new Validate());
+                    return  new ValidateTable($tableGateway);
                 },
                 "Database\Model\Filter" => function($sm){
-                    $tableGateway = $sm->get("FilterTableGateway");
-                    return  new \AutoCode\Model\FilterTable($tableGateway);
+                    $tableGateway = $this->getTableGateway($sm, 'filters',new Filter());
+                    return  new FilterTable($tableGateway);
                 },
+                "Database\Model\User" => function($sm){
+                    $tableGateway = $this->getTableGateway($sm, 'users',new User());
+                    return  new UserTable($tableGateway);
+                }
             ),
             "aliases" => array(
-                "ValidateTable"     => "Database\Model\Validate",
-                "FilterTable"     => "Database\Model\Filter",
+                "ValidateTable" => "Database\Model\Validate",
+                "FilterTable"   => "Database\Model\Filter",
+                "UserTable"     => "Database\Model\User",
+            )
+        );
+    }
+
+    public function getFormElementConfig(){
+        return array(
+            "factories" => array(           
+                "FormUser" => function($sm){            
+                    $form   = new FormUser();
+                    $form->setInputFilter(new FormUserFilter());
+                    // $form->setUseInputFilterDefaults(false);
+                    return $form;
+                },
             )
         );
     }
@@ -89,5 +92,15 @@ class Module implements AutoloaderProviderInterface
                 "selectBoxOfListValidate"   => "Helper\SelectBoxOfListValidate",
             )
         );
+    }
+
+    private function getTableGateway($sm,$table = null,$entity = null){
+        $adapter = $sm->get("Zend\Db\Adapter\Adapter");
+
+        $resultSetPrototype = new HydratingResultSet();
+        $resultSetPrototype->setHydrator(new ObjectProperty());
+        $resultSetPrototype->setObjectPrototype($entity);
+
+        return $tableGateway = new TableGateway($table,$adapter,null,$resultSetPrototype);
     }
 }

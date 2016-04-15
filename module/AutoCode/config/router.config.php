@@ -1,14 +1,27 @@
 <?php
-$home = $code = array(
-    "type"=> "Segment",
+$home = array(
+    "type"=> "Literal",
     "options" => array(
         "route" => "/",
         "defaults" => array(
             "__NAMESPACE__" => "AutoCode\Controller",
-            "controller"    => "AutoCode\Controller\Index",
-            "action"        => "index"
+            "controller"    => "AutoCode\Controller\User",
+            "action"        => "login"
         )
     ),
+    'may_terminate' => true,
+    'child_routes' => array(
+         'default' => array(
+            'type'    => 'Segment',
+            'options' => array(
+                'route'    => '[:action][/]',
+                'constraints' => array(
+                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
+                    // 'controller'     => '[a-zA-Z][a-zA-Z0-9_-]*'
+                ),
+            ),
+        ),
+    )
 );
 
 $code = array(
