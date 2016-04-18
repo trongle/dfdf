@@ -16,7 +16,7 @@ class FormTable extends AbstractTableGateway{
 
 	public function listItem($arrParam = null,$options = null){
 		$result =   $this->_tableGateway->select(function(Select $select) use($arrParam){
-			$select->columns(array( "id","name","content","user_id","created_date"))
+			$select->columns(array( "id","name","content","user_id","created_date","description"))
 				   ->join(array("u"=>"users"),
 				   		  "u.id = forms.user_id",
 				   		  array("username"=>"name"),
@@ -27,6 +27,17 @@ class FormTable extends AbstractTableGateway{
 		})->toArray();
 	
 		return $result;
+	}
+
+	public function getItemById($id = null,$options = null){
+		if(!empty($id)){
+			$result =   $this->_tableGateway->select(function(Select $select) use($id){
+				$select->columns(array( "id","name","content","user_id","created_date","description"))
+					   ->where->equalTo("id",$id);
+			})->current();
+
+			return $result;
+		}
 	}
 
 	public function saveForm($data = null,$options = null){
@@ -59,7 +70,8 @@ class FormTable extends AbstractTableGateway{
         }
 
         if($options['type'] == 'addElement'){
-        	$insert['content'] = trim($data['element']);
+			$insert['content'] = trim($data['element']);
+			$insert['status']  = 'active';
         }
                             
         return $insert;

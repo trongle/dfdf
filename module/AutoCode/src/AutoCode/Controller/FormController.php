@@ -49,6 +49,35 @@ class FormController extends AbstractActionController
 		}
 	}
 
+	public function editFormAction(){
+		$authenticate = $this->getServiceLocator()->get('MyAuth');
+		$auth         = $authenticate->_authen;
+
+		if($auth->hasIdentity()){
+			$userInfo  = $authenticate->_authen->getIdentity();
+			$id        = $this->params()->fromRoute("id");
+			$formTable = $this->getServiceLocator()->get("FormTable");
+
+			$infoForm = $formTable->getItemById($id);
+			$infoForm->content = unserialize($infoForm->content);
+		
+			$viewModel = new ViewModel();
+			$viewModel->setVariables(array(
+				"infoForm"    => $infoForm,
+				'typeDisplay' => 'editForm',
+				'userInfo'    => $userInfo
+			));
+
+			$viewModel->setTemplate("auto-code/index/index.phtml");
+
+			return $viewModel;
+			
+		}else{
+			$this->redirect()->toRoute("home");
+		}
+
+	}
+
 	private function setSerializeString($elementString){
 		$element = array();
 		parse_str($elementString,$element);

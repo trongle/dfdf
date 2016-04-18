@@ -13,6 +13,7 @@ class UserController extends AbstractActionController
 		$form         = $this->getServiceLocator()->get('FormElementManager')->get('FormUser');
 		$errorAuth    = null;
 		$authenticate = $this->getServiceLocator()->get('MyAuth');
+		if($authenticate->_authen->hasIdentity()) $this->redirect()->toRoute('form');
 
 		$form->setInputFilter(new FormUserFilter("login"));
 		if($this->request->isPost()){
@@ -69,6 +70,13 @@ class UserController extends AbstractActionController
 			'form' => $form,
 			'flag' => 'signup'
 		]);
+	}
+
+	public function logoutAction(){
+		$authenticate = $this->getServiceLocator()->get('MyAuth');
+		$authenticate->logout();
+
+		$this->redirect()->toRoute('home');
 	}
 }
 ?>

@@ -4,7 +4,10 @@
 		  	<!-- Default panel contents -->
 		  	<div class="panel-heading">
 		  		<span class="pull-left"><h4>Danh sách các Form đã tạo</h4></span>
-		  		<span class="pull-right"><button class="btn btn-info" id="addNew" type="button">Add New Form</button></span>
+		  		<div class="pull-right">
+			  		<span ><button class="btn btn-info" id="addNew" type="button">Add New Form</button></span>
+			  		<span ><a class="btn btn-warning" href="<?php echo $this->url('home/default',array('action' => 'logout')) ?>">Logout</a></span>
+		  		</div>
 		  		<div class="clearfix"></div>
 		  	</div>
 		  	<!-- Table -->
@@ -26,10 +29,12 @@
 		    				$list .= '<tr>';
 		    					$list .= sprintf(
 		    							'<td><input type="checkbox" class="second" name="inputCheck[]" ></td>
+		    							 <td><a href="%s">%s</a></td>
 		    							 <td>%s</td>
 		    							 <td>%s</td>
-		    							 <td>%s</td>
-		    							 <td>%s</td>',$form['name'],date('d-m-Y',$form['created_date']),$form['username'],$form['id']);
+		    							 <td>%s</td>',
+		    							 $this->url('form/default',array("action" => 'editForm','id' => $form['id'])),
+		    							 $form['name'],date('d-m-Y',$form['created_date']),$form['username'],$form['id']);
 		    				$list .= '</tr>';
 		    				}
 		    			}else{

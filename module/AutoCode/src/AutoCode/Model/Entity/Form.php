@@ -10,7 +10,7 @@ class Form
 	public $content;
 	public $status;
 	public $user_id;
-	public $created_Date;
+	public $created_date;
 	public $description;
 
 
@@ -19,7 +19,7 @@ class Form
 		$this->id           = (!empty($data['id']))        		? $data['id']     :"";
 		$this->name         = (!empty($data['name']))   		? $data['name']   :"";
 		$this->description  = (!empty($data['description']))   	? $data['description']  :"";
-		$this->created_Date = (!empty($data['created_Date']))   ? $data['created_Date']  :"";
+		$this->created_date = (!empty($data['created_date']))   ? $data['created_date']  :"";
 		$this->user_id      = (!empty($data['user_id']))   	  	? $data['user_id']  :"";
 		$this->status       = (!empty($data['status']))   		? $data['status']  :"";
 		$this->content      = (!empty($data['content']))   		? $data['content']  :"";

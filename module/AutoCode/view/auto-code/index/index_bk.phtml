@@ -294,7 +294,6 @@
 <?php $url = $this->url('code/default',array('action' => 'loadTemplate')) ?>
 <script type="text/javascript">
 	$(document).ready(function(){
-		checkSelected();
 		$("#createForm").click(function(){
 			if($("input[name=inputNameForm]").val() === ""){
 				$("#errorNameForm").removeClass("hide");
@@ -574,14 +573,6 @@
 	function hideValidateTemplate(selector,tagA){
 		$(selector).parents('.showTemplateValidate').removeClass("animated zoomIn").addClass('hide');
 		$(tagA).prev('span').removeClass('glyphicon-minus').addClass('glyphicon-plus');
-	}
-
-	function checkSelected(){
-		$("#typeElement option").each(function(index,val){
-			if($(val).val() === "<?php echo $infoForm->content['district']['typeElement'] ?>"){
-				$(val).attr("selected","selected");
-			}
-		})
 	}
 	
 </script>
