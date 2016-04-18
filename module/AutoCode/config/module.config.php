@@ -3,7 +3,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
 			'AutoCode\Controller\Index' => 'AutoCode\Controller\IndexController',
-			'AutoCode\Controller\User'  => 'AutoCode\Controller\UserController',
+            'AutoCode\Controller\User'  => 'AutoCode\Controller\UserController',
+			'AutoCode\Controller\Form'  => 'AutoCode\Controller\FormController',
         ),
     ),
     

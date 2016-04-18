@@ -39,12 +39,24 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+        $authenticate = $this->getServiceLocator()->get('MyAuth');
+        $auth         = $authenticate->_authen;
+        $user_id      = '';
+
+        if(!$auth->hasIdentity()){
+            $this->redirect()->toRoute("home");
+        }else{
+            $userInfo = $auth->getIdentity();
+        }
+
+
         $validateTable = $this->getServiceLocator()->get('ValidateTable');
         $filterTable   = $this->getServiceLocator()->get('FilterTable');
 
         return new ViewModel([
             'validateElement' => $validateTable->listItem(),
-            'filterElement'   => $filterTable->listItem()
+            'filterElement'   => $filterTable->listItem(),
+            'userInfo'        => $userInfo
         ]);
     }
     
@@ -78,10 +90,9 @@ class IndexController extends AbstractActionController
 
     public function validateAction(){
         if($this->request->isXmlHttpRequest()){
-            // echo "<pre>";
-            // print_r($this->request->getPost());
-            // echo "</pre>";
+
             $post        = $this->request->getPost();
+     
             $nameElement = $post['nameElement']; 
 
             //inputName
