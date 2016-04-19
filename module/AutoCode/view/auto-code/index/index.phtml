@@ -4,9 +4,9 @@
 	$classHide = 'hide';
 	if(isset($typeDisplay) && $typeDisplay == 'editForm'){
 		$classHide = '';
-		echo "<pre>";
-		print_r($infoForm);
-		echo "</pre>";
+		// echo "<pre>";
+		// print_r($infoForm);
+		// echo "</pre>";
 	}
 ?>
 <div class="container">
@@ -18,7 +18,7 @@
 					<div class="col-md-8">
 						<div class="form-group">					
 							<label for="type">Name Form</label>
-							<input type="text" value="<?php echo @$infoForm->name ?>" class="form-control" name="inputNameForm" />
+							<input type="text" class="form-control" name="inputNameForm" />
 							<!-- class="hide alert alert-danger alert-dismissable" -->
 							<p class="hide text-danger" id="errorNameForm">
                             	Nhập tên Form để tiếp tục !
@@ -38,7 +38,7 @@
 	<!-- END ADD NEW FORM  -->
 
 	<!-- ADD NEW ELEMENT -->
-	<form id="validateForm" class="<?php echo $classHide  ?>" method="post" action ="<?php echo $urlActionValidateForm ?>">
+	<form id="validateForm" class="hide" method="post" action ="<?php echo $urlActionValidateForm ?>">
 		<div class="row box" id="addNew">
 			<div class="col-md-12">
 				<div class="row">
@@ -93,7 +93,7 @@
 			</div>
 		</div>
 		<!-- END ADD NEW ELEMENT -->
-		<div class="row box <?php echo $classHide  ?>" id="elementAttrs">
+		<div class="row box hide" id="elementAttrs">
 		
 			<div class="col-md-6">
 				<h3> [...] Element</h3>
@@ -294,7 +294,6 @@
 <?php $url = $this->url('code/default',array('action' => 'loadTemplate')) ?>
 <script type="text/javascript">
 	$(document).ready(function(){
-		checkSelected();
 		$("#createForm").click(function(){
 			if($("input[name=inputNameForm]").val() === ""){
 				$("#errorNameForm").removeClass("hide");
@@ -574,14 +573,6 @@
 	function hideValidateTemplate(selector,tagA){
 		$(selector).parents('.showTemplateValidate').removeClass("animated zoomIn").addClass('hide');
 		$(tagA).prev('span').removeClass('glyphicon-minus').addClass('glyphicon-plus');
-	}
-
-	function checkSelected(){
-		$("#typeElement option").each(function(index,val){
-			if($(val).val() === "<?php echo $infoForm->content['district']['typeElement'] ?>"){
-				$(val).attr("selected","selected");
-			}
-		})
 	}
 	
 </script>

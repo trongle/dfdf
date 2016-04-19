@@ -1,7 +1,7 @@
 <form id="isfloat">
 	<div class="form-group col-md-6">
 		<label>Locale:</label>
-		<input type="text" name="my_element[validateOption][isfloat][locale]"/>
+		<input type="text" id="isfloat-locale" name="my_element[validateOption][isfloat][locale]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

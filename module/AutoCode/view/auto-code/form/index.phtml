@@ -24,7 +24,7 @@
 		    	<tbody>
 		    		<?php 
 		    			$list = '';
-		    			if(!empty($listForm)){
+		    			if(count($listForm) > 0){
 		    				foreach ($listForm as $key => $form) {
 		    				$list .= '<tr>';
 		    					$list .= sprintf(
@@ -38,7 +38,8 @@
 		    				$list .= '</tr>';
 		    				}
 		    			}else{
-		    				$list =  "<h3>Chưa có Form được tạo</h3>";
+		    			
+		    				$list .=  "<tr><td>Chưa có Form được tạo<td></tr>";
 		    			}
 
 		    			echo $list;

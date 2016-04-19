@@ -2,7 +2,7 @@
 
 	<div class="form-group col-md-6">
 		<label for="min">Separator:</label>
-		<input type="text" name="my_element[filterOption][wordseparatortocamelcase][separator]" class="form-control" />
+		<input type="text" id="wordseparatortocamelcase-separator" name="my_element[filterOption][wordseparatortocamelcase][separator]" class="form-control" />
 	</div>
 
 	<div class="form-group col-md-12">	   

@@ -1,13 +1,10 @@
-<?php $urlActionValidateForm = BASE_URL. $this->url('code/default',['action' => 'validate']) ?>
-<?php 
-	
-	$classHide = 'hide';
-	if(isset($typeDisplay) && $typeDisplay == 'editForm'){
-		$classHide = '';
-		echo "<pre>";
-		print_r($infoForm);
-		echo "</pre>";
-	}
+<?php $urlActionValidateForm = BASE_URL. $this->url('form/default',['action' => 'validate']) ?>
+<?php
+	$classHide = '';
+	echo "<pre>";
+	print_r($infoForm);
+	echo "</pre>";
+
 ?>
 <div class="container">
 	<!-- ADD NEW FORM -->
@@ -41,7 +38,41 @@
 	<form id="validateForm" class="<?php echo $classHide  ?>" method="post" action ="<?php echo $urlActionValidateForm ?>">
 		<div class="row box" id="addNew">
 			<div class="col-md-12">
-				<div class="row">
+				<div class="row">					 
+					 <div class="col-md-4">
+					 	<div class="form-group">
+					    	<label for="name">Name Element</label>
+					    	<input type="text" id="nameElement" value="" name="nameElement" class="form-control"/>
+					    </div>
+					 </div>
+					 
+					 <div class="col-md-4">
+					 	<div class="form-group">
+					 		<label>&nbsp;</label><br/>
+					    	<button class="btn btn-primary" type="button" id="addNewElement">Add new element</button>
+					    </div>
+					 </div>
+				    	
+				</div>
+				
+			</div>
+		</div>
+		<!-- END ADD NEW ELEMENT -->
+		<?php foreach($infoForm->content as $nameElement => $value): ?>
+		<div class="row box <?php echo $classHide  ?>" id="elementAttrs">
+			<input class="nameElement" name="nameElement" type="hidden" value="<?php echo $nameElement ?>"></input>
+			<div class="col-md-6">
+				<h3> [...] Element</h3>
+				<div class="row" style="margin-bottom: 30px;">
+					<div class="col-md-6 tab" id="tabAttribute">
+						<h4>Attributes</h4>
+					</div>
+					<div class="col-md-6 tab" id="tabOption">
+						<h4>Options</h4>
+					</div>
+				</div>
+				<!-- ATTRIBUTES -->
+				<div class="row" id="attribute">
 					<div class="col-md-4">
 						<div class="form-group">					
 						    <label for="type">Type</label>
@@ -73,82 +104,50 @@
 						    </select>
 					    </div>
 					 </div>
-					 
-					 <div class="col-md-4">
-					 	<div class="form-group">
-					    	<label for="name">Name Element</label>
-					    	<input type="text" id="nameElement" name="nameElement" class="form-control"/>
-					    </div>
-					 </div>
-					 
-					 <div class="col-md-4">
-					 	<div class="form-group">
-					 		<label>&nbsp;</label><br/>
-					    	<button class="btn btn-primary" type="button" id="addNewElement">Add new element</button>
-					    </div>
-					 </div>
-				    	
-				</div>
-				
-			</div>
-		</div>
-		<!-- END ADD NEW ELEMENT -->
-		<div class="row box <?php echo $classHide  ?>" id="elementAttrs">
-		
-			<div class="col-md-6">
-				<h3> [...] Element</h3>
-				<div class="row" style="margin-bottom: 30px;">
-					<div class="col-md-6 tab" id="tabAttribute">
-						<h4>Attributes</h4>
-					</div>
-					<div class="col-md-6 tab" id="tabOption">
-						<h4>Options</h4>
-					</div>
-				</div>
-				<!-- ATTRIBUTES -->
-				<div class="row" id="attribute">
 					<div class="col-md-4">
 						<div class="form-group">					
 						    <label for="id">ID</label>
-						    <input type="text" id="idElement" name="idElement" class="form-control"/>
+						    <input type="text" value="<?php echo @$value['attribute']['id'] ?>" id="idElement" name="idElement" class="form-control"/>
 					    </div>
 					 </div>
 					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					    	<label for="class">Class</label>
-					    	<input type="text" id="classElement" name="classElement" class="form-control"/>
+					    	<input type="text" value="<?php echo @$value['attribute']['class'] ?>" id="classElement" name="classElement" class="form-control"/>
 					    </div>
 					 </div>
 					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					 		<label for="placeElement">Placeholder</label><br/>
-					    	<input type="text" name="placeElement" id="placeElement" class="form-control"/>
+					    	<input type="text" value="<?php echo @$value['attribute']['placeholder'] ?>" name="placeElement" id="placeElement" class="form-control"/>
 					    </div>
 					 </div>
 					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					 		<label for="valueElement">Value</label><br/>
-					    	<input type="text" name="valueElement" id="valueElement" class="form-control"/>
+					    	<input type="text" value="<?php echo @$value['attribute']['value'] ?>" name="valueElement" id="valueElement" class="form-control"/>
 					    </div>
 					 </div>
 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					 		<label for="requiredElement">Required</label><br/>
-					    	<input type="checkbox" name="requiredElement" id="requiredElement"/>
+					 		<?php  $checked = (@$value['requiredElement'] == 'on')? "checked" : ""; ?>
+					    	<input type="checkbox" <?php echo $checked ?> name="requiredElement" id="requiredElement"/>
 					    </div>
 					 </div>
 					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					 		<label for="attrElement">Attributes</label><br/>
-					    	<textarea class="form-control" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
+					    	<textarea class="form-control" value="<?php echo @$value['attribute']['attr'] ?>" name="attrElement" placeholder="onclick : function()" id="attrElement" cols="30" rows="5"></textarea>
 					    </div>
 					 </div>
 					 
+
 				</div>
 				<!-- END ATTRIBUTES -->
 
@@ -157,21 +156,21 @@
 					<div class="col-md-4">
 						<div class="form-group">					
 						    <label for="id">Label name</label>
-						    <input type="text" id="nameLabel" name="nameLabel" class="form-control"/>
+						    <input type="text" value="<?php echo @$value['option']['nameLabel'] ?>" id="nameLabel" name="nameLabel" class="form-control"/>
 					    </div>
 					</div>
 					 
 					<div class="col-md-4">
 					 	<div class="form-group">
 					    	<label for="class">Label class</label>
-					    	<input type="text" id="classLabel" name="classLabel" class="form-control"/>
+					    	<input type="text" value="<?php echo @$value['option']['classLabel'] ?>" id="classLabel" name="classLabel" class="form-control"/>
 					    </div>
 					</div>
 					 
 					<div class="col-md-4">
 					 	<div class="form-group">
 					 		<label for="placeElement">For</label><br/>
-					    	<input type="text" name="forLabel" id="forLabel" class="form-control"/>
+					    	<input type="text" value="<?php echo @$value['option']['forLabel'] ?>" name="forLabel" id="forLabel" class="form-control"/>
 					    </div>
 					</div>
 					 
@@ -181,21 +180,21 @@
 						<div class="col-md-4">
 						 	<div class="form-group">
 						 		<label for="emptyOption">Empty option</label><br/>
-						    	<input type="text" name="emptyOption" id="emptyOption" class="form-control"/>
+						    	<input type="text" value="<?php echo @$value['option']['emptyOption'] ?>"  name="emptyOption" id="emptyOption" class="form-control"/>
 						    </div>
 						</div>
 
 						<div class="col-md-4">
 						 	<div class="form-group">
 						 		<label for="valueOption">Value option</label><br/>
-						    	<input type="text" name="valueOption" id="valueOption" placeholder="1,2,3,4" class="form-control"/>
+						    	<input type="text" value="<?php echo @$value['option']['valueOption'] ?>"  name="valueOption" id="valueOption" placeholder="1,2,3,4" class="form-control"/>
 						    </div>
 						</div>
 
 						<div class="col-md-4">
 						    <div class="form-group">
 						 		<label for="nameOption">Name option</label><br/>
-						    	<input type="text" name="nameOption" placeholder="name1,name2,name3,name4" id="nameOption" class="form-control"/>
+						    	<input type="text" value="<?php echo @$value['option']['nameOption'] ?>" name="nameOption" placeholder="name1,name2,name3,name4" id="nameOption" class="form-control"/>
 						    </div>
 						</div>
 					</div>
@@ -219,7 +218,7 @@
 					 	<div class="form-group" >
 					 		<label>&nbsp;</label><br/>
 					    	<select name="validateElement" id="validateElement" class="form-control">
-					    		<?php					    			
+					    		<?php							
 					    		 	$list = "<option value='not-validate'>Choose Validate Type</option>";
 					    		 	foreach($this->validateElement as $vali){
 					    		 		$list .= '<option value="'. ($vali['name']) .'">'. $vali['name'] .'</option>';
@@ -285,22 +284,57 @@
 			 <!-- onclick="submitValidateForm()" -->
 			<div class="col-md-6 col-md-offset-3 text-center" style="margin-top:80px;margin-bottom:20px">
 				<button type="button" class="btn btn-success" onclick="submitValidateForm()" id="create">Save</button>
-				<button type="button" class="btn btn-primary" onclick="previewValidateForm()" id="create">Preview Code</button>
+				<button type="button" class="btn btn-primary" onclick="previewValidateForm()" id="preview">Preview Code</button>
 			</div>
 		</div>
+	<?php endforeach; ?>
 	</form>
 	<input type="hidden" name="formId" />
 </div>
 <?php $url = $this->url('code/default',array('action' => 'loadTemplate')) ?>
+<?php
+	foreach($infoForm->content as $key => $val){
+		foreach($val['validate']['option'] as $key2 => $val2){
+			echo $key2;
+		}
+	} 
+?>
 <script type="text/javascript">
 	$(document).ready(function(){
+		// EDIT FORM
+		checkSelected();
+		
+		<?php foreach($infoForm->content as $nameElement => $value): ?>
+			nameElement = "<?php echo $nameElement ?>";
+			typeElement = $("#typeElement").val();
+			
+			//show form Add Atrributes Element
+			$("#elementAttrs").removeClass("hide");
+			changeIdInput(nameElement);
+			<?php if(count(@$value['validate']) > 0 ): ?>
+				<?php foreach(@$value['validate']['name'] as $key => $val): ?>
+					HandleFormOption("<?php echo $val ?>",nameElement,"#validateList",'.showTemplateValidate','validate','edit');
+				<?php endforeach; ?>
+			<?php endif; ?>
+
+			<?php if(count(@$value['filter']) > 0 ): ?>
+				<?php foreach(@$value['filter']['name'] as $key => $val): ?>
+					HandleFormOption("<?php echo $val ?>",nameElement,"#filterList",'.showTemplateValidate','filter','edit');
+				<?php endforeach; ?>
+			<?php endif; ?>
+
+		<?php endforeach; ?>
+
+		// END EDIT FORM
+
+
 		$("#createForm").click(function(){
 			if($("input[name=inputNameForm]").val() === ""){
 				$("#errorNameForm").removeClass("hide");
 			}else{
 				$("#errorNameForm").addClass("hide");
 				$.ajax({
-					url : "<?php echo $this->url('form/default',array('action' => 'addFormDraf')) ?>",
+					url  : "<?php echo $this->url('form/default',array('action' => 'addFormDraf')) ?>",
 					type : 'POST',
 					data : {
 						'nameForm' : $("input[name=inputNameForm]").val(),
@@ -325,7 +359,7 @@
 		var nameElement,typeElement;
 
 		$("#addNewElement").on("click",function(){
-			nameElement = $("#nameElement").val();
+			nameElement = $("input[name=nameElement]").val();
 			typeElement = $("#typeElement").val();
 			
 			//show form Add Atrributes Element
@@ -343,10 +377,14 @@
 
 	})
 
-	function HandleFormOption(selectorMain,nameElement,selectorList,selectorTemplate,type){
+	function HandleFormOption(selectorMain,nameElement,selectorList,selectorTemplate,type,typeForm = ''){
 
 			var validateValue = $(selectorMain + " :selected").val();
 			var validateName  = $(selectorMain + " :selected").text();
+			if(typeForm === 'edit'){
+				var validateValue = selectorMain;
+				var validateName  = selectorMain;
+			}
 			var fileName      = validateValue.toLowerCase() + '.php';
 	
 		   	$.ajax({
@@ -358,16 +396,16 @@
 				type 	 : 'GET',
 				dataType : 'json',
 				success  : function(data){
-					
+					// console.log(data);
 					if(data.template === 'no'){
 						var haveTemplate = 'no';
 		    			addValidateRow(selectorList,validateValue,validateName,nameElement,haveTemplate,type);
 					}else{
 						var haveTemplate = 'yes';
 		    			addValidateRow(selectorList,validateValue,validateName,nameElement,haveTemplate,type);
-
+		    			
 						var templateFormated = data.template.replace(/my_element/g,nameElement);
-						$("li[name=" + validateValue + "] "+selectorTemplate).append(templateFormated);
+						$("li[name=" + validateValue + "] " + selectorTemplate).append(templateFormated);
 
 						$(".show-option-validate").on('click',function(){
 						    var self = this;
@@ -385,8 +423,12 @@
 								return false;
 							})
 
+							var str = $(idTemplate).serialize();	
+
+							createSerializeString(self,str,idTemplate)		
+							hideValidateTemplate(this,self);
+
 							$(".accept").on('click',function(){
-				
 								var str = $(idTemplate).serialize();	
 
 								createSerializeString(self,str,idTemplate)		
@@ -442,7 +484,7 @@
 			type : 'POST',
 			data : {
 				element : $("#validateForm").serialize(),
-				formId : $("input[name =formId]").val()
+				formId : $("input[name=formId]").val()
 			},	
 			success : function(data){
 				console.log(data);
@@ -452,6 +494,7 @@
 
 	function previewValidateForm(){
 		var action = $("#validateForm").attr('action');
+
 		$.ajax({
 			url  : action,
 			type : 'POST',
@@ -506,7 +549,7 @@
 
 	function createRowValidateHidden(str,haveTemplate = 'yes',idTemplate = null,selector = null){
 		$('[name=' + idTemplate + ']').remove();
-		console.log(str);
+
 		if(haveTemplate === 'yes'){
 			var newArr = str.split('&');
 			var html = '<div name="' + idTemplate + '">'
@@ -533,7 +576,7 @@
 		
 		if(haveTemplate === 'yes'){
 			return 	'<li name="' + validateValue +'">'+
-						'<span class="glyphicon glyphicon-plus"></span><a class="show-option-validate" href="#' + validateValue + '">' + validateName + '</a>' + 
+						'<span class="glyphicon glyphicon-plus"></span><a class="show-option-validate" href="#' + validateValue.toLowerCase() + '">' + validateName + '</a>' + 
 						'<span class="removeVal glyphicon glyphicon-remove"></span>' + 
 						validateBreakChain + 
 						'<div class="showTemplateValidate col-md-12 hide" > </div>' + 
@@ -541,7 +584,7 @@
 						'<input type="hidden" value="' + validateValue + '" name="' + nameElement + '[' + hiddenInputName + '][' + validateValue + ']"/>' + 
 					'</li>';
 		}else{
-			return 	'<li name="' + validateValue +'">' + 
+			return 	'<li name="' + validateValue.toLowerCase() +'">' + 
 						'<span class="glyphicon glyphicon-plus"></span><a class="a-normal" href="#' + validateValue + '">' + validateName + '</a>' + 
 						'<span class="removeVal glyphicon glyphicon-remove"></span>' + 
 						validateBreakChain + 
@@ -573,6 +616,16 @@
 	function hideValidateTemplate(selector,tagA){
 		$(selector).parents('.showTemplateValidate').removeClass("animated zoomIn").addClass('hide');
 		$(tagA).prev('span').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+	}
+
+	function checkSelected(){
+		$("#typeElement option").each(function(index,val){
+			<?php foreach($infoForm->content as $nameElement => $value): ?>
+				if($(val).val() === "<?php echo $value['type'] ?>"){
+					$(val).attr("selected","selected");
+				}
+			<?php endforeach; ?>
+		})
 	}
 	
 </script>

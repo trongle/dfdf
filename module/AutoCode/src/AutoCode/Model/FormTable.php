@@ -23,7 +23,6 @@ class FormTable extends AbstractTableGateway{
 				   		  "left"
 				   	)
 				   ->order(array('forms.created_date ASC'));
-				   // ->where->notEqualTo("forms.status",'inactive');
 		})->toArray();
 	
 		return $result;
@@ -52,11 +51,15 @@ class FormTable extends AbstractTableGateway{
 
 	public function updateForm($data,$options = null){
 		if(!empty($data)){
-			$insertData = $this->setData($data,$options);
+			
+			$data['element'] = $this->setSerializeString($data['element']);
+			
+			$insertData      = $this->setData($data,$options);
 
 			$this->_tableGateway->update($insertData,array("id" => $data['formId']));
 		}			
-		// return $this->_tableGateway->getLastInsertValue();
+		
+		return $this->_tableGateway->getLastInsertValue();
 	}
 
 	private function setData($data,$options = null){
@@ -76,6 +79,32 @@ class FormTable extends AbstractTableGateway{
                             
         return $insert;
     }
+
+    private function setSerializeString($elementString){
+		$element = array();
+		parse_str($elementString,$element);
+			
+		$element['type']       = $element['typeElement'] ;
+		$element['name']       = $element['nameElement'] ;
+		$element['attribute'] = $element[$element['name']]['attribute'] ;
+		$element['option']    = $element[$element['name']]['option'] ;
+		$element['validate']['name']   = $element[$element['name']]['validateName'] ;
+		$element['validate']['breakchain']   = $element[$element['name']]['validateBreakChain'] ;
+		$element['validate']['option']   = $element[$element['name']]['validateOption'] ;
+		$element['filter']['name']   = $element[$element['name']]['filterName'] ;
+		$element['filter']['option']   = $element[$element['name']]['filterOption'] ;
+		unset($element['filterElement']);
+		unset($element['validateElement']);
+		unset($element['typeElement']);
+		unset($element['nameElement']);
+		unset($element[$element['name']]);
+
+		$content = array(
+			$element['name'] => $element
+		);
+
+		return  serialize($content);
+	}
            
 }
 ?>

@@ -12,7 +12,7 @@ class Authenticate {
 	}
 
 	public function login($arrParams = null,$options = null){
-	
+
 		$this->_authen->getAdapter()->setIdentity($arrParams["inputEmail"]);
 		$this->_authen->getAdapter()->setCredential($arrParams["inputPassword"]);
 

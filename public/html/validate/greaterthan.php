@@ -1,11 +1,11 @@
 <form id="greaterthan">
 	<div class="form-group col-md-6">
 		<label>Min:</label>
-		<input type="number" name="my_element[validateOption][greaterthan][min]"/>
+		<input type="number" id="greaterthan-min" name="my_element[validateOption][greaterthan][min]"/>
 	</div>
 
 	<div class="form-group col-md-12">
-		Inclusive: <input type="checkbox" name="my_element[validateOption][greaterthan][inclusive]"/>
+		Inclusive: <input type="checkbox" id="greaterthan-inclusive" name="my_element[validateOption][greaterthan][inclusive]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

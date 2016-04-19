@@ -2,7 +2,7 @@
 
 	<div class="form-group col-md-6">
 		Exists:
-		<input type="checkbox" name="my_element[filterOption][realpath][exists]"/>
+		<input type="checkbox" id="realpath-exists" name="my_element[filterOption][realpath][exists]"/>
 	</div>
 
 	<div class="form-group col-md-12">	   

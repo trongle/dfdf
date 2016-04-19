@@ -2,7 +2,7 @@
 
 	<div class="form-group col-md-6">
 		<label>Hash:</label>
-		<input type="text" name="my_element[validateOption][filemd5][hash]" class="form-control"/>
+		<input type="text" id="filemd5-hash" name="my_element[validateOption][filemd5][hash]" class="form-control"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   
