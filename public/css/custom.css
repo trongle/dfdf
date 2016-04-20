@@ -174,3 +174,14 @@ ul{
     transform: scale(1.1,1.1);
     cursor: pointer;
 }
+
+.openElement{
+	font-size: 20px;
+	color: #7BB0A6;
+	transition:color 0.5s;
+}
+
+.openElement:hover{
+	cursor: pointer;
+	color:#64DDBB; 
+}
