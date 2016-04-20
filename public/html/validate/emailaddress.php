@@ -29,3 +29,12 @@
     	<button class="btn btn-info cancel" >Cancel</button>		        			    
     </div> 
 </form>
+<div class="hidden-edit">
+	<input type="hidden" class="emailaddress-hostnameValidator" name="my_element[validateOption][emailaddress][hostnameValidator]" />
+	<input type="hidden" class="emailaddress-allow" name="my_element[validateOption][emailaddress][allow]"/>
+	<div class="hide">
+		<input type="checkbox" class="emailaddress-useMxCheck" name="my_element[validateOption][emailaddress][useMxCheck]"/>
+		<input type="checkbox" class="emailaddress-useMxDeepCheck" name="my_element[validateOption][emailaddress][useMxDeepCheck]"/>
+		<input type="checkbox" class="emailaddress-useDomainCheck" name="my_element[validateOption][emailaddress][useDomainCheck]"/>
+	</div>
+</div>

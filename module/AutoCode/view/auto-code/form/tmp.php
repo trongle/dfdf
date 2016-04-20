@@ -24,3 +24,8 @@
 
 				<?php endforeach; ?>
 			<?php endif; ?>
+
+
+				var option2 = val.split('][');
+				console.log("."+option2[1]+"-"+option2[2].replace("]=",""));
+				$(".hidden-edit ."+option2[1]+"-"+option2[2].replace("]=","")).val(option[1]);

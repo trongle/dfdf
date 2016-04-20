@@ -84,15 +84,17 @@ class FormTable extends AbstractTableGateway{
 		$element = array();
 		parse_str($elementString,$element);
 			
-		$element['type']       = $element['typeElement'] ;
-		$element['name']       = $element['nameElement'] ;
-		$element['attribute'] = $element[$element['name']]['attribute'] ;
-		$element['option']    = $element[$element['name']]['option'] ;
-		$element['validate']['name']   = $element[$element['name']]['validateName'] ;
-		$element['validate']['breakchain']   = $element[$element['name']]['validateBreakChain'] ;
-		$element['validate']['option']   = $element[$element['name']]['validateOption'] ;
-		$element['filter']['name']   = $element[$element['name']]['filterName'] ;
-		$element['filter']['option']   = $element[$element['name']]['filterOption'] ;
+		$element['type']                   = $element['typeElement'] ;
+		$element['name']                   = $element['nameElement'] ;
+		$element['attribute']              = $element[$element['name']]['attribute'] ;
+		$element['option']                 = $element[$element['name']]['option'] ;
+		$element['validate']['name']       = $element[$element['name']]['validateName'] ;
+		$element['validate']['breakchain'] = $element[$element['name']]['validateBreakChain'] ;
+		$element['validate']['option']     = $element[$element['name']]['validateOption'] ;
+		$element['filter']['name']         = $element[$element['name']]['filterName'] ;
+		if(key_exists("filterOption",$element[$element['name']])){
+			$element['filter']['option']   = $element[$element['name']]['filterOption'] ;
+		}
 		unset($element['filterElement']);
 		unset($element['validateElement']);
 		unset($element['typeElement']);
