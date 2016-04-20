@@ -1,5 +1,8 @@
 <div class="container">
     <div class="row">
+		<?php 
+			echo $this->flashMessenger()->render();
+		?>
 		<div class="panel panel-default">
 		  	<!-- Default panel contents -->
 		  	<div class="panel-heading">
@@ -18,7 +21,9 @@
 		    			<th>Tên Form</th>
 		    			<th>Created date</th>
 		    			<th>Created by</th>
+		    			<th>Status</th>
 		    			<th>ID</th>
+		    			<th>Remove</th>
 		    		</tr>
 		    	</thead>
 		    	<tbody>
@@ -27,14 +32,25 @@
 		    			if(count($listForm) > 0){
 		    				foreach ($listForm as $key => $form) {
 		    				$list .= '<tr>';
+		    					$status = 'inactive';
+		    					if($form['status'] == 'draf'){
+		    						$status = '<span class="text-info">draf</span>';
+		    					}else if($form['status'] == 'active'){
+		    						$status = '<span class="text-success">active</span>';
+		    					}  
 		    					$list .= sprintf(
 		    							'<td><input type="checkbox" class="second" name="inputCheck[]" ></td>
 		    							 <td><a href="%s">%s</a></td>
 		    							 <td>%s</td>
 		    							 <td>%s</td>
-		    							 <td>%s</td>',
+		    							 <td>%s</td>
+		    							 <td>%s</td>
+		    							 <td >%s</td>',
 		    							 $this->url('form/default',array("action" => 'editForm','id' => $form['id'])),
-		    							 $form['name'],date('d-m-Y',$form['created_date']),$form['username'],$form['id']);
+		    							 $form['name'],date('d-m-Y', $form['created_date']), $form['username'],
+		    							 $status,
+		    							 $form['id'],
+		    							 '<a href="' . $this->url('form/default',['action' => 'remove','id' => $form['id']]) . '"><span class="delete-close"></span></a>');
 		    				$list .= '</tr>';
 		    				}
 		    			}else{

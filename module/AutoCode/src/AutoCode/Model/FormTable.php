@@ -16,7 +16,7 @@ class FormTable extends AbstractTableGateway{
 
 	public function listItem($arrParam = null,$options = null){
 		$result =   $this->_tableGateway->select(function(Select $select) use($arrParam){
-			$select->columns(array( "id","name","content","user_id","created_date","description"))
+			$select->columns(array( "id","name","content","user_id","created_date","description","status"))
 				   ->join(array("u"=>"users"),
 				   		  "u.id = forms.user_id",
 				   		  array("username"=>"name"),
@@ -37,6 +37,16 @@ class FormTable extends AbstractTableGateway{
 
 			return $result;
 		}
+	}
+
+	public function removeItem($id = null,$options = null){
+		if(!empty($id)){
+			$result =   $this->_tableGateway->delete(array('id' => $id ));
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public function saveForm($data = null,$options = null){
@@ -92,9 +102,11 @@ class FormTable extends AbstractTableGateway{
 		$element['validate']['breakchain'] = $element[$element['name']]['validateBreakChain'] ;
 		$element['validate']['option']     = $element[$element['name']]['validateOption'] ;
 		$element['filter']['name']         = $element[$element['name']]['filterName'] ;
+
 		if(key_exists("filterOption",$element[$element['name']])){
 			$element['filter']['option']   = $element[$element['name']]['filterOption'] ;
 		}
+		
 		unset($element['filterElement']);
 		unset($element['validateElement']);
 		unset($element['typeElement']);

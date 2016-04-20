@@ -35,6 +35,21 @@ class FormController extends AbstractActionController
 		}
 	}
 
+    public function removeAction(){
+        $id      = $this->params()->fromRoute('id');
+        $message = '';
+        if(!empty($id)){
+            $formTable = $this->getServiceLocator()->get("FormTable");
+            if($formTable->removeItem($id)){
+                $message = 'Đã xóa Form thành công !';
+            }
+        }
+        
+        $this->flashMessenger()->addMessage($message);
+
+        return $this->redirect()->toRoute('form');
+    }
+
 	public function addFormAction(){
 		if($this->request->isXmlHttpRequest()){
 			$data = array(
@@ -86,9 +101,9 @@ class FormController extends AbstractActionController
         if($this->request->isXmlHttpRequest()){
 
             $post        = $this->request->getPost();
-            echo "<pre>";
-            print_r($post);
-            echo "</pre>";
+            // echo "<pre>";
+            // print_r($post);
+            // echo "</pre>";
             $nameElement = $post['nameElement']; 
 
             //inputName

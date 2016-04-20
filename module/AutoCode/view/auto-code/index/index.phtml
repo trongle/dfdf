@@ -1,14 +1,5 @@
 <?php $urlActionValidateForm = BASE_URL. $this->url('code/default',['action' => 'validate']) ?>
-<?php 
-	
-	$classHide = 'hide';
-	if(isset($typeDisplay) && $typeDisplay == 'editForm'){
-		$classHide = '';
-		// echo "<pre>";
-		// print_r($infoForm);
-		// echo "</pre>";
-	}
-?>
+
 <div class="container">
 	<!-- ADD NEW FORM -->
 	<form id="addNameForm" action="post">
@@ -41,39 +32,7 @@
 	<form id="validateForm" class="hide" method="post" action ="<?php echo $urlActionValidateForm ?>">
 		<div class="row box" id="addNew">
 			<div class="col-md-12">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">					
-						    <label for="type">Type</label>
-						    <select class="form-control" name="typeElement" id="typeElement">
-						    	<option value="button">Button</option>
-						    	<option value="checkbox">Checkbox</option>
-						    	<option value="color">Color</option>
-						    	<option value="date">Date</option>
-						    	<option value="datetime">Datetime</option>
-						    	<option value="dateime-local">Datetime-local</option>
-						    	<option value="email">Email</option>
-						    	<option value="file">File</option>
-						    	<option value="hidden">Hidden</option>
-						    	<option value="image">Image</option>
-						    	<option value="month">Month</option>
-						    	<option value="number">Number</option>
-						    	<option value="password">Pasword</option>
-						    	<option value="radio">Radio</option>
-						    	<option value="range">Range</option>
-						    	<option value="reset">Reset</option>
-						    	<option value="search">Search</option>
-						    	<option value="select">Select</option>
-						    	<option value="Submit">Submit</option>
-						    	<option value="Tel">Tel</option>
-						    	<option value="text">Text</option>
-						    	<option value="time">Time</option>
-						    	<option value="url">Url</option>
-						    	<option value="week">Week</option>
-						    </select>
-					    </div>
-					 </div>
-					 
+				<div class="row">					 
 					 <div class="col-md-4">
 					 	<div class="form-group">
 					    	<label for="name">Name Element</label>
@@ -106,7 +65,39 @@
 					</div>
 				</div>
 				<!-- ATTRIBUTES -->
+
 				<div class="row" id="attribute">
+					<div class="col-md-4">
+						<div class="form-group">					
+						    <label for="type">Type</label>
+						    <select class="form-control" name="typeElement" id="typeElement">
+						    	<option value="button">Button</option>
+						    	<option value="checkbox">Checkbox</option>
+						    	<option value="color">Color</option>
+						    	<option value="date">Date</option>
+						    	<option value="datetime">Datetime</option>
+						    	<option value="dateime-local">Datetime-local</option>
+						    	<option value="email">Email</option>
+						    	<option value="file">File</option>
+						    	<option value="hidden">Hidden</option>
+						    	<option value="image">Image</option>
+						    	<option value="month">Month</option>
+						    	<option value="number">Number</option>
+						    	<option value="password">Pasword</option>
+						    	<option value="radio">Radio</option>
+						    	<option value="range">Range</option>
+						    	<option value="reset">Reset</option>
+						    	<option value="search">Search</option>
+						    	<option value="select">Select</option>
+						    	<option value="Submit">Submit</option>
+						    	<option value="Tel">Tel</option>
+						    	<option value="text">Text</option>
+						    	<option value="time">Time</option>
+						    	<option value="url">Url</option>
+						    	<option value="week">Week</option>
+						    </select>
+					    </div>
+					</div>
 					<div class="col-md-4">
 						<div class="form-group">					
 						    <label for="id">ID</label>
@@ -445,7 +436,7 @@
 				formId : $("input[name =formId]").val()
 			},	
 			success : function(data){
-				console.log(data);
+				window.location.href = "<?php echo $this->url('form') ?>";
 			}
 		})
 	}

@@ -143,7 +143,7 @@ ul{
     display: inline;
     width: 100px;
     height: 85px;
-    margin:22px 0px 0px 100px;
+    margin: 22px 0px 0px 100px;
 }
 
 .glyphicon-chevron-left{
@@ -151,3 +151,26 @@ ul{
     color: black;
 }
 
+.glyphicon-trash{
+	font-size: 30px;
+}
+
+.delete-close{
+	background: url('/zf2/public/img/delete-close.png') no-repeat 0 10px transparent;
+	display: block;
+    height: 44px;
+    width: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+
+.delete-close:hover{
+	background: url('/zf2/public/img/delete-open.png') no-repeat 0 10px transparent;
+	display: block;
+    height: 44px;
+    width: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+    transform: scale(1.1,1.1);
+    cursor: pointer;
+}

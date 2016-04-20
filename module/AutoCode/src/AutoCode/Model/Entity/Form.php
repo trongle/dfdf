@@ -15,7 +15,7 @@ class Form
 
 
 	public function exchangeArray($data){
-		
+	
 		$this->id           = (!empty($data['id']))        		? $data['id']     :"";
 		$this->name         = (!empty($data['name']))   		? $data['name']   :"";
 		$this->description  = (!empty($data['description']))   	? $data['description']  :"";
