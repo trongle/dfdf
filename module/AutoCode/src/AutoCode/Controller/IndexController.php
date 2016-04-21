@@ -92,9 +92,9 @@ class IndexController extends AbstractActionController
         if($this->request->isXmlHttpRequest()){
 
             $post        = $this->request->getPost();
-            // echo "<pre>";
-            // print_r($post);
-            // echo "</pre>";
+            echo "<pre>";
+            print_r($post);
+            echo "</pre>";
             $nameElement = $post['nameElement']; 
 
             //inputName
