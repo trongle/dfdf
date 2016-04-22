@@ -1,18 +1,18 @@
-<form id="striptags">	
+<form class="striptags">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Allow Tags:</label>
-		<input type="text" id="striptags-allowTags" name="my_element[filterOption][striptags][allowTags]" placeholder="i1:v1,i2:v2....."  class="form-control" />
+		<input type="text" class="striptags-allowTags form-control" name="my_element[filterOption][striptags][allowTags]" placeholder="i1:v1,i2:v2....."  />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Allow Attribs:</label>
-		<input type="text" id="striptags-allowAttribs" name="my_element[filterOption][striptags][allowAttribs]" placeholder="i1:v1,i2:v2....."  class="form-control" />
+		<input type="text" class="striptags-allowAttribs form-control" name="my_element[filterOption][striptags][allowAttribs]" placeholder="i1:v1,i2:v2....."  />
 	</div>
 
 	<div class="form-group col-md-6">
 		Allow Comments:
-		<input type="checkbox" id="striptags-allowComments" name="my_element[filterOption][striptags][allowComments]" />
+		<input type="checkbox" class="striptags-allowComments" name="my_element[filterOption][striptags][allowComments]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

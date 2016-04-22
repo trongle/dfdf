@@ -1,16 +1,16 @@
-<form id="filefilessize" >
+<form class="filefilessize" >
 	<div class="form-group col-md-6">
 		<label>Min:</label>
-		<input type="number" id="filefilessize-min"  name="my_element[validateOption][filefilessize][min]" class="form-control" />
+		<input type="number" class="filefilessize-min form-control"  name="my_element[validateOption][filefilessize][min]" />
 	</div>  
 
 	<div class="form-group col-md-6">
 		<label>Max:</label>
-		<input type="number" id="filefilessize-max" name="my_element[validateOption][filefilessize][max]" class="form-control"/>
+		<input type="number" class="filefilessize-max form-control" name="my_element[validateOption][filefilessize][max]"/>
 	</div>
 
 	<div class="form-group col-md-12">
-		Use byte string: <input type="checkbox" id="filefilessize-useByteString" name="my_element[validateOption][filefilessize][useByteString]" checked/>
+		Use byte string: <input type="checkbox" class="filefilessize-useByteString form-control" name="my_element[validateOption][filefilessize][useByteString]" checked/>
 	</div>
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>

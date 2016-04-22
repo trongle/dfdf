@@ -1,8 +1,8 @@
-<form id="wordunderscoretoseparator">	
+<form class="wordunderscoretoseparator">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Separator:</label>
-		<input type="text" id="wordunderscoretoseparator-separator" name="my_element[filterOption][wordunderscoretoseparator][separator]" class="form-control" />
+		<input type="text" class="wordunderscoretoseparator-separator form-control" name="my_element[filterOption][wordunderscoretoseparator][separator]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

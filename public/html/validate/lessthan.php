@@ -1,11 +1,11 @@
-<form id="lessthan">
+<form class="lessthan">
 	<div class="form-group col-md-6">
 		<label>Max:</label>
-		<input type="number" id="lessthan-max"  name="my_element[validateOption][lessthan][max]"/>
+		<input type="number" class="lessthan-max form-control"  name="my_element[validateOption][lessthan][max]"/>
 	</div>
 
 	<div class="form-group col-md-12">
-		Inclusive: <input type="checkbox" id="lessthan-inclusive" name="my_element[validateOption][lessthan][inclusive]"/>
+		Inclusive: <input type="checkbox" class="lessthan-inclusive" name="my_element[validateOption][lessthan][inclusive]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

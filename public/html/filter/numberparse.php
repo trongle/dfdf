@@ -1,18 +1,18 @@
-<form id="numberparse">	
+<form class="numberparse">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Locale:</label>
-		<input type="text" id="numberparse-locale" name="my_element[filterOption][numberparse][locale]"  class="form-control" />
+		<input type="text" class="numberparse-locale form-control" name="my_element[filterOption][numberparse][locale]"  />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Style:</label>
-		<input type="text" id="numberparse-style" name="my_element[filterOption][numberparse][style]"  class="form-control" />
+		<input type="text" class="numberparse-style form-control" name="my_element[filterOption][numberparse][style]"  />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Type:</label>
-		<input type="text" id="numberparse-type" name="my_element[filterOption][numberparse][type]"  class="form-control" />
+		<input type="text" class="numberparse-type form-control" name="my_element[filterOption][numberparse][type]"  />
 	</div>
 
 	<div class="form-group col-md-12">	   

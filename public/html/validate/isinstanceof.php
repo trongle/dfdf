@@ -1,8 +1,8 @@
-<form id="isintanseof" >
+<form class="isintanseof" >
 
 	<div class="form-group col-md-6">
 		<label>Class name:</label>
-		<input type="text" id="isintanseof-classname" name="my_element[validateOption][isintanseof][classname]" class="form-control" />
+		<input type="text" class="isintanseof-classname form-control" name="my_element[validateOption][isintanseof][classname]" />
 	</div> 
 
 	<div class="form-group col-md-12">	   

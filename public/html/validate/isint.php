@@ -1,7 +1,7 @@
-<form id="isint">
+<form class="isint">
 	<div class="form-group col-md-6">
 		<label>Locale:</label>
-		<input type="text" id="isint-locale" name="my_element[validateOption][isint][locale]"/>
+		<input type="text" class="isint-locale form-control" name="my_element[validateOption][isint][locale]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

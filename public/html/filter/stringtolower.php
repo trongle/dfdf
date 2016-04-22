@@ -1,8 +1,8 @@
-<form id="stringtolower">	
+<form class="stringtolower">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Encoding:</label>
-		<input type="text" id="stringtolower-encoding" name="my_element[filterOption][stringtolwer][encoding]"  class="form-control" />
+		<input type="text" class="stringtolower-encoding form-control" name="my_element[filterOption][stringtolwer][encoding]"  />
 	</div>
 
 	<div class="form-group col-md-12">	   

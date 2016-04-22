@@ -1,8 +1,8 @@
-<form id="filemd5">
+<form class="filemd5">
 
 	<div class="form-group col-md-6">
 		<label>Hash:</label>
-		<input type="text" id="filemd5-hash" name="my_element[validateOption][filemd5][hash]" class="form-control"/>
+		<input type="text" class="filemd5-hash form-control" name="my_element[validateOption][filemd5][hash]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

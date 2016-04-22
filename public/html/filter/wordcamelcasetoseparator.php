@@ -1,8 +1,8 @@
-<form id="wordcamelcasetoseparator">	
+<form class="wordcamelcasetoseparator">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Separator:</label>
-		<input type="text" id="wordcamelcasetoseparator-separator" name="my_element[filterOption][wordcamelcasetoseparator][separator]" class="form-control" />
+		<input type="text" class="wordcamelcasetoseparator-separator form-control" name="my_element[filterOption][wordcamelcasetoseparator][separator]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

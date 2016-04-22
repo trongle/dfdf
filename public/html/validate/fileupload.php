@@ -1,8 +1,8 @@
-<form id="fileupload" >
+<form class="fileupload" >
 	
 	<div class="form-group col-md-6">
 		<label>Files:</label>
-		<input type="text" id="fileupload-files" name="my_element[validateOption][fileupload][files]" />
+		<input type="text" class="fileupload-files form-control" name="my_element[validateOption][fileupload][files]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

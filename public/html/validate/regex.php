@@ -1,7 +1,7 @@
-<form id="regex">
+<form class="regex">
 	<div class="form-group col-md-6">
 		<label>pattern :</label>
-		<input type="text" id="regex-pattern" name="my_element[validateOption][regex][pattern]" class="form-control" />
+		<input type="text" class="regex-pattern form-control" name="my_element[validateOption][regex][pattern]" />
 	</div>
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>

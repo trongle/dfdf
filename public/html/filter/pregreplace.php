@@ -1,13 +1,13 @@
-<form id="pregreplace">	
+<form class="pregreplace">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Pattern:</label>
-		<input type="text" id="pregreplace-pattern" name="my_element[filterOption][pregreplace][pattern]"  class="form-control" />
+		<input type="text" class="pregreplace-pattern form-control" name="my_element[filterOption][pregreplace][pattern]" />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Replacement:</label>
-		<input type="text" id="pregreplace-replacement" name="my_element[filterOption][pregreplace][replacement]"  class="form-control" />
+		<input type="text" class="pregreplace-replacement form-control" name="my_element[filterOption][pregreplace][replacement]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

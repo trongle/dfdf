@@ -61,11 +61,10 @@ class FormTable extends AbstractTableGateway{
 
 	public function updateForm($data,$options = null){
 		if(!empty($data)){
-			
 			$data['element'] = $this->setSerializeString($data['element']);
 			
 			$insertData      = $this->setData($data,$options);
-
+			
 			$this->_tableGateway->update($insertData,array("id" => $data['formId']));
 		}			
 		
@@ -86,38 +85,48 @@ class FormTable extends AbstractTableGateway{
 			$insert['content'] = trim($data['element']);
 			$insert['status']  = 'active';
         }
-                            
+                  
         return $insert;
     }
 
     private function setSerializeString($elementString){
 		$element = array();
 		parse_str($elementString,$element);
-			
-		$element['type']                   = $element['typeElement'] ;
-		$element['name']                   = $element['nameElement'] ;
-		$element['attribute']              = $element[$element['name']]['attribute'] ;
-		$element['option']                 = $element[$element['name']]['option'] ;
-		$element['validate']['name']       = $element[$element['name']]['validateName'] ;
-		$element['validate']['breakchain'] = $element[$element['name']]['validateBreakChain'] ;
-		$element['validate']['option']     = $element[$element['name']]['validateOption'] ;
-		$element['filter']['name']         = $element[$element['name']]['filterName'] ;
-
-		if(key_exists("filterOption",$element[$element['name']])){
-			$element['filter']['option']   = $element[$element['name']]['filterOption'] ;
-		}
 		
+		
+		foreach($element as $name => $ele){
+
+			if(@key_exists("validateName",$ele)){
+				$element[$name]['validate']['name']   = $ele['validateName'] ;
+				unset($element[$name]['validateName']);
+			}
+
+			if(@key_exists("validateBreakChain",$ele)){
+				$element[$name]['validate']['breakchain']   = $ele['validateBreakChain'] ;
+				unset($element[$name]['validateBreakChain']);
+			}
+
+			if(@key_exists("validateOption",$ele)){
+				$element[$name]['validate']['option']   = $ele['validateOption'] ;
+				unset($element[$name]['validateOption']);
+			}
+
+			if(@key_exists("filterName",$ele)){
+				$element[$name]['filter']['name']   = $ele['filterName'] ;
+				unset($element[$name]['filterName']);
+			}
+
+			if(@key_exists("filterOption",$ele)){
+				$element[$name]['filter']['option']   = $ele['filterOption'] ;
+				unset($element[$name]['filterOption']);
+			}
+			
+		}
 		unset($element['filterElement']);
 		unset($element['validateElement']);
-		unset($element['typeElement']);
 		unset($element['nameElement']);
-		unset($element[$element['name']]);
 
-		$content = array(
-			$element['name'] => $element
-		);
-
-		return  serialize($content);
+		return  serialize($element);
 	}
            
 }

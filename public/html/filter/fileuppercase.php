@@ -1,8 +1,8 @@
-<form id="fileuppercase">	
+<form class="fileuppercase">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Encoding:</label>
-		<input type="text" id="fileuppercase-encoding" name="my_element[filterOption][fileuppercase][encoding]" class="form-control" />
+		<input type="text" class="fileuppercase-encoding form-control" name="my_element[filterOption][fileuppercase][encoding]"/>
 	</div>
 
 	<div class="form-group col-md-12">	   

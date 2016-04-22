@@ -1,8 +1,8 @@
-<form id="stringtrim" >	
+<form class="stringtrim" >	
 
 	<div class="form-group col-md-6">
 		<label for="min">Charlist:</label>
-		<input type="text" id="stringtrim-charlist" name="my_element[filterOption][stringtrim][charlist]" placeholder="i1:v1,i2:v2....."  class="form-control" />
+		<input type="text" class="stringtrim-charlist form-control" name="my_element[filterOption][stringtrim][charlist]" placeholder="i1:v1,i2:v2....." />
 	</div>
 
 	<div class="form-group col-md-12">	   

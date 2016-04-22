@@ -1,12 +1,12 @@
-<form id="compress">	
+<form class="compress">	
 	<div class="form-group col-md-6">
 		<label for="min">Adapter:</label>
-		<input type="text" id="compress-adapter" name="my_element[filterOption][compress][adapter]"  class="form-control" />
+		<input type="text" class="compress-adapter form-control" name="my_element[filterOption][compress][adapter]"   />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Options:</label>
-		<input type="text" id="compress-options" name="my_element[filterOption][compress][options]" placeholder="i1:v1,i2:v2,i3:v3..." class="form-control" />
+		<input type="text" class="compress-options form-control" name="my_element[filterOption][compress][options]" placeholder="i1:v1,i2:v2,i3:v3..."  />
 	</div>
 
 	<div class="form-group col-md-12">	   

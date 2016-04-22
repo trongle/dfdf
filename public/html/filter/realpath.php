@@ -1,8 +1,8 @@
-<form id="realpath">	
+<form class="realpath">	
 
 	<div class="form-group col-md-6">
 		Exists:
-		<input type="checkbox" id="realpath-exists" name="my_element[filterOption][realpath][exists]"/>
+		<input type="checkbox" class="realpath-exists" name="my_element[filterOption][realpath][exists]"/>
 	</div>
 
 	<div class="form-group col-md-12">	   

@@ -1,17 +1,17 @@
-<form id="htmlentities">	
+<form class="htmlentities">	
 	<div class="form-group col-md-6">
 		<label for="min">Quotestyle:</label>
-		<input type="text" id="htmlentities-quotestyle" name="my_element[filterOption][htmlentities][quotestyle]"  class="form-control" />
+		<input type="text" class="htmlentities-quotestyle form-control" name="my_element[filterOption][htmlentities][quotestyle]"   />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Charset:</label>
-		<input type="text" id="htmlentities-charset" name="my_element[filterOption][htmlentities][charset]" class="form-control" />
+		<input type="text" class="htmlentities-charset form-control" name="my_element[filterOption][htmlentities][charset]"  />
 	</div>
 
 	<div class="form-group col-md-6">
 		<label for="min">Double Quote:</label>
-		<input type="text" id="htmlentities-doublequote" name="my_element[filterOption][htmlentities][doublequote]" class="form-control" />
+		<input type="text" class="htmlentities-doublequote form-control" name="my_element[filterOption][htmlentities][doublequote]"  />
 	</div>
 
 	<div class="form-group col-md-12">	   

@@ -52,13 +52,13 @@ i{
 	cursor: default;
 }
 
-#code{
-	height: 500px;
-    font-size: 15px;
-    line-height: 22px;
-    color: purple;
-    overflow: scroll;
-    background: black;
+.code{
+	height: 500px !important;
+    font-size: 15px !important;
+    line-height: 22px !important;
+    color: purple !important;
+    overflow: scroll !important;
+    background: black !important;
 }
 
 .tab{
@@ -175,13 +175,17 @@ ul{
     cursor: pointer;
 }
 
-.openElement{
+.openElement,.removeElement{
 	font-size: 20px;
 	color: #7BB0A6;
 	transition:color 0.5s;
 }
 
-.openElement:hover{
+.openElement:hover,.removeElement:hover{
 	cursor: pointer;
 	color:#64DDBB; 
+}
+
+.requiredElement{
+	box-shadow: none !important;
 }

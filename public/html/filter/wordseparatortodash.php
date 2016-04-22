@@ -1,8 +1,8 @@
-<form id="wordseparatortodash">	
+<form class="wordseparatortodash">	
 
 	<div class="form-group col-md-6">
 		<label for="min">Separator:</label>
-		<input type="text" id="wordseparatortodash-separator" name="my_element[filterOption][wordseparatortodash][separator]" class="form-control" />
+		<input type="text" class="wordseparatortodash-separator form-control" name="my_element[filterOption][wordseparatortodash][separator]" />
 	</div>
 
 	<div class="form-group col-md-12">	   

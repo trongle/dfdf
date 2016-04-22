@@ -1,12 +1,12 @@
-<form id="fileextension" >
+<form class="fileextension" >
 
 	<div class="form-group col-md-6">
 		<label>Extension:</label> 
-		<input type="text" id="fileextension-extension" name="my_element[validateOption][fileextension][extension]"/>
+		<input type="text" class="fileextension-extension form-control" name="my_element[validateOption][fileextension][extension]"/>
 	</div>
 
 	<div class="form-group col-md-12">
-		Case: <input type="checkbox" id="fileextension-case" name="my_element[validateOption][fileextension][case]"/>
+		Case: <input type="checkbox" class="fileextension-case form-control" name="my_element[validateOption][fileextension][case]"/>
 	</div>
 
 	<div class="form-group col-md-12">	   

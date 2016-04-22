@@ -1,8 +1,8 @@
-<form id="notempty">
+<form class="notempty">
 
 	<div class="form-group col-md-6">
 		<label>Type:</label>
-		<input type="text" id="notempty-type" name="my_element[validateOption][notempty][type]"/>
+		<input type="text" class="notempty-type form-control" name="my_element[validateOption][notempty][type]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

@@ -1,13 +1,13 @@
-<form id="filecount" >
+<form class="filecount" >
 
 	<div class="form-group col-md-6">
 		<label>Min:</label>
-		<input type="number" id="filecount-min" name="my_element[validateOption][filecount][min]" class="form-control"/>
+		<input type="number" class="filecount-min form-control" name="my_element[validateOption][filecount][min]"/>
 	</div>
 
 	<div class="form-group col-md-6">
 		<label>Max:</label>
-		<input type="number" id="filecount-max" class="form-control" name="my_element[validateOption][filecount][max]"/>
+		<input type="number" class="filecount-max form-control" name="my_element[validateOption][filecount][max]"/>
 	</div>
 	
 	<div class="form-group col-md-12">	   

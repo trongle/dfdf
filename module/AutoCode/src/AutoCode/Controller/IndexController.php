@@ -91,24 +91,22 @@ class IndexController extends AbstractActionController
     public function validateAction(){
         if($this->request->isXmlHttpRequest()){
 
-            $post        = $this->request->getPost();
-            echo "<pre>";
-            print_r($post);
-            echo "</pre>";
-            $nameElement = $post['nameElement']; 
+            $post        = $this->filterPost($this->request->getPost()); 
+            $nameElement = str_replace(".wrapper-","",$post->selector); 
+            $post = $post->element[$nameElement];
 
             //inputName
-            $this->attribute          = $post[$nameElement]['attribute'];
-            $this->option             = $post[$nameElement]['option'];
+            $this->attribute          = $post['attribute'];
+            $this->option             = $post['option'];
 
             //validate
-            $this->validateName       = isset($post[$nameElement]['validateName'])? $post[$nameElement]['validateName'] : '';
-            $this->validateOption     = isset($post[$nameElement]['validateOption'])? $post[$nameElement]['validateOption'] : '';
-            $this->validateBreakChain = isset($post[$nameElement]['validateBreakChain'])? $post[$nameElement]['validateBreakChain'] : '';
+            $this->validateName       = isset($post['validateName'])? $post['validateName'] : '';
+            $this->validateOption     = isset($post['validateOption'])? $post['validateOption'] : '';
+            $this->validateBreakChain = isset($post['validateBreakChain'])? $post['validateBreakChain'] : '';
             
             //filter
-            $this->filterName       = isset($post[$nameElement]['filterName'])? $post[$nameElement]['filterName'] : '';
-            $this->filterOption     = isset($post[$nameElement]['filterOption'])? $post[$nameElement]['filterOption'] : '';
+            $this->filterName       = isset($post['filterName'])? $post['filterName'] : '';
+            $this->filterOption     = isset($post['filterOption'])? $post['filterOption'] : '';
 
             $this->setValue($post);          
             
@@ -158,6 +156,20 @@ class IndexController extends AbstractActionController
             return $this->response;
         }
                        
+    }
+
+    private function filterPost($post = null){
+        if(!empty($post)){
+            $parse_str       = '';
+            parse_str($post['element'],$parse_str);
+            $post['element'] = $parse_str;
+    
+            unset($post->element['nameElement']);
+            unset($post->element['validateElement']);
+            unset($post->element['filterElement']);
+        }
+
+        return $post;
     }
 
     private function openValidate(){
@@ -266,10 +278,12 @@ class IndexController extends AbstractActionController
 
     private function setValue($post = null){
         if(!empty($post)){
-
-            $this->type     = empty($post["typeElement"])? '' :self::setSpace().'"type" <span class="php-plain">=></span> "'.$post["typeElement"].'"<span class="php-plain">,</span><br/>';
-            $this->name     = empty($post["nameElement"])? '' :self::setSpace().'"name" <span class="php-plain">=></span> "'.$post['nameElement'].'"<span class="php-plain">,</span><br/>';
-            $this->required = empty($post['requiredElement'])? self::setSpace().'"required" <span class="php-plain">=></span> false,<br/>' :self::setSpace().'"required" <span class="php-plain">=></span> true,<br/>';
+            // echo "<pre>";
+            // print_r($post);
+            // echo "</pre>";exit();
+            $this->type     = empty($post["type"])? '' :self::setSpace().'"type" <span class="php-plain">=></span> "'.$post["type"].'"<span class="php-plain">,</span><br/>';
+            $this->name     = empty($post["name"])? '' :self::setSpace().'"name" <span class="php-plain">=></span> "'.$post['name'].'"<span class="php-plain">,</span><br/>';
+            $this->required = empty($post['required'])? self::setSpace().'"required" <span class="php-plain">=></span> false,<br/>' :self::setSpace().'"required" <span class="php-plain">=></span> true,<br/>';
             
             //attribute
             $this->class           = empty($this->attribute['class'])? '' : self::setSpace(2).'"class" <span class="php-plain">=></span> "' . $this->attribute['class'] . '"<span class="php-plain">,</span><br/>';
@@ -302,7 +316,7 @@ class IndexController extends AbstractActionController
 
         $selectOption = null;
 
-        if($post["typeElement"] == 'select'){
+        if($post["type"] == 'select'){
             $selectOption = $this->emptyOption ; 
             
             if(!empty($this->valueOption) && !empty($this->nameOption) ){

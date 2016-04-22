@@ -1,7 +1,7 @@
-<form id="filecrc32" >
+<form class="filecrc32" >
 	<div class="form-group col-md-6">
 		<label>Hash:</label>
-		<input type="text" id="filecrc32-hash" name="my_element[validateOption][filecrc32][hash]"/>
+		<input type="text" class="filecrc32-hash form-control" name="my_element[validateOption][filecrc32][hash]"/>
 	</div>
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>
