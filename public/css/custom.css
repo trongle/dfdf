@@ -189,3 +189,27 @@ ul{
 .requiredElement{
 	box-shadow: none !important;
 }
+
+#smartButtonSave,#smartAddNewElement,#smartNameElement{
+	position: fixed;
+	 
+	bottom: 0;
+	 
+	right: 0;
+	 	 
+	z-index: 100;
+	 
+	display: none;
+	 
+}
+
+#smartAddNewElement{
+	right: 60px;
+}
+
+#smartNameElement{
+	right : 120px;
+	display: block;
+	width : 135px;
+}
+

@@ -1,4 +1,9 @@
 <?php $urlActionValidateForm = BASE_URL. $this->url('code/default',['action' => 'validate']) ?>
+<?php 
+// echo "<pre>";
+// print_r($infoForm);
+// echo "</pre>";
+?>
 <div class="container">
 	<!-- ADD NEW FORM -->
 	<form id="addNameForm" action="post">
@@ -44,6 +49,9 @@
 					 		<label>&nbsp;</label><br/>
 					    	<button class="btn btn-primary" type="button" id="addNewElement">Add new element</button>
 					    	<button type="button" class="btn btn-success" onclick="submitValidateForm()" id="createElement">Save</button>
+					    	<button class="btn btn-primary" type="button" id="smartAddNewElement">Add new element</button>
+					    	<input type="text" id="smartNameElement" name="nameElement" class="form-control hide"/>
+					    	<button type="button" class="btn btn-success" onclick="submitValidateForm()" id="smartButtonSave">Save</button>
 					    </div>
 					</div>
 				    	
@@ -306,7 +314,10 @@
 
 			if(flagName === '') flagName = nameElement; // get name of fisrt form for clone purpose
 
-			$(".elementAttrs").removeClass("hide");//show all form when page loaded
+			// add nameElement ro span hidden
+			$(selector + " >  div:first > span:first").text("[" + nameElement + "] Element");
+			//show all form when page loaded
+			$(".elementAttrs").removeClass("hide");
 
 			<?php if(count(@$infoElement['validate']['name']) > 0 ): ?>
 				<?php foreach(@$infoElement['validate']['name'] as $nameValidate): ?>
@@ -334,7 +345,9 @@
 																			.appendTo('#validateForm');
 				// change class wrapper with name of element
 				$(".wrapper-" + flagName).not(":first").attr('class',"wrapper-" + nameElementNotFirst);
-
+				// add nameElement ro span hidden
+				$(notFirstSelector + " >  div:first > span:first").text("[" + nameElementNotFirst + "] Element");
+				
 				allMainAction(notFirstSelector,nameElementNotFirst);
 		})
 	})
@@ -720,5 +733,41 @@
 			$(selector).removeClass("glyphicon-minus").addClass("glyphicon-plus");
 		}
 	}
+
+	// function smartSaveButton(){
+	// 	var offset = 250;
+	// 	var duration = 300;
+		 
+	// 	$(window).scroll(function() {
+		 
+	// 		if ($(this).scrollTop() > offset) {
+	// 			$("#smartButtonSave").fadeIn(duration);
+	// 			$("#smartAddNewElement").fadeIn(duration);
+	// 			var firstClick = 1;
+	// 			$("#smartAddNewElement").on("click",function(e){
+	// 				if(firstClick === 1){
+	// 					firstClick = 2;
+	// 					$(this).text("OK");
+	// 					$("#smartNameElement").removeClass("hide");
+	// 				}else if(firstClick === 2){
+	// 					firstClick = 3;
+	// 					if($("#smartNameElement").val() !== ""){
+	// 						alert($("#smartNameElement").val());
+	// 					}
+	// 				}else if(firstClick === 3){
+	// 					$("#smartNameElement").addClass("hide").val('');
+	// 					$("#smartAddNewElement").text("Add new element");
+	// 				}
+	// 			});
+			 
+	// 		} else {
+	// 			$("#smartButtonSave").fadeOut(duration);
+	// 			$("#smartAddNewElement").fadeOut(duration).text("Add new element");
+	// 			$("#smartNameElement").addClass("hide").val('');
+			 
+	// 		}
+		 
+	// 	});
+	// }
 
 </script>
