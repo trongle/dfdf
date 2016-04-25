@@ -23,6 +23,7 @@
 		    			<th>Created by</th>
 		    			<th>Status</th>
 		    			<th>ID</th>
+		    			<th>Action</th>
 		    			<th>Remove</th>
 		    		</tr>
 		    	</thead>
@@ -45,11 +46,13 @@
 		    							 <td>%s</td>
 		    							 <td>%s</td>
 		    							 <td>%s</td>
+		    							 <td>%s</td>,
 		    							 <td >%s</td>',
 		    							 $this->url('form/default',array("action" => 'editForm','id' => $form['id'])),
 		    							 $form['name'],date('d-m-Y', $form['created_date']), $form['username'],
 		    							 $status,
 		    							 $form['id'],
+		    							 '<a href="' . $this->url('code/default',['action' => 'createCode','id' => $form['id']]) . '">Create Code</a>',
 		    							 '<a href="' . $this->url('form/default',['action' => 'remove','id' => $form['id']]) . '"><span class="delete-close"></span></a>');
 		    				$list .= '</tr>';
 		    				}
@@ -67,8 +70,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		
+	$(document).ready(function() {	
 		$("#addNew").click(function(){
 			window.location.href = "<?php echo $this->url("code") ?>" ;
 		})

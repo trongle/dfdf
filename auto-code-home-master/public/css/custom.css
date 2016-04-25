@@ -1,0 +1,244 @@
+.container .box{
+	background-color: #e2eecf;
+	padding: 5px 0;
+	margin-bottom: 20px; 
+}
+
+.row .removeVal{
+	color : red;
+	margin : 0 7px;
+}
+
+.row .removeVal:hover{
+	cursor : pointer
+}
+
+/*#elementAttrs{
+	height : 700px;
+}*/
+
+.row .display-code{
+	height : 500px;
+	width : 500px;
+	margin-right:5px;
+}
+
+hr{
+	border-top : #ddd 2px solid !important;
+}
+
+i{
+	display: inline-block;
+    width: 400px;
+    overflow: scroll;
+}
+
+.red{
+	color:red;
+}
+
+.blue{
+	color:blue;
+	font-weight: bold;
+}
+
+.a-normal{
+	color : black;
+}
+
+.a-normal:hover{
+	text-decoration: none;
+	color : black;
+	cursor: default;
+}
+
+.code{
+	height: 500px !important;
+    font-size: 15px !important;
+    line-height: 22px !important;
+    color: purple !important;
+    overflow: scroll !important;
+    background: black !important;
+}
+
+.tab{
+	background-color:#7BB0A6;
+	text-align: center;
+	transition:background-color 0.5s;
+}
+
+.tab:hover{
+	cursor: pointer;
+	background-color:#64DDBB; 
+}
+
+.php-keyword{
+	color : #5ba1cf !important;
+}
+
+.php-variable{
+	color : #ffaa3e !important;
+}
+
+.php-plain{
+	color: #b9bdb6 !important;
+}
+
+code{
+	color:#5ce638 !important;
+	background: black !important;
+}
+
+.showTemplateFilter,
+.showTemplateValidate{
+	margin: 15px 0;
+    background: #D3EBB2;
+    padding: 10px;
+}
+
+.glyphicon{
+	font-size: 9px;
+    margin-right: 5px;
+}
+
+ul{
+	list-style-type: none;
+}
+
+.form-signin{
+	max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading{
+    margin-bottom: 10px;
+}
+
+.form-signin input[type="email"] {
+	padding:25px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="text"] {
+	padding:25px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+.form-signin input[type="password"] {
+	padding:25px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#dangnhap {
+	margin-top: 20px;
+}
+
+#back{
+	background: #fff;
+    border: #fff;
+    display: inline;
+    width: 100px;
+    height: 85px;
+    margin: 22px 0px 0px 100px;
+}
+
+.glyphicon-chevron-left{
+	font-size: 85px;
+    color: black;
+}
+
+.glyphicon-trash{
+	font-size: 30px;
+}
+
+.delete-close{
+	background: url('../img/delete-close.png') no-repeat 0 10px transparent;
+	display: block;
+    height: 44px;
+    width: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+
+.delete-close:hover{
+	background: url('../img/delete-open.png') no-repeat 0 10px transparent;
+	display: block;
+    height: 44px;
+    width: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+    transform: scale(1.1,1.1);
+    cursor: pointer;
+}
+
+.openElement,.removeElement{
+	font-size: 20px;
+	color: #7BB0A6;
+	transition:color 0.5s;
+}
+
+.openElement:hover,.removeElement:hover{
+	cursor: pointer;
+	color:#64DDBB; 
+}
+
+.requiredElement,.disableHtml{
+	box-shadow: none !important;
+	margin:0 !important;
+}
+
+#lazyButtonSave,
+#lazyNameElement,
+#lazyAddNewElement,
+#lazyCloseAllElement,
+#lazyLabelAddNewElement{
+	position: fixed;
+	width: 70px;
+	right: 0; 	 
+	z-index: 100;
+	opacity: 0.5;
+	display: none;
+	border-radius: 0;
+}
+
+#lazyCloseAllElement{
+	display: block;
+}
+
+#lazyButtonSave{
+	bottom: 320px;
+}
+
+#lazyCloseAllElement{
+	bottom: 388px;
+}
+
+#lazyAddNewElement,
+#lazyLabelAddNewElement{
+	bottom: 354px;
+}
+
+#lazyNameElement{
+	bottom : 0;
+	margin-right: -60px;
+}
+
+#lazyButtonSave:hover,
+#lazyAddNewElement:hover,
+#lazyLabelAddNewElement:hover,
+#lazyCloseAllElement:hover{
+	opacity: 1;
+}
+
+#lazyNameElement{
+	right : 130px;
+	display: block;
+	bottom : 354px;
+	width : 135px;
+	border: rgba(0, 0, 255, 0.37) 1px solid;	
+}

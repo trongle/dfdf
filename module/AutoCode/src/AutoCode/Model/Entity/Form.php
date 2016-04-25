@@ -8,6 +8,7 @@ class Form
 	public $id;
 	public $name;
 	public $content;
+	public $attribute;
 	public $status;
 	public $user_id;
 	public $created_date;
@@ -22,6 +23,7 @@ class Form
 		$this->created_date = (!empty($data['created_date']))   ? $data['created_date']  :"";
 		$this->user_id      = (!empty($data['user_id']))   	  	? $data['user_id']  :"";
 		$this->status       = (!empty($data['status']))   		? $data['status']  :"";
+		$this->attribute    = (!empty($data['attribute']))   	? $data['attribute']  :"";
 		$this->content      = (!empty($data['content']))   		? $data['content']  :"";
 	
 	}	

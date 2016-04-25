@@ -18,13 +18,13 @@
 					<div class="col-md-4">
 						<div class="form-group">					
 							<label for="type">Form action</label>
-							<input type="text" class="form-control" name="FormAction"/>
+							<input type="text" class="form-control" name="formAction"/>
 						</div>
 					</div>			
 					<div class="col-md-4">
 						<div class="form-group">					
 							<label for="type">Class Form</label>
-							<input type="text" class="form-control" name="FormClass"/>
+							<input type="text" class="form-control" name="formClass"/>
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -36,7 +36,7 @@
 					<div class="col-md-4">
 						<div class="form-group">					
 							<label for="type">Method Form</label>
-							<select class="form-control" name="formId">
+							<select class="form-control" name="formMethod">
 								<option value="post">POST</option>
 								<option value="get">Get</option>
 							</select>
@@ -45,7 +45,7 @@
 					<div class="col-md-4">
 						<div class="form-group">					
 							<label for="type">Entype Form</label>
-							<select class="form-control" name="formId">
+							<select class="form-control" name="formEntype">
 								<option value="empty">Default</option>
 								<option value="multipart/form-data">Multipart/form-data</option>
 								<option value="application/x-www-form-urlencoded">Application/x-www-form-urlencoded</option>
@@ -333,7 +333,7 @@
 			</div>
 		</div>
 	</form>
-	<input type="hidden" name="formId" />
+	<input type="hidden" name="formIdHidden" />
 </div>
 <?php $url = $this->url('code/default',array('action' => 'loadTemplate')) ?>
 
@@ -437,8 +437,14 @@
 					url : "<?php echo $this->url('form/default',array('action' => 'addFormDraf')) ?>",
 					type : 'POST',
 					data : {
-						'nameForm' : $("input[name=inputNameForm]").val(),
-						'user_id'  : "<?php echo $userInfo->id ?>"
+						'nameForm'   : $("input[name=inputNameForm]").val(),
+						'actionForm' : $("input[name=formAction]").val(),
+						'classForm'  : $("input[name=formClass]").val(),
+						'idForm'     : $("input[name=formId]").val(),
+						'methodForm' : $("select[name=formMethod]").val(),
+						'entypeForm' : $("select[name=formEntype]").val(),
+						'otherForm'  : $("input[name=formOther]").val(),
+						'user_id'    : "<?php echo $userInfo->id ?>"
 					},
 					success : function(id){
 						if(id !== ''){
@@ -446,7 +452,7 @@
 								$("#validateForm").removeClass("hide");
 							}
 		
-							$("input[name=formId]").val(id);
+							$("input[name=formIdHidden]").val(id);
 						}
 					}
 				})

@@ -1,7 +1,6 @@
 <?php 
 namespace AutoCode\Form;
 
-use Adminuser\Form\FormUserFilter;
 use Zend\Form\Form;
 
 class FormUser extends Form{

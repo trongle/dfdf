@@ -53,6 +53,7 @@ class FormController extends AbstractActionController
 	public function addFormAction(){
 		if($this->request->isXmlHttpRequest()){
 			$data = array(
+				$this->request->getPost(),
 				"element" => $this->request->getPost('element'), 
 				"formId"  => $this->request->getPost('formId')
 			);
@@ -86,14 +87,11 @@ class FormController extends AbstractActionController
 				'userInfo'        => $userInfo
 			));
 
-			// $viewModel->setTemplate("auto-code/index/index.phtml");
-
 			return $viewModel;
 			
 		}else{
 			$this->redirect()->toRoute("home");
 		}
-
 	}
 }
 ?>

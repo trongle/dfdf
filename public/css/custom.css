@@ -84,12 +84,17 @@ i{
 	color: #b9bdb6 !important;
 }
 
+.php-comment{
+	color: #878a85 !important;
+}
+
 code{
 	color:#5ce638 !important;
 	background: black !important;
 }
 
-.showTemplateValidate,.showTemplateFilter{
+.showTemplateFilter,
+.showTemplateValidate{
 	margin: 15px 0;
     background: #D3EBB2;
     padding: 10px;
@@ -156,7 +161,7 @@ ul{
 }
 
 .delete-close{
-	background: url('/zf2/public/img/delete-close.png') no-repeat 0 10px transparent;
+	background: url('../img/delete-close.png') no-repeat 0 10px transparent;
 	display: block;
     height: 44px;
     width: 30px;
@@ -165,7 +170,7 @@ ul{
 }
 
 .delete-close:hover{
-	background: url('/zf2/public/img/delete-open.png') no-repeat 0 10px transparent;
+	background: url('../img/delete-open.png') no-repeat 0 10px transparent;
 	display: block;
     height: 44px;
     width: 30px;
@@ -186,30 +191,58 @@ ul{
 	color:#64DDBB; 
 }
 
-.requiredElement{
+.requiredElement,.disableHtml{
 	box-shadow: none !important;
+	margin:0 !important;
 }
 
-#smartButtonSave,#smartAddNewElement,#smartNameElement{
+#lazyButtonSave,
+#lazyNameElement,
+#lazyAddNewElement,
+#lazyCloseAllElement,
+#lazyLabelAddNewElement{
 	position: fixed;
-	 
-	bottom: 0;
-	 
-	right: 0;
-	 	 
+	width: 70px;
+	right: 0; 	 
 	z-index: 100;
-	 
+	opacity: 0.5;
 	display: none;
-	 
+	border-radius: 0;
 }
 
-#smartAddNewElement{
-	right: 60px;
-}
-
-#smartNameElement{
-	right : 120px;
+#lazyCloseAllElement{
 	display: block;
-	width : 135px;
 }
 
+#lazyButtonSave{
+	bottom: 320px;
+}
+
+#lazyCloseAllElement{
+	bottom: 388px;
+}
+
+#lazyAddNewElement,
+#lazyLabelAddNewElement{
+	bottom: 354px;
+}
+
+#lazyNameElement{
+	bottom : 0;
+	margin-right: -60px;
+}
+
+#lazyButtonSave:hover,
+#lazyAddNewElement:hover,
+#lazyLabelAddNewElement:hover,
+#lazyCloseAllElement:hover{
+	opacity: 1;
+}
+
+#lazyNameElement{
+	right : 130px;
+	display: block;
+	bottom : 354px;
+	width : 135px;
+	border: rgba(0, 0, 255, 0.37) 1px solid;	
+}

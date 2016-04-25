@@ -11,6 +11,7 @@ class IndexController extends AbstractActionController
     private $type;
     private $name;
     private $required;
+
 //attribute
     private $attribute;
     private $class;
@@ -25,6 +26,8 @@ class IndexController extends AbstractActionController
     private $nameLabel;
     private $classLabel;
     private $forLabel;
+    private $disableHtml;
+    private $optionLabel;
     //select box
     private $emptyOption;
     private $valueOption;
@@ -53,11 +56,14 @@ class IndexController extends AbstractActionController
         $validateTable = $this->getServiceLocator()->get('ValidateTable');
         $filterTable   = $this->getServiceLocator()->get('FilterTable');
 
-        return new ViewModel([
+        $viewModel =  new ViewModel([
             'validateElement' => $validateTable->listItem(),
             'filterElement'   => $filterTable->listItem(),
             'userInfo'        => $userInfo
         ]);
+
+        $viewModel->setTemplate("auto-code/form/edit-form.phtml");
+        return $viewModel;
     }
     
     public function loadTemplateAction(){   
@@ -86,16 +92,16 @@ class IndexController extends AbstractActionController
         }else{
             echo "not permission";
         }   
-    }
+    } 
 
-    public function validateAction(){
+    public function createCodeAction(){
         if($this->request->isXmlHttpRequest()){
 
             $post        = $this->filterPost($this->request->getPost()); 
             $nameElement = str_replace(".wrapper-","",$post->selector); 
-            $post = $post->element[$nameElement];
+            $post        = $post->element[$nameElement];
 
-            //inputName
+            //
             $this->attribute          = $post['attribute'];
             $this->option             = $post['option'];
 
@@ -111,7 +117,117 @@ class IndexController extends AbstractActionController
             $this->setValue($post);          
             
             // Create input code 
-            $code = $this->openCode() . $this->name . $this->type . $this->required ;
+            echo $code = $this->createInputCode($post);
+
+            echo '<div class="hide">superman</div>';
+
+            // Create filter and Validate code         
+            
+            echo $codeFilterAndValidate = $this->openCode() . $this->name
+                                                .$this->createFilterCode() . $this->createValidateCode()
+                                        . $this->closeCode() ;  
+
+            return $this->response;
+        }else{
+            $authenticate = $this->getServiceLocator()->get('MyAuth');
+            $auth         = $authenticate->_authen;
+
+            if($auth->hasIdentity()){
+                $id            = $this->params()->fromRoute("id");
+                $formTable     = $this->getServiceLocator()->get("FormTable");
+
+                $infoForm          = $formTable->getItemById($id);
+                $infoForm->content = unserialize($infoForm->content);
+
+                $codeInput             = '';
+                $codeValidateAndFilter = '';
+                foreach($infoForm->content as $nameElement => $infoElement){
+                    //
+                    $this->attribute          = $infoElement['attribute'];
+                    $this->option             = $infoElement['option'];
+
+                    //validate
+                    $this->validateName       = isset($infoElement['validate']['name'])? $infoElement['validate']['name'] : '';
+                    $this->validateOption     = isset($infoElement['validate']['option'])? $infoElement['validate']['option'] : '';
+                    $this->validateBreakChain = isset($infoElement['validate']['breakchain'])? $infoElement['validate']['breakchain'] : '';
+                    
+                    //filter
+                    $this->filterName       = isset($infoElement['filter']['name'])? $infoElement['filter']['name'] : '';
+                    $this->filterOption     = isset($infoElement['filter']['option'])? $infoElement['filter']['option'] : '';
+
+                    $this->setValue($infoElement);
+
+                    $codeInput             .= $this->createCommentString($nameElement,'','') . $this->createInputCode();
+                    if( !empty($this->createFilterCode()) || !empty($this->createValidateCode()) ){     
+                        $codeValidateAndFilter .= $this->createCommentString($nameElement,'','') . $this->openCode('') . $this->name . $this->createFilterCode() . $this->createValidateCode() . $this->closeCode('');
+                    }
+                }
+
+                $viewModel = new ViewModel();
+
+                $viewModel->setVariables(array(
+                    "infoForm"              => $infoForm,
+                    'codeInput'             => $this->createAttributeFormString($infoForm->attribute) . $codeInput,
+                    'codeValidateAndFilter' => $codeValidateAndFilter,
+                ));
+
+                return $viewModel;
+                
+            }else{
+                $this->redirect()->toRoute("home");
+            }
+        }
+                       
+    }
+    
+    private function createAttributeFormString($attributeForm = null){
+        $code = '';
+        
+        if(!empty($attributeForm)){
+            $attributeForm = unserialize($attributeForm);
+   
+            $code   = '<span class="php-variable">$this</span><span class="php-plain">->setAttributes</span><span class="php-plain">(</span><span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
+            $code   .=  empty($attributeForm['id'])?         '' : self::setSpace(1).'"id" <span class="php-plain">=></span> "' . $attributeForm['id'] . '"<span class="php-plain">,</span><br/>';
+            $code   .=  empty($attributeForm['class'])?      '' : self::setSpace(1).'"class" <span class="php-plain">=></span> "' . $attributeForm['class'] . '"<span class="php-plain">,</span><br/>';
+            $code   .=  empty($attributeForm['method'])?     '' : self::setSpace(1).'"method" <span class="php-plain">=></span> "' . $attributeForm['method'] . '"<span class="php-plain">,</span><br/>';
+            $code   .=  $attributeForm['entype'] == 'empty'? '' : self::setSpace(1).'"entype" <span class="php-plain">=></span> "' . $attributeForm['entype'] . '"<span class="php-plain">,</span><br/>';
+            $code   .=  empty($attributeForm['action'])?     '' : self::setSpace(1).'"action" <span class="php-plain">=></span> "' . $attributeForm['action'] . '"<span class="php-plain">,</span><br/>';
+            $code   .= '<span class="php-plain">));</span>';
+        }
+
+        return $code;
+    }
+
+    private function createCommentString($nameInput = null, $tagOpen = "<code>" , $tagClose = "</code>"){
+        return "<br/><br/>" . $tagOpen . "<span class='php-comment'>//" . $nameInput . "</span>" . $tagClose . "<br/>";
+    }
+
+    private function createValidateCode(){
+        $codeValidate = '';
+
+        if(count($this->validateName) > 0 && !empty($this->validateName)){
+            $codeValidate   .= $this->openValidate()
+                                . $this->createValidateString()
+                            . $this->close() ;
+        }
+
+        return $codeValidate;
+    }
+
+    private function createFilterCode(){
+        $codeFilter = '';
+
+        if(count($this->filterName) > 0 && !empty($this->filterName)){
+            $codeFilter = $this->openFilter()
+                            . $this->createFilterString()
+                        . $this->close();
+        }
+
+        return $codeFilter;
+    }
+
+    private function createInputCode($post = null,$openTag = "<code>",$closeTag = "</code>"){
+        $code = $this->openCode($openTag) . $this->name . $this->type . $this->required ;
 
                 if($this->checkAttribute() == true){
                     $code   .= $this->openAttribute()
@@ -121,41 +237,13 @@ class IndexController extends AbstractActionController
 
                 if($this->checkOption() == true){
                     $code   .= $this->openOption() 
-                                . $this->nameLabel . $this->labelAttribute() . $this->createStringSelectBox($post)
+                                . $this->nameLabel . $this->labelAttributeString() . $this->createOptionLabelString() . $this->createSelectBoxString($post)
                             .$this->close();
                 }
 
-            $code .= $this->closeCode();
+        $code .= $this->closeCode($closeTag);
 
-            echo $code;
-
-            echo '<div class="hide">superman</div>';
-
-            // Create filter code 
-            $codeFilter = '';
-            if(count($this->filterName) > 0 && !empty($this->filterName)){
-                $codeFilter = $this->openFilter()
-                                . $this->createStringFilter()
-                            . $this->close();
-            }
-
-            // Create validate code 
-            $codeValidate = '';
-            if(count($this->validateName) > 0 && !empty($this->validateName)){
-                $codeValidate   .= $this->openValidate()
-                                    . $this->createStringValidate()
-                                . $this->close() ;
-            }
-            
-            $codeFilterAndValidate  = $this->openCode() . $this->name
-                                        .$codeFilter . $codeValidate
-                                    . $this->closeCode() ;  
-
-            echo $codeFilterAndValidate;
-
-            return $this->response;
-        }
-                       
+        return $code;
     }
 
     private function filterPost($post = null){
@@ -163,7 +251,7 @@ class IndexController extends AbstractActionController
             $parse_str       = '';
             parse_str($post['element'],$parse_str);
             $post['element'] = $parse_str;
-    
+
             unset($post->element['nameElement']);
             unset($post->element['validateElement']);
             unset($post->element['filterElement']);
@@ -180,7 +268,7 @@ class IndexController extends AbstractActionController
         return $this->setSpace() . '"filters" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
     }
 
-    private function createStringValidate(){
+    private function createValidateString(){
         $codeValidate = '';
         foreach($this->validateName as $validate){
             $codeValidate   .= $this->setSpace(2) . '<span class="php-keyword">array</span><span class="php-plain">(</span><br/>'
@@ -193,7 +281,7 @@ class IndexController extends AbstractActionController
         return $codeValidate;
     }
 
-    private function createStringfilter(){
+    private function createFilterString(){
         $codeFilter = '';
         foreach($this->filterName as $filter){
             $codeFilter   .= $this->setSpace(2) . '<span class="php-keyword">array</span><span class="php-plain">(</span><br/>'
@@ -266,7 +354,7 @@ class IndexController extends AbstractActionController
         return self::setSpace($level).'<span class="php-plain">),</span><br/>';
     }
     
-    private function labelAttribute(){
+    private function labelAttributeString(){
         if(!empty($this->classLabel) || !empty($this->forLabel)){
             return self::setSpace(2).'"label_attributes" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>' 
                                     . $this->classLabel . $this->forLabel
@@ -278,9 +366,6 @@ class IndexController extends AbstractActionController
 
     private function setValue($post = null){
         if(!empty($post)){
-            // echo "<pre>";
-            // print_r($post);
-            // echo "</pre>";exit();
             $this->type     = empty($post["type"])? '' :self::setSpace().'"type" <span class="php-plain">=></span> "'.$post["type"].'"<span class="php-plain">,</span><br/>';
             $this->name     = empty($post["name"])? '' :self::setSpace().'"name" <span class="php-plain">=></span> "'.$post['name'].'"<span class="php-plain">,</span><br/>';
             $this->required = empty($post['required'])? self::setSpace().'"required" <span class="php-plain">=></span> false,<br/>' :self::setSpace().'"required" <span class="php-plain">=></span> true,<br/>';
@@ -290,12 +375,14 @@ class IndexController extends AbstractActionController
             $this->id              = empty($this->attribute['id'])? '' : self::setSpace(2).'"id" <span class="php-plain">=></span> "' . $this->attribute['id'] . '"<span class="php-plain">,</span><br/>';
             $this->placeholder     = empty($this->attribute['placeholder'])? '' : self::setSpace(2).'"placeholder" <span class="php-plain">=></span> "' . $this->attribute['placeholder'] . '"<span class="php-plain">,</span><br/>';
             $this->value           = empty($this->attribute['value'])? '' : self::setSpace(2).'"value" <span class="php-plain">=></span> "' . $this->attribute['value'] . '"<span class="php-plain">,</span><br/>';
-            $this->otherAttributes = $this->setOtherAttributes();
+            $this->otherAttributes = $this->setArrayPair('attribute');
             
             //options
-            $this->nameLabel  = empty($this->option['nameLabel'])? '' : self::setSpace(2).'"label" <span class="php-plain">=></span> "' . $this->option['nameLabel'] . '"<span class="php-plain">,</span><br/>';
-            $this->classLabel = empty($this->option['classLabel'])? '' : self::setSpace(3).'"class" <span class="php-plain">=></span> "' . $this->option['classLabel'] . '"<span class="php-plain">,</span><br/>';
-            $this->forLabel   = empty($this->option['forLabel'])? '' : self::setSpace(3).'"for" <span class="php-plain">=></span> "' . $this->option['forLabel'] . '"<span class="php-plain">,</span><br/>';
+            $this->nameLabel    = empty($this->option['nameLabel'])? '' : self::setSpace(2).'"label" <span class="php-plain">=></span> "' . $this->option['nameLabel'] . '"<span class="php-plain">,</span><br/>';
+            $this->classLabel   = empty($this->option['classLabel'])? '' : self::setSpace(3).'"class" <span class="php-plain">=></span> "' . $this->option['classLabel'] . '"<span class="php-plain">,</span><br/>';
+            $this->forLabel     = empty($this->option['forLabel'])? '' : self::setSpace(3).'"for" <span class="php-plain">=></span> "' . $this->option['forLabel'] . '"<span class="php-plain">,</span><br/>';
+            $this->disableHtml  = empty($this->option['disableHtml'])? self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> false,<br/>' : self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> true,<br/>';
+            $this->optionLabel = $this->setArrayPair('optionLabel');
         }
     }
 
@@ -311,7 +398,7 @@ class IndexController extends AbstractActionController
         
     }
 
-    private function createStringSelectBox($post = null){
+    private function createSelectBoxString($post = null){
         $this->setValueSelectBox();
 
         $selectOption = null;
@@ -336,6 +423,16 @@ class IndexController extends AbstractActionController
         return $selectOption;
     }
 
+    private function createOptionLabelString($post = null){
+        if(!empty($this->disableHtml) || !empty($this->optionLabel)){
+            return self::setSpace(2).'"label_options" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>' 
+                                        . $this->disableHtml . $this->optionLabel
+                                    . self::setSpace(2).'<span class="php-plain">),</span><br/>';
+        }else{
+            return null;
+        }
+    }
+
     private  function openCode($tag = '<code>'){
         return $tag . '<span class="php-variable">$this</span><span class="php-plain">->add</span><span class="php-plain">(</span><span class="php-keyword">array</span><span class="php-plain">(</span><br/>' ;
     }
@@ -344,20 +441,32 @@ class IndexController extends AbstractActionController
         return '<span class="php-plain">));</span>' . $closeTag . '<br/>';
     }
 
-    private function setOtherAttributes(){
+    private function setArrayPair($type = null){
         $xhtml    = '';
         
-        if(!empty($this->attribute['attr'])){
-            $attrs = explode(',', $this->attribute['attr']);
-                
-            foreach($attrs as $attr){
-                $attr  = trim($attr);
-                $attr  = explode(':',$attr);
-                $xhtml .=  self::setSpace(2).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
+        if(!empty($type)){
+            if(!empty($this->attribute['attr']) && $type == "attribute"){
+                $attrs = explode(',', $this->attribute['attr']);
+                    
+                foreach($attrs as $attr){
+                    $attr  = trim($attr);
+                    $attr  = explode(':',$attr);
+                    $xhtml .=  self::setSpace(2).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
+                }
+                return $xhtml;
+            }
+
+            if(!empty($this->option['optionLabel']) && $type == 'optionLabel'){
+                $attrs = explode(',', $this->option['optionLabel']);
+                    
+                foreach($attrs as $attr){
+                    $attr  = trim($attr);
+                    $attr  = explode(':',$attr);
+                    $xhtml .=  self::setSpace(3).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
+                }
+                return $xhtml;
             }
         }
-
-        return $xhtml;
     }
 
     private function checkAttribute(){
