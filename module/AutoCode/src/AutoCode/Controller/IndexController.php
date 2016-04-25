@@ -157,7 +157,7 @@ class IndexController extends AbstractActionController
 
                     $this->setValue($infoElement);
 
-                    $codeInput             .= $this->createCommentString($nameElement,'','') . $this->createInputCode();
+                    $codeInput             .= $this->createCommentString($nameElement,'','') . $this->createInputCode($infoElement,'','');
                     if( !empty($this->createFilterCode()) || !empty($this->createValidateCode()) ){     
                         $codeValidateAndFilter .= $this->createCommentString($nameElement,'','') . $this->openCode('') . $this->name . $this->createFilterCode() . $this->createValidateCode() . $this->closeCode('');
                     }

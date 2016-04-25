@@ -1,4 +1,3 @@
-
 <div class="container">
 	<h1>[<?php echo $infoForm->name ?>]</h1>
 	<br/>
@@ -47,23 +46,51 @@
 					<span class="php-keyword">use</span> <span class="php-plain">Zend\Form\Form;</span><br/>
 					<br/>
 					<span class="php-keyword">class</span> <span class="php-plain class-form-name"></span> <span class="php-keyword">extends</span> <span class="php-plain">Form{</span><br/>
-					<br/>
-					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">public function</span>  <span class="php-plain">__construct() {</span><br/>
-							<?php echo str_repeat("&nbsp;",10) ?><span class="php-plain">parent::__construct();</span><br/><br/>
-					<div style="margin-left: 75px;">
-							<?php echo $this->codeInput ?>
-					</div>
-					<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">)</span>
-				</code><br/>
+						<!-- method construct -->
+						<br/>
+						<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">public function</span>  <span class="php-plain">__construct(){</span><br/>
+								<?php echo str_repeat("&nbsp;",10) ?><span class="php-plain">parent::__construct();</span><br/><br/>
+						<div style="margin-left: 75px;">
+								<?php echo $this->codeInput ?>
+						</div>
+						<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span><br/>
+
+						<!-- method showError -->
+						<br/><br/>
+						<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">public function</span>  <span class="php-plain">showError(){</span><br/>
+							<?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">if</span><span class="php-plain">(empty(</span><span class="php-variable">$this</span><span class="php-plain">->getMessages()))</span> <span class="php-keyword">return</span> false;<br/><br/>
+							<?php echo str_repeat("&nbsp;",10) ?><span class="php-variable">$error</span> <span class="php-plain">=</span> '&lt;div class="alert alert-danger alert-dismissible fade in" role="alert"&gt; &lt;button type="button" class="close" data-dismiss="alert" aria-label="Close"&gt;&lt;span aria-hidden="true"&gt;×&lt;/span&gt;&lt;/button&gt;';<br/>
+						 	<?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">foreach</span><span class="php-plain">(</span><span class="php-variable">$this</span><span class="php-plain">->getMessages()</span> <span class="php-keyword">as</span> <span class="php-variable">$key</span><span class="php-plain">=></span><span class="php-variable">$val</span><span class="php-plain">){</span><br/>
+								<?php echo str_repeat("&nbsp;",15) ?><span class="php-variable">$error</span> <span class="php-plain">.=</span> <span class="php-keyword">sprintf</span><span class="php-plain">(</span>'&lt;p&gt;&lt;b&gt;%s : &lt;/b&gt;%s&lt;/p&gt;'<span class="php-plain">,</span><span class="php-keyword">ucfirst</span><span class="php-plain">(</span><span class="php-variable">$this</span><span class="php-plain">->convertToPrettyName(</span><span class="php-variable">$key</span><span class="php-plain">)),</span><span class="php-keyword">current</span><span class="php-plain">(</span><span class="php-variable">$val</span><span class="php-plain">));</span><br/>
+							<?php echo str_repeat("&nbsp;",10) ?><span class="php-plain">}</span><br/>
+							<?php echo str_repeat("&nbsp;",10) ?><span class="php-variable">$error</span> <span class="php-plain">.=</span> '&lt;/div&gt;'<span class="php-plain">;</span><br/><br/>
+							<?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">return</span> <span class="php-variable">$error</span><span class="php-plain">;</span><br/>
+						<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span><br/>
+
+						<!-- method convertToPrettyName -->
+						<br/><br/>
+						<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">private function</span> <span class="php-plain">convertToPrettyName(</span><span class="php-variable">$fieldName</span><span class="php-plain">){</span><br/>
+					        <?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">switch</span><span class="php-plain">(</span><span class="php-variable">$fieldName</span><span class="php-plain">){</span><br/>
+					            <?php foreach($infoForm->content as $nameElement => $infoElement): ?>
+						            <?php echo str_repeat("&nbsp;",15) ?><span class="php-keyword">case </span> <?php echo '"' . $nameElement . '"' ?> <span class="php-plain">:</span><br>
+						            <?php echo str_repeat("&nbsp;",20) ?><span class="php-keyword">return</span> <?php echo '"' . $infoElement['option']['nameLabel'] . '"' ?><span class="php-plain">;</span><br/>
+						            <?php echo str_repeat("&nbsp;",20) ?><span class="php-keyword">break</span><span class="php-plain">;</span><br/>
+					        	<?php endforeach; ?>
+					        <?php echo str_repeat("&nbsp;",10) ?><span class="php-plain">}</span><br/>
+					    <?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span><br/>
+					<span class="php-plain">}</span><br/>
+				</code>
 			</div>
 		</div>
+
+
 		<!-- END CODE FOR CLASS FORM -->
 
 		<div class="col-md-6 ">
 			<h3>Code For Class Filter</h3>
 			<div  name="code" class="form-control code">
 				<code>
-					<span class="php-keyword">namespace</span> <span class="php-plain name-space">AutoCode\Form;</span><br/>
+					<span class="php-keyword">namespace</span> <span class="php-plain name-space">;</span><br/>
 					<br/>
 					<span class="php-keyword">use</span> <span class="php-plain">Zend\InputFilter\InputFilter;</span><br/>
 					<br/>
@@ -74,22 +101,59 @@
 					<div style="margin-left: 75px;">
 							<?php echo $this->codeValidateAndFilter ?>
 					</div>
-					<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">)</span>
-				</code><br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span><br/>
+					<span class="php-plain">}</span>
+				</code>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<h3>Code For Module(Module.php)</h3>
+			<div  name="code" class="form-control code">
+				<code>
+					<span class="php-keyword">use</span> <span class="php-plain name-space">;</span><br/>
+					<br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">public function</span> <span class="php-plain">getFormElementConfig(){</span><br/>
+				        <?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">return</span> <span class="php-plain">array(</span><br/>
+				            <?php echo str_repeat("&nbsp;",15) ?>"factories" <span class="php-plain">=> array(</span><br/>       
+				                <?php echo str_repeat("&nbsp;",20) ?><?php echo '"' . $infoForm->name .'"' ?> <span class="php-plain">=></span> <span class="php-keyword">function(</span><span class="php-variable">$sm</span><span class="php-plain">){</span><br/>            
+				                    <?php echo str_repeat("&nbsp;",25) ?><span class="php-variable">$form</span>   <span class="php-plain">=</span> <span class="php-keyword">new</span> <span class="php-plain">FormUser();</span><br/>
+				                    <?php echo str_repeat("&nbsp;",25) ?><span class="php-variable">$form</span><span class="php-plain">->setInputFilter(</span><span class="php-keyword">new</span> <span class="php-plain "><span class="class-validate-filter-name-module"></span>);</span><br/>
+					                <?php echo str_repeat("&nbsp;",25) ?><span class="php-keyword">return</span> <span class="php-variable">$form</span><span class="php-plain">;</span><br/>
+				                <?php echo str_repeat("&nbsp;",20) ?><span class="php-plain">},</span><br/>
+				            <?php echo str_repeat("&nbsp;",15) ?><span class="php-plain">)</span><br/>
+				        <?php echo str_repeat("&nbsp;",10) ?><span class="php-plain">);</span><br/>
+				    <?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span><br/>
+				</code>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<h3>Code For Action(Controller)</h3>
 			<div  name="code" class="form-control code">
-
+				<code>
+					<br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-variable">$form</span> <span class="php-plain">=</span> <span class="php-variable">$this</span><span class="php-plain">->getServiceLocator()->get(</span>'FormElementManager'<span class="php-plain">)->get(</span><?php echo '"' . $infoForm->name .  '"' ?><span class="php-plain">);</span><br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-variable">$form</span><span class="php-plain">->setData(</span><span class="php-variable">$this</span><span class="php-plain">->request->getPost());</span><br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">if</span><span class="php-plain">(</span><span class="php-variable">$form</span><span class="php-plain">->isValid()){</span><br/>
+						<?php echo str_repeat("&nbsp;",10) ?><span class="php-variable">$data</span>  <span class="php-plain">=</span>   <span class="php-variable">$form</span><span class="php-plain">->getData();</span><br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-plain">}</span>
+				</code>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<h3>Code For View</h3>
 			<div  name="code" class="form-control code">
-
+				<code>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">echo</span> <span class="php-variable">$form</span><span class="php-plain">->showError();</span><br/>
+					<br/>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">echo</span> <span class="php-variable">$this</span><span class="php-plain">->form()->openTag(</span><span class="php-variable">$form</span><span class="php-plain">);</span><br/>
+					    <?php foreach($infoForm->content as $nameElement => $infoElement): ?>
+					    	<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">echo</span> <span class="php-variable">$this</span><span class="php-plain">->formLabel(</span><span class="php-variable">$form</span><span class="php-plain">->get(</span><?php echo "'" . $nameElement . "'" ?><span class="php-plain">))</span> <span class="php-keyword">.</span><span class="php-variable">$this</span><span class="php-plain">->formElement(</span><span class="php-variable">$form</span><span class="php-plain">->get(</span><?php echo "'" . $nameElement . "'" ?><span class="php-plain">))</span><br/>
+						<?php endforeach; ?>
+					<?php echo str_repeat("&nbsp;",5) ?><span class="php-keyword">echo</span> <span class="php-variable">$this</span><span class="php-plain">->form()->closeTag();</span><br/>
+				</code>
 			</div>
 		</div>
 	</div>
@@ -105,7 +169,8 @@
 			}else{
 				$("#errorClassForm").addClass("hide");
 				var arr = $("[name=inputNameClassForm]").val().split("\\");
-				$(".class-form-name").text(arr.pop());
+				var classForm = arr.pop();
+				$(".class-form-name").text(classForm);
 				$(".name-space").eq(0).text(arr.join("\\") + ";");
 				flag = true;
 			}
@@ -116,8 +181,11 @@
 			}else{
 				$("#errorClassFilter").addClass("hide");
 				var arr = $("[name=inputNameClassFilter]").val().split("\\");
-				$(".class-validate-filter-name").text(arr.pop());
+				var classFilter = arr.pop();
+				$(".class-validate-filter-name").text(classFilter);
+				$(".class-validate-filter-name-module").text(classFilter + "()");
 				$(".name-space").eq(1).text(arr.join("\\") + ";");
+				$(".name-space").eq(2).text(arr.join("\\") + ";");
 				flag = true;
 			}
 
