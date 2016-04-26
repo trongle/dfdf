@@ -36,6 +36,7 @@ class IndexController extends AbstractActionController
     private $validateName;
     private $validateOption;
     private $validateBreakChain;
+    private $messageError;
 //filter
     private $filterName;
     private $filterOption;
@@ -100,7 +101,9 @@ class IndexController extends AbstractActionController
             $post        = $this->filterPost($this->request->getPost()); 
             $nameElement = str_replace(".wrapper-","",$post->selector); 
             $post        = $post->element[$nameElement];
-
+            echo "<pre>";
+            print_r($post);
+            echo "</pre>";exit();
             //
             $this->attribute          = $post['attribute'];
             $this->option             = $post['option'];
@@ -109,6 +112,7 @@ class IndexController extends AbstractActionController
             $this->validateName       = isset($post['validateName'])? $post['validateName'] : '';
             $this->validateOption     = isset($post['validateOption'])? $post['validateOption'] : '';
             $this->validateBreakChain = isset($post['validateBreakChain'])? $post['validateBreakChain'] : '';
+            $this->messageError       = isset($post['messageError'])? $post['messageError'] : '';
             
             //filter
             $this->filterName       = isset($post['filterName'])? $post['filterName'] : '';
@@ -126,7 +130,7 @@ class IndexController extends AbstractActionController
             echo $codeFilterAndValidate = $this->openCode() . $this->name
                                                 .$this->createFilterCode() . $this->createValidateCode()
                                         . $this->closeCode() ;  
-
+            // header("Content-type: application/json; charset=ISO-8859-1");
             return $this->response;
         }else{
             $authenticate = $this->getServiceLocator()->get('MyAuth');
@@ -164,7 +168,6 @@ class IndexController extends AbstractActionController
                         }
                     }
                 }
-                
 
                 $viewModel = new ViewModel();
 
@@ -258,8 +261,31 @@ class IndexController extends AbstractActionController
             unset($post->element['nameElement']);
             unset($post->element['validateElement']);
             unset($post->element['filterElement']);
+
+            $post = $this->handleMessageError($post);
         }
 
+        return $post;
+    }
+
+    private function handleMessageError($post = null){
+        if(!empty($post)){
+            foreach($post['element'] as $key => $value){
+                if(array_key_exists('messageError', $value)){
+                    foreach($value['messageError'] as $key1 => $val1){
+                        foreach($val1 as $key2 => $val2){
+                            if(!empty($val2)){
+                                parse_str($val2,$realMessage);
+                                parse_str($key2,$realConst);
+                                unset($post->element[$key]['messageError'][$key1][$key2]);
+                                $post->element[$key]['messageError'][$key1][key($realConst)] = str_replace("_"," ",key($realMessage)); 
+                            }
+                        }
+                    }
+                }                
+            }
+        }
+    
         return $post;
     }
 

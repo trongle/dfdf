@@ -246,3 +246,8 @@ ul{
 	width : 135px;
 	border: rgba(0, 0, 255, 0.37) 1px solid;	
 }
+
+.input-small{
+	width:90% !important;
+	display: inline-block !important;
+}

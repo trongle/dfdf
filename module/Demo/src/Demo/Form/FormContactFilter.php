@@ -12,7 +12,12 @@ class FormContactFilter extends InputFilter{
 		     "validators" => array(
 		          array(
 		               "name" => "NotEmpty",
-		               "break_chain_on_failure" => "true"
+		               "break_chain_on_failure" => "true",
+		               "options" => array(
+							"messages" => array(
+								\Zend\Validator\NotEmpty::IS_EMPTY => "Dữ liệu không được rỗng"
+							)
+						),
 		          ),
 		     ),
 		));

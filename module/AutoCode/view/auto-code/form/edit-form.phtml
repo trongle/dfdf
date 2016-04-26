@@ -1,4 +1,9 @@
 <?php $urlActionValidateForm = BASE_URL. $this->url('code/default',['action' => 'createCode']) ?>
+<?php  
+echo "<pre>";
+print_r($infoForm);
+echo "</pre>";
+?>
 <?php 
 $hide     = "hide";
 $flagEdit = false;
@@ -488,19 +493,20 @@ if(isset($infoForm)){
 				selector : selector 
 			},
 			success : function(data){
-				var source = data.split('<div class="hide">superman</div>');
-				// console.log(source);
-				$(selector + ' .row-show-code').removeClass('hide').addClass('animated flipInX');
+				console.log(data);
+				// var source = data.split('<div class="hide">superman</div>');
+				// // console.log(source);
+				// $(selector + ' .row-show-code').removeClass('hide').addClass('animated flipInX');
 				
-				$(selector + " .code").html(source[0]);
+				// $(selector + " .code").html(source[0]);
 				
-				$(selector + ' .filterValidate').click(function(){
-					$(selector + ' .code').html(source[1]);
-				});
+				// $(selector + ' .filterValidate').click(function(){
+				// 	$(selector + ' .code').html(source[1]);
+				// });
 
-				$(selector + ' .elementForm').click(function(){
-					$(selector + ' .code').html(source[0]);
-				});
+				// $(selector + ' .elementForm').click(function(){
+				// 	$(selector + ' .code').html(source[0]);
+				// });
 			}
 		})
 
