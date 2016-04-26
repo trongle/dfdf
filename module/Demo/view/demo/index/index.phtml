@@ -1,6 +1,6 @@
 <?php echo $this->headLink()->prependStylesheet(URL_CSS . '/demo.css')?>
 
-<div id="content">
+<!-- <div id="content">
    <h1> Contact me </h1>
     
     <form action=" " method="post"  autocomplete="on">
@@ -19,5 +19,21 @@
 More script and css style
 : <a href="http://www.htmldrive.net/" title="HTML DRIVE - Free DHMTL Scripts,Jquery plugins,Javascript,CSS,CSS3,Html5 Library">www.htmldrive.net </a>
 	</form>		
-</div> 
+</div>  -->
 
+<div id="content">
+   <h1> Contact me </h1>
+<?php  
+	$form->prepare();
+	echo $form->showError();
+
+    echo $this->form()->openTag($form);
+	    echo "<p>" . $this->formLabel($form->get('username')).$this->formElement($form->get('username'))."<p>"  ;
+	    echo "<p>" . $this->formLabel($form->get('usermail')).$this->formElement($form->get('usermail'))."<p>"  ;
+	    echo "<p>" . $this->formLabel($form->get('usersite')) .$this->formElement($form->get('usersite'))."<p>"  ;
+	    echo "<p>" . $this->formLabel($form->get('subject')) .$this->formElement($form->get('subject'))."<p>"  ;
+	    echo "<p>" . $this->formLabel($form->get('message')) .$this->formElement($form->get('message'))."<p>"  ;
+	    echo $this->formElement($form->get('submit'));
+    echo $this->form()->closeTag();
+?>
+</div> 

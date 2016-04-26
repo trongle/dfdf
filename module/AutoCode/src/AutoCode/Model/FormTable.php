@@ -61,10 +61,17 @@ class FormTable extends AbstractTableGateway{
 
 	public function updateForm($data,$options = null){
 		if(!empty($data)){
+
 			$data['element'] = $this->setSerializeString($data['element']);
-			
+			$arr = unserialize($data['element']);
+
+			//filter htmlTag
+			foreach ($arr as $key => $value) {
+				 $value['option']['nameLabel'] = htmlentities($value['option']['nameLabel']);
+			}
+
 			$insertData      = $this->setData($data,$options);
-			
+					
 			$this->_tableGateway->update($insertData,array("id" => $data['formId']));
 		}			
 		
@@ -93,7 +100,7 @@ class FormTable extends AbstractTableGateway{
         }
 
         if($options['type'] == 'addElement'){
-
+       
         	$attribute['id']     = $data[0]['idForm'];
 			$attribute['class']  = $data[0]['classForm'];
 			$attribute['method'] = $data[0]['methodForm'];
@@ -114,8 +121,6 @@ class FormTable extends AbstractTableGateway{
     private function setSerializeString($elementString){
 		$element = array();
 		parse_str($elementString,$element);
-		
-		
 		foreach($element as $name => $ele){
 
 			if(@key_exists("validateName",$ele)){

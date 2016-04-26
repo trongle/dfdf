@@ -141,27 +141,30 @@ class IndexController extends AbstractActionController
 
                 $codeInput             = '';
                 $codeValidateAndFilter = '';
-                foreach($infoForm->content as $nameElement => $infoElement){
-                    //
-                    $this->attribute          = $infoElement['attribute'];
-                    $this->option             = $infoElement['option'];
+                if($infoForm->content != ''){
+                    foreach($infoForm->content as $nameElement => $infoElement){
+                        //
+                        $this->attribute          = $infoElement['attribute'];
+                        $this->option             = $infoElement['option'];
 
-                    //validate
-                    $this->validateName       = isset($infoElement['validate']['name'])? $infoElement['validate']['name'] : '';
-                    $this->validateOption     = isset($infoElement['validate']['option'])? $infoElement['validate']['option'] : '';
-                    $this->validateBreakChain = isset($infoElement['validate']['breakchain'])? $infoElement['validate']['breakchain'] : '';
-                    
-                    //filter
-                    $this->filterName       = isset($infoElement['filter']['name'])? $infoElement['filter']['name'] : '';
-                    $this->filterOption     = isset($infoElement['filter']['option'])? $infoElement['filter']['option'] : '';
+                        //validate
+                        $this->validateName       = isset($infoElement['validate']['name'])? $infoElement['validate']['name'] : '';
+                        $this->validateOption     = isset($infoElement['validate']['option'])? $infoElement['validate']['option'] : '';
+                        $this->validateBreakChain = isset($infoElement['validate']['breakchain'])? $infoElement['validate']['breakchain'] : '';
+                        
+                        //filter
+                        $this->filterName       = isset($infoElement['filter']['name'])? $infoElement['filter']['name'] : '';
+                        $this->filterOption     = isset($infoElement['filter']['option'])? $infoElement['filter']['option'] : '';
 
-                    $this->setValue($infoElement);
+                        $this->setValue($infoElement);
 
-                    $codeInput             .= $this->createCommentString($nameElement,'','') . $this->createInputCode($infoElement,'','');
-                    if( !empty($this->createFilterCode()) || !empty($this->createValidateCode()) ){     
-                        $codeValidateAndFilter .= $this->createCommentString($nameElement,'','') . $this->openCode('') . $this->name . $this->createFilterCode() . $this->createValidateCode() . $this->closeCode('');
+                        $codeInput             .= $this->createCommentString($nameElement,'','') . $this->createInputCode($infoElement,'','');
+                        if( !empty($this->createFilterCode()) || !empty($this->createValidateCode()) ){     
+                            $codeValidateAndFilter .= $this->createCommentString($nameElement,'','') . $this->openCode('') . $this->name . $this->createFilterCode() . $this->createValidateCode() . $this->closeCode('');
+                        }
                     }
                 }
+                
 
                 $viewModel = new ViewModel();
 
@@ -378,7 +381,7 @@ class IndexController extends AbstractActionController
             $this->otherAttributes = $this->setArrayPair('attribute');
             
             //options
-            $this->nameLabel    = empty($this->option['nameLabel'])? '' : self::setSpace(2).'"label" <span class="php-plain">=></span> "' . $this->option['nameLabel'] . '"<span class="php-plain">,</span><br/>';
+            $this->nameLabel    = empty($this->option['nameLabel'])? '' : self::setSpace(2).'"label" <span class="php-plain">=></span> "' . htmlspecialchars($this->option['nameLabel']) . '"<span class="php-plain">,</span><br/>';
             $this->classLabel   = empty($this->option['classLabel'])? '' : self::setSpace(3).'"class" <span class="php-plain">=></span> "' . $this->option['classLabel'] . '"<span class="php-plain">,</span><br/>';
             $this->forLabel     = empty($this->option['forLabel'])? '' : self::setSpace(3).'"for" <span class="php-plain">=></span> "' . $this->option['forLabel'] . '"<span class="php-plain">,</span><br/>';
             $this->disableHtml  = empty($this->option['disableHtml'])? self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> false,<br/>' : self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> true,<br/>';

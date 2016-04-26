@@ -9,7 +9,7 @@
 		  		<span class="pull-left"><h4>Danh sách các Form đã tạo</h4></span>
 		  		<div class="pull-right">
 			  		<span ><button class="btn btn-info" id="addNew" type="button">Add New Form</button></span>
-			  		<span ><a class="btn btn-warning" href="<?php echo $this->url('home/default',array('action' => 'logout')) ?>">Logout</a></span>
+			  		<span ><a class="btn btn-warning" href="<?php echo $this->url('home/default',array('action' => 'logout')) ?>" >Logout</a></span>
 		  		</div>
 		  		<div class="clearfix"></div>
 		  	</div>
@@ -46,7 +46,7 @@
 		    							 <td>%s</td>
 		    							 <td>%s</td>
 		    							 <td>%s</td>
-		    							 <td>%s</td>,
+		    							 <td>%s</td>
 		    							 <td >%s</td>',
 		    							 $this->url('form/default',array("action" => 'editForm','id' => $form['id'])),
 		    							 $form['name'],date('d-m-Y', $form['created_date']), $form['username'],

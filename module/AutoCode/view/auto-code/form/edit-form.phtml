@@ -4,9 +4,6 @@ $hide     = "hide";
 $flagEdit = false;
 // ============= Edit Area ================
 if(isset($infoForm)){
-	// echo "<pre>";
-	// print_r($infoForm);
-	// echo "</pre>";
 	$attributeForm = unserialize($infoForm->attribute);	
 	$flagEdit      = true;
 	$hide          = '';
@@ -119,7 +116,7 @@ if(isset($infoForm)){
 		</div>
 		<!-- END ADD NEW ELEMENT -->
 		<?php 
-			if($infoForm->status == 'active'){
+			if(@$infoForm->status == 'active'){
 				echo $this->partial("auto-code/form/view_edit.phtml", array('infoForm' => @$infoForm, 'validateElement' => $validateElement, 'filterElement' => $filterElement));	
 			}else{
 				echo $this->partial("auto-code/form/view_not_edit.phtml", array('validateElement' => $validateElement, 'filterElement' => $filterElement));
@@ -251,6 +248,7 @@ if(isset($infoForm)){
 				'formId'     : id
 			},	
 			success : function(data){
+				// console.log(data);
 				 window.location.href = "<?php echo $this->url("form") ?>"
 			}
 		})

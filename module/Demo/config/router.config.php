@@ -28,7 +28,7 @@ $home = array(
 return array(
     "router"       => array(
         "routes" => array(
-            "home" => $home,
+            "demo" => $home,
         )
     )
 );
