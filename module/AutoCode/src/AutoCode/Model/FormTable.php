@@ -70,7 +70,7 @@ class FormTable extends AbstractTableGateway{
 				 $value['option']['nameLabel'] = htmlentities($value['option']['nameLabel']);
 			}
 
-			$insertData      = $this->setData($data,$options);
+			$insertData     = $this->setData($data,$options);
 					
 			$this->_tableGateway->update($insertData,array("id" => $data['formId']));
 		}			
@@ -121,11 +121,25 @@ class FormTable extends AbstractTableGateway{
     private function setSerializeString($elementString){
 		$element = array();
 		parse_str($elementString,$element);
+
 		foreach($element as $name => $ele){
 
 			if(@key_exists("validateName",$ele)){
 				$element[$name]['validate']['name']   = $ele['validateName'] ;
 				unset($element[$name]['validateName']);
+			}
+
+			if(@key_exists("messageError",$ele)){
+				foreach($ele['messageError'] as $validateName => $validateOption){
+					foreach($validateOption as $constError => $messageError){
+						parse_str($constError,$realConstError);	
+						parse_str($messageError,$realMessageError);
+		
+						unset($ele['messageError'][$validateName][$constError]);
+						$element[$name]['validate']['message'][$validateName][key($realConstError)] = str_replace("_"," ",key($realMessageError));
+					}
+				}
+				unset($element[$name]['messageError']);
 			}
 
 			if(@key_exists("validateBreakChain",$ele)){
@@ -149,6 +163,8 @@ class FormTable extends AbstractTableGateway{
 			}
 			
 		}
+
+
 		unset($element['filterElement']);
 		unset($element['validateElement']);
 		unset($element['nameElement']);

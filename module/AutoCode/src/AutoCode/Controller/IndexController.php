@@ -101,9 +101,7 @@ class IndexController extends AbstractActionController
             $post        = $this->filterPost($this->request->getPost()); 
             $nameElement = str_replace(".wrapper-","",$post->selector); 
             $post        = $post->element[$nameElement];
-            echo "<pre>";
-            print_r($post);
-            echo "</pre>";exit();
+      
             //
             $this->attribute          = $post['attribute'];
             $this->option             = $post['option'];
@@ -113,7 +111,7 @@ class IndexController extends AbstractActionController
             $this->validateOption     = isset($post['validateOption'])? $post['validateOption'] : '';
             $this->validateBreakChain = isset($post['validateBreakChain'])? $post['validateBreakChain'] : '';
             $this->messageError       = isset($post['messageError'])? $post['messageError'] : '';
-            
+      
             //filter
             $this->filterName       = isset($post['filterName'])? $post['filterName'] : '';
             $this->filterOption     = isset($post['filterOption'])? $post['filterOption'] : '';
@@ -130,7 +128,7 @@ class IndexController extends AbstractActionController
             echo $codeFilterAndValidate = $this->openCode() . $this->name
                                                 .$this->createFilterCode() . $this->createValidateCode()
                                         . $this->closeCode() ;  
-            // header("Content-type: application/json; charset=ISO-8859-1");
+
             return $this->response;
         }else{
             $authenticate = $this->getServiceLocator()->get('MyAuth');
@@ -152,9 +150,10 @@ class IndexController extends AbstractActionController
                         $this->option             = $infoElement['option'];
 
                         //validate
-                        $this->validateName       = isset($infoElement['validate']['name'])? $infoElement['validate']['name'] : '';
-                        $this->validateOption     = isset($infoElement['validate']['option'])? $infoElement['validate']['option'] : '';
+                        $this->validateName       = isset($infoElement['validate']['name'])? $infoElement['validate']['name']             : '';
+                        $this->validateOption     = isset($infoElement['validate']['option'])? $infoElement['validate']['option']         : '';
                         $this->validateBreakChain = isset($infoElement['validate']['breakchain'])? $infoElement['validate']['breakchain'] : '';
+                        $this->messageError       = isset($infoElement['validate']['message'])? $infoElement['validate']['message']       : '';
                         
                         //filter
                         $this->filterName       = isset($infoElement['filter']['name'])? $infoElement['filter']['name'] : '';
@@ -185,6 +184,21 @@ class IndexController extends AbstractActionController
         }
                        
     }
+
+    private function createMessageErrorString($validateName){
+        $code = '';
+
+        if(!empty($this->messageError[$validateName])){
+            $code = $this->setSpace(4) . '"messages" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
+            foreach($this->messageError[$validateName] as $constError => $messageError){
+                if(empty($messageError)) continue;
+                $code .= $this->setSpace(5) . ' <span class="php-variable">' . $constError . '</span> <span class="php-plain">=></span> "' . $messageError .'",<br/>';
+            }
+            $code .= $this->setSpace(4) . '<span class="php-plain">),</span><br/>';
+        }
+
+        return $code;
+    }
     
     private function createAttributeFormString($attributeForm = null){
         $code = '';
@@ -198,6 +212,7 @@ class IndexController extends AbstractActionController
             $code   .=  empty($attributeForm['method'])?     '' : self::setSpace(1).'"method" <span class="php-plain">=></span> "' . $attributeForm['method'] . '"<span class="php-plain">,</span><br/>';
             $code   .=  $attributeForm['entype'] == 'empty'? '' : self::setSpace(1).'"entype" <span class="php-plain">=></span> "' . $attributeForm['entype'] . '"<span class="php-plain">,</span><br/>';
             $code   .=  empty($attributeForm['action'])?     '' : self::setSpace(1).'"action" <span class="php-plain">=></span> "' . $attributeForm['action'] . '"<span class="php-plain">,</span><br/>';
+            $code   .=  $this->setArrayPair($attributeForm['other'],1);
             $code   .= '<span class="php-plain">));</span>';
         }
 
@@ -326,15 +341,18 @@ class IndexController extends AbstractActionController
         $codeValidate = '';
         if(isset($this->validateOption[$validateName]) && count($this->validateOption[$validateName]) > 0){
                 $codeValidateOption = '';
+                //handle option validate
                 foreach($this->validateOption[$validateName] as $name => $value){
                     if($value == 'on') $value = "true";
                     if(empty($value)) continue;
                     $codeValidateOption   .= $this->setSpace(4) . '"' . $name . '" <span class="php-plain">=></span> "' . $value . '"<span class="php-plain">,</span><br/>';
-                    
                 }
-                if(!empty(trim($codeValidateOption))){
+
+                //handle mesasge validate
+                if(!empty(trim($codeValidateOption)) || !empty($this->messageError)){
                     $codeValidate   .= $this->setSpace(3) . '"options" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
                         $codeValidate .= $codeValidateOption;
+                        $codeValidate .= $this->createMessageErrorString($validateName);
                     $codeValidate   .= $this->close(3);       
                 }
         }
@@ -404,14 +422,15 @@ class IndexController extends AbstractActionController
             $this->id              = empty($this->attribute['id'])? '' : self::setSpace(2).'"id" <span class="php-plain">=></span> "' . $this->attribute['id'] . '"<span class="php-plain">,</span><br/>';
             $this->placeholder     = empty($this->attribute['placeholder'])? '' : self::setSpace(2).'"placeholder" <span class="php-plain">=></span> "' . $this->attribute['placeholder'] . '"<span class="php-plain">,</span><br/>';
             $this->value           = empty($this->attribute['value'])? '' : self::setSpace(2).'"value" <span class="php-plain">=></span> "' . $this->attribute['value'] . '"<span class="php-plain">,</span><br/>';
-            $this->otherAttributes = $this->setArrayPair('attribute');
+            $this->otherAttributes = $this->setArrayPair($this->attribute['attr'],2);
             
+
             //options
             $this->nameLabel    = empty($this->option['nameLabel'])? '' : self::setSpace(2).'"label" <span class="php-plain">=></span> "' . htmlspecialchars($this->option['nameLabel']) . '"<span class="php-plain">,</span><br/>';
             $this->classLabel   = empty($this->option['classLabel'])? '' : self::setSpace(3).'"class" <span class="php-plain">=></span> "' . $this->option['classLabel'] . '"<span class="php-plain">,</span><br/>';
             $this->forLabel     = empty($this->option['forLabel'])? '' : self::setSpace(3).'"for" <span class="php-plain">=></span> "' . $this->option['forLabel'] . '"<span class="php-plain">,</span><br/>';
             $this->disableHtml  = empty($this->option['disableHtml'])? self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> false,<br/>' : self::setSpace(3).'"disable_html_escape" <span class="php-plain">=></span> true,<br/>';
-            $this->optionLabel = $this->setArrayPair('optionLabel');
+            $this->optionLabel  = $this->setArrayPair($this->option['optionLabel'],3);
         }
     }
 
@@ -470,32 +489,32 @@ class IndexController extends AbstractActionController
         return '<span class="php-plain">));</span>' . $closeTag . '<br/>';
     }
 
-    private function setArrayPair($type = null){
+    private function setArrayPair($value,$space = '2'){
         $xhtml    = '';
         
-        if(!empty($type)){
-            if(!empty($this->attribute['attr']) && $type == "attribute"){
-                $attrs = explode(',', $this->attribute['attr']);
-                    
-                foreach($attrs as $attr){
-                    $attr  = trim($attr);
-                    $attr  = explode(':',$attr);
-                    $xhtml .=  self::setSpace(2).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
-                }
-                return $xhtml;
+        if(!empty($value)){
+            $attrs = explode(',', $value);
+                
+            foreach($attrs as $attr){
+                $attr  = trim($attr);
+                $attr  = explode(':',$attr);
+                $xhtml .=  self::setSpace($space).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
             }
 
-            if(!empty($this->option['optionLabel']) && $type == 'optionLabel'){
-                $attrs = explode(',', $this->option['optionLabel']);
-                    
-                foreach($attrs as $attr){
-                    $attr  = trim($attr);
-                    $attr  = explode(':',$attr);
-                    $xhtml .=  self::setSpace(3).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
-                }
-                return $xhtml;
-            }
         }
+        
+        return $xhtml;
+
+            // if(!empty($this->option['optionLabel']) && $type == 'optionLabel'){
+            //     $attrs = explode(',', $this->option['optionLabel']);
+                    
+            //     foreach($attrs as $attr){
+            //         $attr  = trim($attr);
+            //         $attr  = explode(':',$attr);
+            //         $xhtml .=  self::setSpace($space).'"' . @$attr[0] . '" <span class="php-plain">=></span> "' . @$attr[1] . '"<span class="php-plain">,</span><br/>';
+            //     }
+            //     return $xhtml;
+            // }
     }
 
     private function checkAttribute(){

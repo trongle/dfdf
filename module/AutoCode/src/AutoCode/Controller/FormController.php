@@ -38,6 +38,7 @@ class FormController extends AbstractActionController
     public function removeAction(){
         $id      = $this->params()->fromRoute('id');
         $message = '';
+        
         if(!empty($id)){
             $formTable = $this->getServiceLocator()->get("FormTable");
             if($formTable->removeItem($id)){

@@ -10,6 +10,7 @@ class FormContact extends Form{
 
           $this->setAttributes(array(
                "method" => "post",
+               "autocomplete" => "on"
           ));
 
           //username

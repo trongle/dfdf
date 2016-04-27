@@ -12,6 +12,29 @@
 	<div class="form-group col-md-12">
 		Checksum: <input class="barcode-useCheckSum" type="checkbox" name="my_element[validateOption][barcode][useCheckSum]" />
 	</div>
+
+	<div class="form-group col-md-12">
+		<label>Message error:</label><br/>
+		<ul class="list-group">
+			<li class="list-group-item">FAILED : "The input failed checksum validation" <br/>=> 
+				<input type="text" name="my_element[messageError][barcode][Zend\Validator\Barcode::FAILED]" 
+						class="form-control input-small barcode-FAILED">
+			</li>
+			<li class="list-group-item">INVALID_CHARS : "The input contains invalid characters" <br/>=> 
+				<input type="text" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID_CHARS]" 
+						class="form-control input-small barcode-INVALID_CHARS">
+			</li>
+			<li class="list-group-item">INVALID_LENGTH : "The input should have a length of %length% characters" <br/>=> 
+				<input type="text" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID_LENGTH]" 
+						class="form-control input-small barcode-INVALID_LENGTH">
+			</li>
+			<li class="list-group-item">INVALID : "Invalid type given. String expected" <br/>=> 
+				<input type="text" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID]" 
+						class="form-control input-small barcode-INVALID">
+			</li>
+		</ul>
+	</div>
+
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>
     	<button class="btn btn-info cancel" >Cancel</button>		        			    
@@ -23,4 +46,8 @@
 	<div class="hide">
 		<input class="barcode-useCheckSum" type="checkbox" name="my_element[validateOption][barcode][useCheckSum]" />
 	</div>
+	<input type="hidden" name="my_element[messageError][barcode][Zend\Validator\Barcode::FAILED]" class="barcode-FAILED">
+	<input type="hidden" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID_CHARS]" class="barcode-INVALID_CHARS">
+	<input type="hidden" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID_LENGTH]" class="barcode-INVALID_LENGTH">
+	<input type="hidden" name="my_element[messageError][barcode][Zend\Validator\Barcode::INVALID]" class="barcode-INVALID">
 </div>
