@@ -2,8 +2,10 @@
 
 namespace Demo;
 
+use Demo\Form\Form01;
 use Zend\Mvc\MvcEvent;
 use Demo\Form\FormContact;
+use Demo\Form\Form01Filter;
 use Demo\Form\FormContactFilter;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
@@ -43,9 +45,14 @@ class Module implements AutoloaderProviderInterface
     public function getFormElementConfig(){
           return array(
                "factories" => array(
-                    "FormContact" => function($sm){
+                    "formContact" => function($sm){
                          $form = new FormContact();
                          $form->setInputFilter(new FormContactFilter());
+                         return $form;
+                    },
+                    "form01" => function($sm){
+                         $form = new Form01();
+                         $form->setInputFilter(new Form01Filter());
                          return $form;
                     },
                )

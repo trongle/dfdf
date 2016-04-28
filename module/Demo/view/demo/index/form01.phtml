@@ -1,0 +1,44 @@
+<?php 
+	echo $this->headLink()->prependStylesheet(URL_CSS . '/form01.css');
+	$form->prepare();
+?>
+    <div class="wrapper">
+		<div class="container">
+			<h1>Welcome</h1>
+			
+			<!-- <form class="form">
+				<input type="text" placeholder="Username">
+				<input type="password" placeholder="Password">
+			</form> -->
+			<?php  
+				echo $form->showError();
+
+			    echo $this->form()->openTag($form);
+				    echo $this->formElement($form->get('username'));
+				    echo $this->formElement($form->get('password'));
+				    echo $this->formElement($form->get('repassword'));
+			?>
+				<button type="submit" id="button">Login</button>
+			<?php 
+			   echo $this->form()->closeTag();
+			?>
+		</div>
+		
+		<ul class="bg-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<?php echo $this->headScript()->prependFile(URL_JS . '/index.js'); ?>
+
+   

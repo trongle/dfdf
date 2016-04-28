@@ -23,7 +23,17 @@
 		<label for="min">Schema:</label>
 		<input type="text" name="my_element[validateOption][dbrecordexists][schema]" class="dbrecordexists-schema form-control" />
 	</div>
-	
+
+	<div class="form-group col-md-12">
+		<label>Message error:</label><br/>
+		<ul class="list-group">
+			<li class="list-group-item">ERROR_RECORD_FOUND => "A record matching the input was found" <br/>=> 
+				<input type="text" name="my_element[messageError][dbrecordexists][Zend\Validator\Db\RecordExists::ERROR_RECORD_FOUND]" 
+						class="form-control input-small dbrecordexists-ERROR_RECORD_FOUND">
+			</li>
+		</ul>
+	</div>
+
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>
     	<button class="btn btn-info cancel" >Cancel</button>		        			    
@@ -32,7 +42,8 @@
 <div class="hidden-edit">
 	<input type="hidden" class="dbrecordexists-table" name="my_element[validateOption][dbrecordexists][table]" />
 	<input type="hidden" class="dbrecordexists-field" name="my_element[validateOption][dbrecordexists][field]" />
-	<input type="hidden" class="dbrecordexists-adapter"  name="my_element[validateOption][dbrecordexists][adapter]"/>
+	<input type="hidden" class="dbrecordexists-adapter" name="my_element[validateOption][dbrecordexists][adapter]"/>
 	<input type="hidden" name="my_element[validateOption][dbrecordexists][exclude]" class="dbrecordexists-exclude" placeholder="field:name,value:name"/>
 	<input type="hidden" name="my_element[validateOption][dbrecordexists][schema]" class="dbrecordexists-schema"  />
+	<input type="hidden" name="my_element[messageError][dbrecordexists][Zend\Validator\Db\RecordExists::ERROR_RECORD_FOUND]" class="dbrecordexists-ERROR_RECORD_FOUND">
 </div>

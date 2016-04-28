@@ -12,6 +12,25 @@
 	<div class="form-group col-md-12">
 		Use byte string: <input type="checkbox" class="filesize-useByteString" name="my_element[validateOption][filesize][useByteString]" checked/>
 	</div>
+	
+	<div class="form-group col-md-12">
+		<label>Message error:</label><br/>
+		<ul class="list-group">
+			<li class="list-group-item">TOO_BIG => "All files in sum should have a maximum size of '%max%' but '%size%' were detected" <br/>=> 
+				<input type="text" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::TOO_BIG]" 
+						class="form-control input-small filesize-TOO_BIG">
+			</li>
+			<li class="list-group-item">TOO_SMALL => "All files in sum should have a minimum size of '%min%' but '%size%' were detected" <br/>=> 
+				<input type="text" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::TOO_SMALL]" 
+						class="form-control input-small filesize-TOO_SMALL">
+			</li>
+			<li class="list-group-item">NOT_READABLE => "One or more files can not be read" <br/>=> 
+				<input type="text" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::NOT_READABLE]" 
+						class="form-control input-small filesize-NOT_READABLE">
+			</li>
+		</ul>
+	</div>
+	
 	<div class="form-group col-md-12">	   
     	<button class="btn btn-primary accept" >Accept</button>
     	<button class="btn btn-info cancel" >Cancel</button>		        			    
@@ -23,4 +42,7 @@
 	<div class="hide">
 		<input type="checkbox" class="filesize-useByteString" name="my_element[validateOption][filesize][useByteString]" checked/>
 	</div>
+	<input type="hidden" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::TOO_BIG]" class="filesize-TOO_BIG">
+	<input type="hidden" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::TOO_SMALL]" class="filesize-TOO_SMALL">
+	<input type="hidden" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::NOT_READABLE]" class="filesize-NOT_READABLE">
 </div>

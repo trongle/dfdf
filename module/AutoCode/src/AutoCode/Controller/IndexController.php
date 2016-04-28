@@ -192,7 +192,7 @@ class IndexController extends AbstractActionController
             $code = $this->setSpace(4) . '"messages" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
             foreach($this->messageError[$validateName] as $constError => $messageError){
                 if(empty($messageError)) continue;
-                $code .= $this->setSpace(5) . ' <span class="php-variable">' . $constError . '</span> <span class="php-plain">=></span> "' . $messageError .'",<br/>';
+                $code .= $this->setSpace(5) . ' <span class="php-variable">' . "\\".$constError . '</span> <span class="php-plain">=></span> "' . $messageError .'",<br/>';
             }
             $code .= $this->setSpace(4) . '<span class="php-plain">),</span><br/>';
         }
