@@ -161,13 +161,17 @@ if(isset($infoForm)){
 						<?php  
 							$validateOptionMessage = array();
 
-							if(array_key_exists(strtolower($nameValidate),@$infoElement['validate']['option'])){
-								$validateOptionMessage['optionMessage'][$nameValidate]['option'] = @$infoElement['validate']['option'][strtolower($nameValidate)];
+							if(!empty($infoElement['validate']['option'])){
+								if(array_key_exists(strtolower($nameValidate),@$infoElement['validate']['option'])){
+									$validateOptionMessage['optionMessage'][$nameValidate]['option'] = @$infoElement['validate']['option'][strtolower($nameValidate)];
+								}
 							}
 
-							if(array_key_exists(strtolower($nameValidate),@$infoElement['validate']['message'])){
-								$validateOptionMessage['optionMessage'][$nameValidate]['message'] = @$infoElement['validate']['message'][strtolower($nameValidate)];
-							}
+							if(!empty($infoElement['validate']['message'])){
+								if(array_key_exists(strtolower($nameValidate),@$infoElement['validate']['message'])){
+									$validateOptionMessage['optionMessage'][$nameValidate]['message'] = @$infoElement['validate']['message'][strtolower($nameValidate)];
+								}
+							}						
 						?>
 						HandleFormOption("<?php echo $nameValidate ?>",nameElement,'.showTemplateValidate','validate','edit',<?php echo json_encode($validateOptionMessage) ?>);
 					<?php endforeach; ?>
@@ -266,6 +270,7 @@ if(isset($infoForm)){
 		$.ajax({
 			url  : "<?php echo $this->url("form/default" , array('action' => 'addForm')) ?>",
 			type : 'POST',
+			// contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 			data : {
 				'nameForm'   : $("input[name=inputNameForm]").val(),
 				'actionForm' : $("input[name=formAction]").val(),
@@ -274,14 +279,27 @@ if(isset($infoForm)){
 				'methodForm' : $("select[name=formMethod]").val(),
 				'entypeForm' : $("select[name=formEntype]").val(),
 				'otherForm'  : $("input[name=formOther]").val(),
-				'element'    : $("#validateForm").serialize(),
+				// 'element'    : $("#validateForm").serialize(),
+				'element'    : getValues("#validateForm"),
 				'formId'     : id
 			},	
 			success : function(data){
-				// console.log(data);
-				window.location.href = "<?php echo $this->url("form") ?>"
+				console.log(data);
+				// window.location.href = "<?php echo $this->url("form") ?>"
 			}
 		})
+	}
+
+	function getValues(selector){
+		var data = [];
+		$(selector).find('[name]').each( function( i , v ){
+	     	var input = $( this ), // resolves to current input element.
+	          	name = input.attr( 'name' ),
+	          	value = input.val();
+	      	data.push({name : $(this).attr("name") , value: $(this).attr("value")}) 
+	   	});
+
+	   	return data ;
 	}
 
 	function showAndHideElement(selector){
@@ -336,7 +354,7 @@ if(isset($infoForm)){
 	function checkSelected(selector){
 		var nameInput = selector.replace(".wrapper-","");
 
-		// get selected value (thu vi) 
+		// get selected value 
 	
 		<?php if(isset($infoForm) && $infoForm->content != ''): ?>
 			<?php foreach(@$infoForm->content as $nameElement => $infoElement): ?>

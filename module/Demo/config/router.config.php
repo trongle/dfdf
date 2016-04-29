@@ -1,11 +1,11 @@
 <?php
-$home = array(
+$demo_user = array(
     "type"=> "Literal",
     "options" => array(
         "route" => "/demo",
         "defaults" => array(
             "__NAMESPACE__" => "Demo\Controller",
-            "controller"    => "Demo\Controller\Index",
+            "controller"    => "Demo\Controller\User",
             "action"        => "index"
         )
     ),
@@ -14,10 +14,34 @@ $home = array(
          'default' => array(
             'type'    => 'Segment',
             'options' => array(
-                'route'    => '/[:action][/]',
+                'route'    => '/user[/:action[/:id]][/]',
+                'constraints' => array(
+                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    'id'         => '\d*'
+                ),
+            ),
+        ),
+    )
+);
+
+$city = array(
+    "type"=> "Segment",
+    "options" => array(
+        "route" => "/adminuser/city",
+        "defaults" => array(
+            "__NAMESPACE__" => "Adminuser\Controller",
+            "controller"    => "city",
+            "action"        => "index"
+        )
+    ),
+    'may_terminate' => true,
+    'child_routes' => array(
+         'default' => array(
+            'type'    => 'Segment',
+            'options' => array(
+                'route'    => '[/:action][/]',
                 'constraints' => array(
                     'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
-                    // 'controller'     => '[a-zA-Z][a-zA-Z0-9_-]*'
                 ),
             ),
         ),
@@ -26,9 +50,10 @@ $home = array(
 
 
 return array(
-    "router"       => array(
+    "router" => array(
         "routes" => array(
-            "demo" => $home,
+            "demo_user" => $demo_user,
+            'city'      => $city
         )
     )
 );

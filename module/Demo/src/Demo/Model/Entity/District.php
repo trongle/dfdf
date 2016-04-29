@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Adminuser\Model\Entity;
+namespace Demo\Model\Entity;
 
 class District
 {

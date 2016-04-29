@@ -1,5 +1,6 @@
-<?php 
-namespace Adminuser\Model;
+<?php
+
+namespace Demo\Model;
 
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\AbstractTableGateway;

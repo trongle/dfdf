@@ -120,11 +120,11 @@ class FormTable extends AbstractTableGateway{
 
     private function setSerializeString($elementString){
 		$element = array();
-		// echo "<pre>";
-		// print_r($elementString);
-		// echo "</pre>";
-		// exit();
 		parse_str($elementString,$element);
+		echo "<pre>";
+		print_r($element);
+		echo "</pre>";
+		exit();
 
 		foreach($element as $name => $ele){
 
@@ -174,14 +174,17 @@ class FormTable extends AbstractTableGateway{
 			}
 			
 		}
-		
+		echo "<pre>";
+		print_r($element);
+		echo "</pre>";
+		exit();
 		
 
 		unset($element['filterElement']);
 		unset($element['validateElement']);
 		unset($element['nameElement']);
 
-		return  serialize($element);
+		return serialize($element);
 	}
            
 }

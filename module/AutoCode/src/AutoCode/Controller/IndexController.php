@@ -96,6 +96,7 @@ class IndexController extends AbstractActionController
     } 
 
     public function createCodeAction(){
+        // header ('Content-Type: text/html; charset=UTF-8'); 
         if($this->request->isXmlHttpRequest()){
 
             $post        = $this->filterPost($this->request->getPost()); 
@@ -124,10 +125,11 @@ class IndexController extends AbstractActionController
             echo '<div class="hide">superman</div>';
 
             // Create filter and Validate code         
-            
-            echo $codeFilterAndValidate = $this->openCode() . $this->name
-                                                .$this->createFilterCode() . $this->createValidateCode()
-                                        . $this->closeCode() ;  
+            if( !empty($this->createFilterCode()) || !empty($this->createValidateCode()) ){ 
+                echo $codeFilterAndValidate = $this->openCode() . $this->name
+                                                    .$this->createFilterCode() . $this->createValidateCode()
+                                            . $this->closeCode() ;  
+            }
 
             return $this->response;
         }else{
@@ -441,9 +443,11 @@ class IndexController extends AbstractActionController
 
     private function setValueSelectBox(){
         $this->emptyOption = empty($this->option['emptyOption'])? '' : self::setSpace(2).'"empty_option" <span class="php-plain">=></span> "' . $this->option['emptyOption'] . '"<span class="php-plain">,</span><br/>';                
-        $this->valueOption = empty($this->option['valueOption'])? '' :  $this->option['valueOption'];                
+        $this->valueOption = empty($this->option['valueOption'])? '' : $this->option['valueOption'];                
         $this->nameOption  = empty($this->option['nameOption'])? '' :  $this->option['nameOption'];                
-        
+        if(!empty($this->nameOption) && empty($this->valueOption)){
+            $this->valueOption = "&#48;";
+        }
     }
 
     private function createSelectBoxString($post = null){
@@ -458,7 +462,7 @@ class IndexController extends AbstractActionController
                 $this->valueOption = explode(',',$this->valueOption);
                 $this->nameOption  = explode(',',$this->nameOption);
 
-                $selectOption .= self::setSpace(2).'"value_option" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
+                $selectOption .= self::setSpace(2).'"value_options" <span class="php-plain">=></span> <span class="php-keyword">array</span><span class="php-plain">(</span><br/>';
 
                 foreach($this->valueOption as $key => $val){
                     $selectOption .= self::setSpace(3).'"'. $val .'" <span class="php-plain">=></span> "' . $this->nameOption[$key] . '"<span class="php-plain">,</span><br/>';

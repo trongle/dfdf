@@ -11,18 +11,28 @@
  * file.
  */
 return array(
-	 "db" => array(
+	"db" => array(
 	 	"driver"   => "Pdo_Mysql",
 	 	"database" => "zend_auto",
-	 	"charset"  => "utf8"
-	 ),
-	 "service_manager" => array(
+	 	"charset"  => "utf8",
+	 	"adapters" => array(
+	 		"db_demo" => array(
+	 			"driver"   => "Pdo_Mysql",
+			 	"database" => "demo_user",
+			 	"charset"  => "utf8"
+	 		)
+	 	)
+	),
+	"service_manager" => array(
+	 	'abstract_factories' => array(
+            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+        ),
 	 	"factories" => array(
 	 		"Zend\Db\Adapter\Adapter" => "Zend\Db\Adapter\AdapterServiceFactory",
 	 	),
 	 	"aliases"   => array(
 	 		"dbConfig" => "Zend\Db\Adapter\Adapter"
 	 	)
-	 )
+	)
 )
 ?>

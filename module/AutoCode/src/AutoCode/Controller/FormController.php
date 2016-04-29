@@ -58,7 +58,9 @@ class FormController extends AbstractActionController
 				"element" => $this->request->getPost('element'), 
 				"formId"  => $this->request->getPost('formId')
 			);
-       
+       		echo "<pre>";
+       		print_r($data);
+       		echo "</pre>";exit();
 			$formTable = $this->getServiceLocator()->get("FormTable");
 			$formTable->updateForm($data,['type' => 'addElement']);
 
