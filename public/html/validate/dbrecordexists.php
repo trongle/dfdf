@@ -26,7 +26,7 @@
 
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">ERROR_RECORD_FOUND => "A record matching the input was found" <br/>=> 
 				<input type="text" name="my_element[messageError][dbrecordexists][Zend\Validator\Db\RecordExists::ERROR_RECORD_FOUND]" 
 						class="form-control input-small dbrecordexists-ERROR_RECORD_FOUND">

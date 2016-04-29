@@ -120,8 +120,12 @@ class FormTable extends AbstractTableGateway{
 
     private function setSerializeString($elementString){
 		$element = array();
+		// echo "<pre>";
+		// print_r($elementString);
+		// echo "</pre>";
+		// exit();
 		parse_str($elementString,$element);
-		
+
 		foreach($element as $name => $ele){
 
 			if(@key_exists("validateName",$ele)){
@@ -150,7 +154,9 @@ class FormTable extends AbstractTableGateway{
 			if(@key_exists("validateOption",$ele)){
 				// if(array_key_exists("regex",$ele["validateOption"])){
 				// 	if(array_key_exists("pattern",$ele["validateOption"]["regex"])){
-				// 		parse_str($ele["validateOption"]["regex"]["pattern"],$ele["validateOption"]["regex"]["pattern"]);
+				// 		echo $ele["validateOption"]["regex"]["pattern"] ;
+				// 		// parse_str($ele["validateOption"]["regex"]["pattern"],$ele["validateOption"]["regex"]["pattern"]);
+				// 		$ele["validateOption"]["regex"]["pattern"] = utf8_decode($ele["validateOption"]["regex"]["pattern"]);
 				// 	}	
 				// }
 				$element[$name]['validate']['option']   = $ele['validateOption'] ;
@@ -169,9 +175,7 @@ class FormTable extends AbstractTableGateway{
 			
 		}
 		
-		echo "<pre>";
-		print_r($element);
-		echo "</pre>";exit();
+		
 
 		unset($element['filterElement']);
 		unset($element['validateElement']);

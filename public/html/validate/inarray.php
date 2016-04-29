@@ -16,7 +16,7 @@
 
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_IN_ARRAY => 'The input was not found in the haystack'<br/>=> 
 				<input type="text" name="my_element[messageError][inarray][Zend\Validator\InArray::NOT_IN_ARRAY]" 
 						class="form-control input-small inarray-NOT_IN_ARRAY">

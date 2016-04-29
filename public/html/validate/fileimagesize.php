@@ -20,7 +20,7 @@
 	</div>	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">WIDTH_TOO_BIG => "Maximum allowed width for image should be '%maxwidth%' but '%width%' detected" <br/>=> 
 				<input type="text" name="my_element[messageError][fileimagesize][Zend\Validator\File\ImageSize::WIDTH_TOO_BIG]" 
 						class="form-control input-small fileimagesize-WIDTH_TOO_BIG">

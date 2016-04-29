@@ -2,7 +2,7 @@
 <form class="digits" >
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_DIGITS => "The input must contain only digits" <br/>=> 
 				<input type="text" name="my_element[messageError][digits][Zend\Validator\Digits::NOT_DIGITS]" 
 						class="form-control input-small digits-NOT_DIGITS">

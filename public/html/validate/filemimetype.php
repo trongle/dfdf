@@ -19,7 +19,7 @@
 
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">FALSE_TYPE => "File has an incorrect mimetype of '%type%'" <br/>=> 
 				<input type="text" name="my_element[messageError][filemimetype][Zend\Validator\File\MimeType::FALSE_TYPE]" 
 						class="form-control input-small filemimetype-FALSE_TYPE">

@@ -18,7 +18,7 @@
 	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_SAME => "The form submitted did not originate from the expected site" <br/>=> 
 				<input type="text" name="my_element[messageError][csrf][Zend\Validator\Csrf::NOT_SAME]" 
 						class="form-control input-small csrf-NOT_SAME">

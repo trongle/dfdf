@@ -24,9 +24,9 @@
 		<input type="text" class="emailaddress-hostnameValidator form-control" name="my_element[validateOption][emailaddress][hostnameValidator]"/>
 	</div>
 
-	<div class="form-group col-md-12">
+	<div class=" form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INVALID => "Invalid type given. String expected" <br/>=> 
 				<input type="text" name="my_element[messageError][emailaddress][Zend\Zend\Validator\EmailAddress::INVALID]" 
 						class="form-control input-small emailaddress-INVALID">

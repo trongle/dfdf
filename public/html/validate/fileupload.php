@@ -7,7 +7,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INI_SIZE => "File '%value%' exceeds the defined ini size" <br/>=> 
 				<input type="text" name="my_element[messageError][fileupload][Zend\Validator\File\Upload::INI_SIZE]" 
 						class="form-control input-small fileupload-INI_SIZE">

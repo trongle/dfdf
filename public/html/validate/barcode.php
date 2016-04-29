@@ -13,9 +13,9 @@
 		Checksum: <input class="barcode-useCheckSum" type="checkbox" name="my_element[validateOption][barcode][useCheckSum]" />
 	</div>
 
-	<div class="form-group col-md-12">
+	<div class=" form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">FAILED : "The input failed checksum validation" <br/>=> 
 				<input type="text" name="my_element[messageError][barcode][Zend\Validator\Barcode::FAILED]" 
 						class="form-control input-small barcode-FAILED">

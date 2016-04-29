@@ -1,7 +1,7 @@
 <form class="hex">
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INVALID => "Invalid type given. String expected"<br/>=> 
 				<input type="text" name="my_element[messageError][hex][Zend\Validator\Hex::INVALID]" 
 						class="form-control input-small hex-INVALID">

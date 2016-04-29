@@ -7,7 +7,7 @@
 
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">Is_Empty : "Value is required and can't be empty" <br/>=> 
 				<input type="text" name="my_element[messageError][notempty][Zend\Validator\NotEmpty::IS_EMPTY]" 
 						class="form-control input-small notempty-IS_EMPTY">

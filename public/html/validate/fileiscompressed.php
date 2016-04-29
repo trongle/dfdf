@@ -2,7 +2,7 @@
 
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">FALSE_TYPE => "File is not compressed, '%type%' detected"<br/>=> 
 				<input type="text" name="my_element[messageError][fileiscompressed][Zend\Validator\File\IsCompressed::FALSE_TYPE]" 
 						class="form-control input-small fileiscompressed-FALSE_TYPE">

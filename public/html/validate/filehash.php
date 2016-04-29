@@ -10,7 +10,7 @@
 	</div>	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">DOES_NOT_MATCH => "File does not match the given hashes" <br/>=> 
 				<input type="text" name="my_element[messageError][filehash][Zend\Validator\File\Hash::DOES_NOT_MATCH]" 
 						class="form-control input-small filehash-DOES_NOT_MATCH">

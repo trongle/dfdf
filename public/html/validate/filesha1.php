@@ -7,7 +7,7 @@
 	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">DOES_NOT_MATCH => "File does not match the given sha1 hashes" <br/>=> 
 				<input type="text" name="my_element[messageError][filesha1][Zend\Validator\File\Sha1::DOES_NOT_MATCH]" 
 						class="form-control input-small filesha1-DOES_NOT_MATCH">

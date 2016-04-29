@@ -10,7 +10,7 @@
 
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_LESS => "The input is not less than '%max%'"<br/>=> 
 				<input type="text" name="my_element[messageError][lessthan][Zend\Validator\LessThan::NOT_LESS]" 
 						class="form-control input-small lessthan-NOT_LESS">

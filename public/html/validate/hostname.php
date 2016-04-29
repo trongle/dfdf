@@ -19,7 +19,7 @@
 	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">CANNOT_DECODE_PUNYCODE => "The input appears to be a DNS hostname but the given punycode notation cannot be decoded" <br/>=> 
 				<input type="text" name="my_element[messageError][hostname][Zend\Validator\Hostname::CANNOT_DECODE_PUNYCODE]" 
 						class="form-control input-small hostname-CANNOT_DECODE_PUNYCODE">

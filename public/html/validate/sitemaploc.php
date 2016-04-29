@@ -1,7 +1,7 @@
 <form class="sitemaploc">
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_VALID => "The input is not a valid sitemap location"<br/>=> 
 				<input type="text" name="my_element[messageError][sitemaploc][Zend\Validator\Sitemap\Loc::NOT_VALID]" 
 						class="form-control input-small sitemaploc-NOT_VALID">

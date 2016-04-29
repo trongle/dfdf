@@ -1,7 +1,7 @@
 <form class="datetime" >
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INVALID => "Invalid type given. String expected" <br/>=> 
 				<input type="text" name="my_element[messageError][datetime][Zend\I18n\Validator\DateTime::INVALID]" 
 						class="form-control input-small datetime-INVALID">

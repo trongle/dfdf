@@ -10,7 +10,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOTSUPPORTED => "Unknown country within the IBAN"<br/>=> 
 				<input type="text" name="my_element[messageError][iban][Zend\Validator\Iban::NOTSUPPORTED]" 
 						class="form-control input-small iban-NOTSUPPORTED">

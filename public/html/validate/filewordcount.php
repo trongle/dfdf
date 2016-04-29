@@ -11,7 +11,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">TOO_MUCH => "Too many words, maximum '%max%' are allowed but '%count%' were counted" <br/>=> 
 				<input type="text" name="my_element[messageError][filewordcount][Zend\Validator\File\WordCount::TOO_MUCH]" 
 						class="form-control input-small filewordcount-TOO_MUCH">

@@ -16,7 +16,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NO_MATCH => 'The input does not match a phone number format'<br/>=> 
 				<input type="text" name="my_element[messageError][phonenumber][Zend\I18n\Validator\PhoneNumber::NO_MATCH]" 
 						class="form-control input-small phonenumber-NO_MATCH">

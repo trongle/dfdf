@@ -10,7 +10,8 @@ return array(
     'modules' => array(
         'Application',
         'AutoCode',
-        'Demo'
+        'Demo',
+        'Adminuser'
     ),
 
     // These are various options for the listeners attached to the ModuleManager

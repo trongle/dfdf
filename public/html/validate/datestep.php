@@ -21,7 +21,7 @@
 
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INVALID => "Invalid type given. String, integer, array or DateTime expected" <br/>=> 
 				<input type="text" name="my_element[messageError][datestep][Zend\Validator\DateStep::INVALID]" 
 						class="form-control input-small datestep-INVALID">

@@ -251,3 +251,8 @@ ul{
 	width:90% !important;
 	display: inline-block !important;
 }
+
+.messageError{
+	height: 200px;
+	overflow-y: scroll;
+}

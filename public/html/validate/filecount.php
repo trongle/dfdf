@@ -12,7 +12,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">TOO_MANY => "Too many files, maximum '%max%' are allowed but '%count%' are given" <br/>=> 
 				<input type="text" name="my_element[messageError][filecount][Zend\Validator\File\Count::TOO_MANY]" 
 						class="form-control input-small filecount-TOO_MANY">

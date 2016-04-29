@@ -15,7 +15,7 @@
 	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">TOO_BIG => "All files in sum should have a maximum size of '%max%' but '%size%' were detected" <br/>=> 
 				<input type="text" name="my_element[messageError][filesize][Zend\Validator\File\FilesSize::TOO_BIG]" 
 						class="form-control input-small filesize-TOO_BIG">

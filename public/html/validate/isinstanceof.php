@@ -7,7 +7,7 @@
 	
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_INSTANCE_OF => "The input is not an instance of '%className%'"<br/>=> 
 				<input type="text" name="my_element[messageError][isintanseof][Zend\Validator\IsInstanceOf::NOT_INSTANCE_OF]" 
 						class="form-control input-small isintanseof-NOT_INSTANCE_OF">

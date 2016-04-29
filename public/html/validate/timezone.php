@@ -1,7 +1,7 @@
 <form class="timezone">
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">INVALID => 'Invalid timezone given.'<br/>=> 
 				<input type="text" name="my_element[messageError][timezone][Zend\Validator\Timezone::INVALID]" 
 						class="form-control input-small timezone-INVALID">

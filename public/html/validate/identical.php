@@ -15,7 +15,7 @@
 
     <div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_SAME => "The two given tokens do not match"<br/>=> 
 				<input type="text" name="my_element[messageError][identical][Zend\Validator\Identical::NOT_SAME]" 
 						class="form-control input-small identical-NOT_SAME">

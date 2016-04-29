@@ -146,7 +146,10 @@ if(isset($infoForm)){
 				var nameElement = "<?php echo $nameElement ?>";
 				var selector    = '.wrapper-' + nameElement;
 
-				if(flagName === '') flagName = nameElement; // get name of first form for clone purpose
+				if(flagName === ''){
+					flagName = nameElement; // get name of first form for clone purpose	
+				}
+
 				// add nameElement to span hidden
 				$(selector + " >  div:first > span:first").text("[" + nameElement + "] Element");
 				//show all form when page loaded
@@ -190,8 +193,13 @@ if(isset($infoForm)){
 		$("#addNewElement").on("click",function(){
 			if(flagName === ''){
 				flagName = $("#nameElement").val();
+			}else{
+				//Set lại flagName nếu phần tử đầu tiên bị xóa
+				if(!$(".elementAttrs:first").hasClass("wrapper-"+flagName)){
+					flagName = $(".elementAttrs:first").find(".input-name-element-hidden").val(); 
+				}
 			}
-			// alert(flagName);
+		
 			if(firstTime === false){ //============= first click :  show form ==============
 				firstTime         = true;			
 				var nameElement   = flagName;			

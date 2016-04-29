@@ -5,9 +5,9 @@
 	</div>
 
 
-	<div class="form-group col-md-12">
+	<div class=" form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_ALNUM : "The input contains characters which are non alphabetic and no digits" <br/>=> 
 				<input type="text" name="my_element[messageError][alnum][Zend\I18n\Validator\Alnum::NOT_ALNUM]" 
 						class="form-control input-small alnum-NOT_ALNUM">

@@ -1,0 +1,38 @@
+<?php
+$params = current($this->layout()->getChildren())->params;
+$controller = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', '');
+$arrData = explode('\\', $controller);
+$controller = strtolower(array_pop($arrData));
+$action = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('action', '');
+
+$isFullAccess = IS_FULLACCESS;
+$arrUserPermissionList = empty(IS_FULLACCESS) ? unserialize(USER_PERMISSION) : [];
+?>
+<aside>
+    <div id="sidebar" style="margin-left: -210px; overflow: hidden; outline: none;" class="nav-collapse ">
+        <ul class="sidebar-menu" id="nav-accordion" style="display: none;">
+            <li>
+                <a class="<?php echo $controller === 'index' ? 'active' : ''; ?>" href="<?php echo $this->serverUrl() . $this->Url('admincp', []); ?>">
+                    <i class="fa fa-home"></i>
+                    <span>TRANG CHỦ</span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a href="" class="<?php echo $controller === 'user' ? 'active dcjq-parent' : ''; ?>">
+                    <i class="fa fa-user"></i>
+                    <span>Quản lý người dùng</span>
+                </a>
+                <ul class="sub" style="<?php echo $controller === 'user' ? 'display: block;' : ''; ?>">
+                    <li class="<?php echo ($controller === 'user' && $action === 'index') ? 'active' : ''; ?>">
+                        <a  href="<?php echo $this->serverUrl() . $this->Url('admincp', array('controller' => 'user')); ?>">Danh sách người dùng</a>
+                    </li>
+
+                    <li class="<?php echo ($controller === 'user' && $action === 'add') ? 'active' : ''; ?>">
+                        <a  href="<?php echo $this->Url('home/default', array('action' => 'add')); ?>">Thêm người dùng mới</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>

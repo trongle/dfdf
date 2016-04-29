@@ -7,7 +7,7 @@
 	
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">DOES_NOT_EXIST => "File does not exist" <br/>=> 
 				<input type="text" name="my_element[messageError][fileexists][Zend\Validator\File\Exists::DOES_NOT_EXIST]" 
 						class="form-control input-small fileexists-DOES_NOT_EXIST">

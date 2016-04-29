@@ -11,7 +11,7 @@
 
 	<div class="form-group col-md-12">
 		<label>Message error:</label><br/>
-		<ul class="list-group">
+		<ul class="messageError list-group">
 			<li class="list-group-item">NOT_BETWEEN => "The input is not between '%min%' and '%max%', inclusively" <br/>=> 
 				<input type="text" name="my_element[messageError][between][Zend\Validator\Between::NOT_BETWEEN]" 
 						class="form-control input-small between-NOT_BETWEEN">
