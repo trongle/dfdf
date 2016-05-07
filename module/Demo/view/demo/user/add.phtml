@@ -9,6 +9,7 @@
                 <header class="panel-heading">Thêm người dùng mới </header>
                 <div class="panel-body">
                     <?php 
+                        $form->prepare();
                         echo $form->showError();
                     ?>
                     <?php 
@@ -17,15 +18,13 @@
                             ['ele' => $form->get('fullname')   , 'type' => 'require'],
                             ['ele' => $form->get('email')      , 'type' => 'require'],
                             ['ele' => $form->get('gender')     , 'type' => 'select'],
-                            ['ele' => $form->get('birthdate')] ,
+                            ['ele' => $form->get('birthdate')  , 'type' => ''] ,
                             ['ele' => $form->get('phone')      , 'type' => 'require'],
                             ['ele' => $form->get('password')   , 'type' => 'require'],
                             ['ele' => $form->get('repassword') , 'type' => 'require'],
-                            ['ele' => $form->get('address')    , 'type' => 'require'],
                             ['ele' => $form->get('city_id')       , 'type' => 'select'],
                             ['ele' => $form->get('district_id')   , 'type' => 'select'],
                             ['ele' => $form->get('ward_id')       , 'type' => 'select'],
-                            ['ele' => $form->get('role_list')  , 'type' => 'group'],
                             ['ele' => $form->get('user_id')    , 'type' => 'hidden'],
                             ['ele' => $form->get('ok')         , 'type' => 'submit'],
                         ));
@@ -41,7 +40,7 @@
 	var ObjCity,ObjDistrict,ObjWard;
 	$(document).ready(function(){
 		$.ajax({
-            url      : "<?php echo $urlCity ?>",
+            url      : "<?php echo BASE_URL . $urlCity ?>",
             type     : "POST",
             dataType : "json",
             success : function(data){

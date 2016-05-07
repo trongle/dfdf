@@ -1,0 +1,57 @@
+<?php 
+$xhtml = "";
+switch ($type) {
+	case 'submit':
+		$xhtml = sprintf('<div class="form-group">
+		                    <div class="col-lg-offset-2 col-lg-10">
+		                        %s
+		                    </div>
+		                </div>',
+		                $this->formElement($ele));
+		break;
+
+	case 'require':
+		$xhtml = sprintf('<div class="form-group"> %s 
+                           	<div class="col-lg-10"> %s </div>
+                        </div>',
+						$this->formLabel($ele,"<span style='color:red'>*</span>","prepend"),
+                        $this->formElement($ele));
+		break;
+
+	case 'select':
+		$xhtml = sprintf('<div class="form-group">
+                            %s
+                            <div class="col-lg-10">
+                                %s
+                            </div>
+                        </div>',
+                        $this->formLabel($ele,"<span style='color:red'>*</span>","prepend"),
+                        $this->formSelect($ele));
+		break;
+
+	case 'group':
+		$xhtml = sprintf('<div class="form-group">
+                            %s
+                            <div class="col-lg-10">
+                                %s
+                            </div>
+                        </div>',
+                        $this->formLabel($ele,"<span style='color:red'>*</span>","prepend"),
+                        $this->formSelect($ele));
+		break;
+                
+                case 'hidden':
+                            $xhtml = sprintf('<div class="form-group"> %s </div>',$this->formElement($ele));
+                            break;
+	
+	default:
+		$xhtml = sprintf('<div class="form-group"> %s  
+                           	<div class="col-lg-10"> %s </div>
+                        </div>',
+                        $this->formLabel($ele),
+                        $this->formElement($ele));
+		break;
+}
+
+echo $xhtml;
+?>
