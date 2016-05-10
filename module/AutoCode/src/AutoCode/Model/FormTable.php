@@ -212,6 +212,7 @@ class FormTable extends AbstractTableGateway{
 		unset($element['validateElement']);
 		unset($element['nameElement']);
 		unset($element['renameInfo']);
+		unset($element['convertInput']);
 
 		return serialize($element);
 	}

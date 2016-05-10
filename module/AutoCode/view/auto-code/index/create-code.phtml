@@ -1,7 +1,7 @@
 <?php  
-// echo "<pre>";
-// print_r($infoForm);
-// echo "</pre>";
+echo "<pre>";
+print_r($infoForm);
+echo "</pre>";
 ?>
 <div class="container">
 	<h1>[<?php echo $infoForm->name ?>]</h1>
@@ -82,7 +82,7 @@
 					        <?php echo str_repeat("&nbsp;",10) ?><span class="php-keyword">switch</span><span class="php-plain">(</span><span class="php-variable">$fieldName</span><span class="php-plain">){</span><br/>
 					            <?php if($infoForm->content != ""): ?>
 						            <?php foreach($infoForm->content as $nameElement => $infoElement): ?>
-						            	<?php if(array_key_exists('nameLabel',$infoElement['option']) && $infoElement['type'] != 'submit' && $infoElement['type'] != 'button'): ?>
+						            	<?php if(array_key_exists('nameLabel',$infoElement['option']) && $infoElement['option']['nameLabel'] != '' && $infoElement['type'] != 'submit' && $infoElement['type'] != 'button'): ?>
 								            <?php echo str_repeat("&nbsp;",15) ?><span class="php-keyword">case </span> <?php echo '"' . $nameElement . '"' ?> <span class="php-plain">:</span><br>
 								            <?php echo str_repeat("&nbsp;",20) ?><span class="php-keyword">return</span> <?php echo '"' . $infoElement['option']['nameLabel'] . '"' ?><span class="php-plain">;</span><br/>
 								            <?php echo str_repeat("&nbsp;",20) ?><span class="php-keyword">break</span><span class="php-plain">;</span><br/>
